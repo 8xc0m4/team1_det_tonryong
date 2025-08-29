@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:team1_det_tonryong/presentation/page/login/login_page.dart';
+import 'package:team1_det_tonryong/presentation/page/home/home_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: LoginPage(),
+      home: HomePage(),
     );
   }
 }
