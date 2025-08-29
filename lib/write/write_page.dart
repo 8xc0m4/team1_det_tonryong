@@ -18,9 +18,12 @@ class WritePage extends StatelessWidget {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
-            child: Image.asset(
-              'assets/icon/pen.png',
-              height: 40,
+            child: Container(
+              width: 50,
+              height: 50,
+              child: Image.asset(
+                'assets/icon/pen.png',
+              ),
             ),
           ),
         ],
