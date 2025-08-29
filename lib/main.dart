@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:team1_det_tonryong/presentation/page/login_page.dart';
+import 'package:team1_det_tonryong/presentation/page/login/login_page.dart';
 
 void main() {
   runApp(const MyApp());
