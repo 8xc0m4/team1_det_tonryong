@@ -11,7 +11,7 @@ class BottomWritBox extends StatelessWidget {
       width: double.infinity,
       height: 100,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Color(0xffFBC3D7),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withValues(alpha: 0.2),
@@ -27,8 +27,8 @@ class BottomWritBox extends StatelessWidget {
           child: Row(
             children: [
               Container(
-                width: 30,
-                height: 30,
+                width: 40,
+                height: 40,
                 decoration: BoxDecoration(
                   color: Colors.grey,
                   shape: BoxShape.circle,
@@ -39,13 +39,24 @@ class BottomWritBox extends StatelessWidget {
               ),
               Flexible(
                 child: Container(
-                  height: 30,
+                  height: 40,
                   child: TextField(
                     decoration: InputDecoration(
                       hintText: '제목 추가...',
                       hintStyle: TextStyle(
                         fontSize: 16,
                         color: Colors.grey,
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.black,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(
+                          color: Colors.black,
+                        ),
                       ),
                     ),
                   ),
@@ -57,7 +68,10 @@ class BottomWritBox extends StatelessWidget {
               SizedBox(
                 width: 30,
                 height: 30,
-                child: Image.asset('assets/icon/send.png'),
+                child: Image.asset(
+                  'assets/icon/send.png',
+                  fit: BoxFit.cover,
+                ),
               ),
             ],
           ),
