@@ -38,7 +38,7 @@ class _FloatingCommentManagerState extends State<FloatingCommentManager> {
       final screenWidth = MediaQuery.of(context).size.width;
       // final screenHeight = MediaQuery.of(context).size.height;
 
-      final randomX = random.nextDouble() * (screenWidth);
+      final randomX = random.nextDouble() * (screenWidth * 0.5); // 공범
       final randomY = random.nextDouble() * (250.0); // 여기가 범인
 
       setState(() {
@@ -137,7 +137,6 @@ class _FloatingCommentState extends State<_FloatingComment>
       animation: _controller,
       builder: (_, __) {
         return Positioned(
-          // 왜 자꾸 화면을 빠져나갈까
           left: widget.startX.clamp(0, screenWidth),
           bottom: widget.startY + _positionY.value,
           child: Opacity(
@@ -147,7 +146,7 @@ class _FloatingCommentState extends State<_FloatingComment>
                 minWidth: 10,
                 maxWidth: 400,
                 minHeight: 10,
-                maxHeight: 300,
+                maxHeight: 200,
               ),
               child: Text(
                 displayText, //예시 택스트 가져오기
