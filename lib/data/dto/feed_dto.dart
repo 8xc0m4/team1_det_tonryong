@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class FeedDto {
   final String userNM;
   final DateTime feedTime;
   final int feedLike;
   final String feedPhoto;
-  final List<Comment> comments;
+  final List<Comment>? comments;
 
   FeedDto({
     required this.userNM,
@@ -15,10 +17,10 @@ class FeedDto {
   FeedDto.fromJson(Map<String, dynamic> map)
     : this(
         userNM: map["userNM"],
-        feedTime: map["feedTime"],
+        feedTime: (map["feedTime"] as Timestamp).toDate(),
         feedLike: map["feedLike"],
         feedPhoto: map["feedPhoto"],
-        comments: map["comments"],
+        comments: map["comments"] ?? [],
       );
   Map<String, dynamic> toJson() {
     return {
@@ -47,7 +49,7 @@ class Comment {
   Comment.fromJson(Map<String, dynamic> map)
     : this(
         commentId: map["commentId"],
-        commentTime: map["commentTime"],
+        commentTime: (map["commentTime"] as Timestamp).toDate(),
         commentLike: map["commentLike"],
         commentUserNM: map["commentUserNM"],
       );
