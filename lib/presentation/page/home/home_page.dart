@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:team1_det_tonryong/presentation/page/home/home_view_model.dart';
 import 'package:team1_det_tonryong/presentation/page/home/widgets/home_list.dart';
 import 'package:team1_det_tonryong/presentation/page/write/write_page.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final result = ref.watch(homeViewModelProvider);
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -32,7 +35,7 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
-      body: HomeList(),
+      body: HomeList(result),
     );
   }
 }
