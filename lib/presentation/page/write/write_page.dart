@@ -17,13 +17,13 @@ class _WritePageState extends ConsumerState<WritePage> {
   File? _selectedImage;
   List<File> _allGalleryPhotos = [];
 
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _loadGalleryPhotos();
-    });
-  }
+  // // @override
+  // void initState() {
+  //   super.initState();
+  //   WidgetsBinding.instance.addPostFrameCallback((_) {
+  //     _loadGalleryPhotos();
+  //   });
+  // }
 
   Future<void> _loadGalleryPhotos() async {
     try {

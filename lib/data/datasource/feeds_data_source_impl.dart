@@ -41,4 +41,21 @@ class FeedsDataSourceImpl implements FeedsDataSource {
       return List<CommentDto>.empty();
     }
   }
+
+  @override
+  Future<void> createFeed({
+    required String userNM,
+    required String feedPhoto,
+  }) async {
+    final firestore = FirebaseFirestore.instance;
+    final collectionRef = firestore.collection('feeds');
+    final docRef = collectionRef.doc();
+    docRef.set({
+      "userNM": userNM,
+      "feedTime": DateTime.now(),
+      "feedLike": 0,
+      "feedPhoto": feedPhoto,
+      "fLikeUsers": [],
+    });
+  }
 }
