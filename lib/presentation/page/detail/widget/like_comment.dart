@@ -23,7 +23,7 @@ class _LikeCommentState extends State<LikeComment> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         GestureDetector(
-          onTap: _toggleLike,
+          onTap: _toggleLike, // 다른 곳에서 좋아요 누르면 올라간 숫자 유지 // 좋아요 누르면 숫자 올라가게 만들기
           child: Image.asset(
             liked
                 ? 'assets/icon/heart_pink.png'
