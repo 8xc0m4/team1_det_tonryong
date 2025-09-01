@@ -5,6 +5,7 @@ import 'package:team1_det_tonryong/firebase_options.dart';
 import 'package:team1_det_tonryong/presentation/page/write/write_page.dart';
 
 void main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const ProviderScope(child: MyApp()));
@@ -20,3 +21,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+

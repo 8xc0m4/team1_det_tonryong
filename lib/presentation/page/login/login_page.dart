@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:team1_det_tonryong/presentation/page/home/home_page.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -49,7 +50,10 @@ class LoginPage extends StatelessWidget {
           children: [
             Text(
               '닉네임을 입력해 주세요',
-              style: TextStyle(fontSize: 24, color: Colors.black),
+              style: TextStyle(
+                fontSize: 24,
+                color: Colors.black,
+              ),
             ),
             SizedBox(height: 50, width: 200, child: TextField()),
           ],
@@ -57,6 +61,14 @@ class LoginPage extends StatelessWidget {
       ),
       btnOkOnPress: () {
         //파이어 베이스에 데이터 보낸 후 홈페이지로 이동
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return HomePage();
+            },
+          ),
+        );
       },
     )..show();
   }
