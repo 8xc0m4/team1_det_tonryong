@@ -1,12 +1,22 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:team1_det_tonryong/presentation/page/comment/view_model/comment_view_model.dart';
 import 'package:team1_det_tonryong/presentation/page/comment/views/Comments.dart';
 import 'package:team1_det_tonryong/presentation/page/comment/views/bottom_write_box.dart';
 
-class CommentPage extends StatelessWidget {
+// TODO : 연결 시 삭제 하고 id를 받아서 사용할 것
+String id = '1';
+
+class CommentPage extends ConsumerStatefulWidget {
+  @override
+  ConsumerState<CommentPage> createState() =>
+      _CommentPageState();
+}
+
+class _CommentPageState extends ConsumerState<CommentPage> {
   @override
   Widget build(BuildContext context) {
+    final result = ref.watch(commentViewModelProvider(id));
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -61,6 +71,8 @@ class CommentPage extends StatelessWidget {
                         horizontal: 20,
                       ),
                       child: Row(
+                        crossAxisAlignment:
+                            CrossAxisAlignment.center,
                         children: [
                           Text(
                             '댓글',
