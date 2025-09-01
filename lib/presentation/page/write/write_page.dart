@@ -17,17 +17,18 @@ class _WritePageState extends ConsumerState<WritePage> {
   File? _selectedImage;
   List<File> _allGalleryPhotos = [];
 
-  // // @override
-  // void initState() {
-  //   super.initState();
-  //   WidgetsBinding.instance.addPostFrameCallback((_) {
-  //     _loadGalleryPhotos();
-  //   });
-  // }
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _loadGalleryPhotos();
+    });
+  }
 
   Future<void> _loadGalleryPhotos() async {
     try {
-      final permission = await PhotoManager.requestPermissionExtend();
+      final permission =
+          await PhotoManager.requestPermissionExtend();
       if (!permission.isAuth) return;
 
       final albums = await PhotoManager.getAssetPathList(
@@ -35,7 +36,10 @@ class _WritePageState extends ConsumerState<WritePage> {
       );
       if (albums.isEmpty) return;
 
-      final assets = await albums[0].getAssetListPaged(page: 0, size: 5);
+      final assets = await albums[0].getAssetListPaged(
+        page: 0,
+        size: 5,
+      );
       final files = <File>[];
       for (var asset in assets) {
         final file = await asset.file;
@@ -68,7 +72,9 @@ class _WritePageState extends ConsumerState<WritePage> {
               onTap: () {
                 // 로그 출력
                 if (_selectedImage != null) {
-                  debugPrint('선택한 사진이 있습니다. 경로: ${_selectedImage!.path}');
+                  debugPrint(
+                    '선택한 사진이 있습니다. 경로: ${_selectedImage!.path}',
+                  );
                   PostDialog.show(
                     context,
                     ref,
@@ -78,14 +84,24 @@ class _WritePageState extends ConsumerState<WritePage> {
                 } else {
                   debugPrint('선택한 사진이 없습니다.');
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('사진을 먼저 선택해주세요.')),
+                    const SnackBar(
+                      content: Text('사진을 먼저 선택해주세요.'),
+                    ),
                   );
                 }
               },
               child: SizedBox(
                 width: 50,
                 height: 50,
-                child: Image.asset('assets/icon/pen.png'),
+                child: GestureDetector(
+                  onTap: () {
+                    // 여기에 아이콘 클릭시 파이어베이스에 Storage에 사진 추가하고
+                    // 다시 반환값으로 url를 받아 다시 파이어베이스에 저장하는 추가
+                    // 즉 여기에 아이콘 클릭시 riverpod으로 viewmodel에서 추가하는 메서드 실행
+                    // 이후 datasouce에 Storage 추가와 데이터베이스에 추가 기능 넣어야 함
+                  },
+                  child: Image.asset('assets/icon/pen.png'),
+                ),
               ),
             ),
           ),
@@ -110,7 +126,9 @@ class _WritePageState extends ConsumerState<WritePage> {
                     setState(() {
                       _selectedImage = image;
                     });
-                    debugPrint('사진 선택 완료: ${_selectedImage!.path}');
+                    debugPrint(
+                      '사진 선택 완료: ${_selectedImage!.path}',
+                    );
                   }
                 },
                 child: ClipRRect(
@@ -122,7 +140,8 @@ class _WritePageState extends ConsumerState<WritePage> {
                         )
                       : Center(
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment:
+                                MainAxisAlignment.center,
                             children: [
                               Image.asset(
                                 'assets/icon/image_pick.png',
@@ -132,7 +151,9 @@ class _WritePageState extends ConsumerState<WritePage> {
                               const SizedBox(height: 8),
                               const Text(
                                 "사진을 추가해주세요",
-                                style: TextStyle(color: Colors.black54),
+                                style: TextStyle(
+                                  color: Colors.black54,
+                                ),
                               ),
                             ],
                           ),
@@ -160,7 +181,8 @@ class _WritePageState extends ConsumerState<WritePage> {
                       ),
                       child: (_allGalleryPhotos.length > index)
                           ? ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius:
+                                  BorderRadius.circular(8),
                               child: Image.file(
                                 _allGalleryPhotos[index],
                                 fit: BoxFit.cover,

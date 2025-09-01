@@ -55,18 +55,26 @@ class PostDialog {
                   children: [
                     Expanded(
                       child: CupertinoButton(
-                        padding: const EdgeInsets.symmetric(vertical: 6.0),
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 6.0,
+                        ),
                         borderRadius: const BorderRadius.only(
                           bottomLeft: Radius.circular(16.0),
                         ),
                         color: Colors.transparent,
-                        onPressed: () => Navigator.of(context).pop(),
+                        onPressed: () =>
+                            Navigator.of(context).pop(),
                         child: const Text(
                           "취소",
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w400,
-                            color: Color.fromARGB(255, 255, 0, 0),
+                            color: Color.fromARGB(
+                              255,
+                              255,
+                              0,
+                              0,
+                            ),
                           ),
                         ),
                       ),
@@ -78,27 +86,35 @@ class PostDialog {
                     ),
                     Expanded(
                       child: CupertinoButton(
-                        padding: const EdgeInsets.symmetric(vertical: 6.0),
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 6.0,
+                        ),
                         borderRadius: const BorderRadius.only(
                           bottomRight: Radius.circular(16.0),
                         ),
                         color: Colors.transparent,
                         onPressed: () async {
-                          Navigator.of(context).pop(); // Close dialog
+                          Navigator.of(
+                            context,
+                          ).pop(); // Close dialog
 
                           if (selectedImage != null) {
                             debugPrint(
                               '선택한 사진이 있습니다. 경로: ${selectedImage.path}',
                             );
                             try {
-                              final storageRef = FirebaseStorage.instance.ref();
+                              final storageRef = FirebaseStorage
+                                  .instance
+                                  .ref();
                               final fileName = DateTime.now()
                                   .millisecondsSinceEpoch
                                   .toString();
                               final imageRef = storageRef.child(
                                 'posts/$fileName.jpg',
                               );
-                              await imageRef.putFile(selectedImage);
+                              await imageRef.putFile(
+                                selectedImage,
+                              );
                               final downloadUrl = await imageRef
                                   .getDownloadURL();
 
@@ -106,19 +122,22 @@ class PostDialog {
                                   .collection('posts')
                                   .add({
                                     'feedPhoto': downloadUrl,
-                                    'feedTime': FieldValue.serverTimestamp(),
+                                    'feedTime':
+                                        FieldValue.serverTimestamp(),
                                     'userNM': 'currentUserId',
                                     'feedLike': 0,
                                   });
 
-                              ref
-                                  .read(homeViewModelProvider.notifier)
-                                  .addPostedPhotoUrl(downloadUrl);
+                              // ref
+                              //     .read(homeViewModelProvider.notifier)
+                              //     .addPostedPhotoUrl(downloadUrl);
 
                               debugPrint(
                                 '게시된 사진이 Firebase에 업로드됨. URL: $downloadUrl',
                               );
-                              debugPrint('로고 정보: [LOGO_PLACEHOLDER]');
+                              debugPrint(
+                                '로고 정보: [LOGO_PLACEHOLDER]',
+                              );
                             } catch (e) {
                               debugPrint('이미지 업로드 중 오류 발생: $e');
                             }
@@ -127,14 +146,17 @@ class PostDialog {
                           }
 
                           // Navigate to HomePage safely
-                          WidgetsBinding.instance.addPostFrameCallback((_) {
-                            Navigator.of(
-                              rootContext,
-                              rootNavigator: true,
-                            ).pushReplacement(
-                              MaterialPageRoute(builder: (_) => HomePage()),
-                            );
-                          });
+                          WidgetsBinding.instance
+                              .addPostFrameCallback((_) {
+                                Navigator.of(
+                                  rootContext,
+                                  rootNavigator: true,
+                                ).pushReplacement(
+                                  MaterialPageRoute(
+                                    builder: (_) => HomePage(),
+                                  ),
+                                );
+                              });
                         },
                         child: const Text(
                           "게시",
