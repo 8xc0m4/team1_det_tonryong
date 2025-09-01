@@ -45,7 +45,7 @@ class FeedsDataSourceImpl implements FeedsDataSource {
 
   Future<void> createComment({
     required String id,
-    required CommentEntity comment,
+    required CommentDto comment,
   }) async {
     try {
       final firestore = FirebaseFirestore.instance;
@@ -53,7 +53,7 @@ class FeedsDataSourceImpl implements FeedsDataSource {
       final docRef = colRef.doc(id);
       final commentColRef = docRef.collection('comments');
       final result = await commentColRef.doc();
-      result.set();
+      result.set(comment.toJson());
     } catch (e) {
       print(e);
     }

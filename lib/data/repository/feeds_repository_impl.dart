@@ -1,6 +1,7 @@
 import 'package:team1_det_tonryong/data/datasource/feeds_data_source.dart';
 import 'package:team1_det_tonryong/domain/entity/comment_entity.dart';
 import 'package:team1_det_tonryong/domain/entity/home_entity.dart';
+import 'package:team1_det_tonryong/domain/entity/write_entity.dart';
 import 'package:team1_det_tonryong/domain/repository/feeds_repository.dart';
 
 class FeedsRepositoryImpl implements FeedsRepository {

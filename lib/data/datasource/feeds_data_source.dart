@@ -4,4 +4,8 @@ import 'package:team1_det_tonryong/data/dto/feed_dto.dart';
 abstract interface class FeedsDataSource {
   Future<List<FeedDto>?> getFeeds();
   Future<List<CommentDto>> getComments(String id);
+  Future<void> createComment({
+    required String id,
+    required CommentDto comment,
+  });
 }
