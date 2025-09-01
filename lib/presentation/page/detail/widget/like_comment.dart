@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:team1_det_tonryong/presentation/page/comment/comment_page.dart';
 
 // 좋아요 버튼 활성화 및 댓글 페이지 연결 예정
 class LikeComment extends StatefulWidget {
@@ -33,10 +34,22 @@ class _LikeCommentState extends State<LikeComment> {
           ),
         ),
         const SizedBox(height: 15),
-        Image.asset(
-          'assets/icon/dg.png',
-          width: 40,
-          height: 40,
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return CommentPage();
+                },
+              ),
+            );
+          },
+          child: Image.asset(
+            'assets/icon/dg.png',
+            width: 40,
+            height: 40,
+          ),
         ),
       ],
     );
