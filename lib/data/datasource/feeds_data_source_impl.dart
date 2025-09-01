@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:team1_det_tonryong/data/datasource/feeds_data_source.dart';
 import 'package:team1_det_tonryong/data/dto/comment_dto.dart';
 import 'package:team1_det_tonryong/data/dto/feed_dto.dart';
+import 'package:team1_det_tonryong/domain/entity/comment_entity.dart';
 
 class FeedsDataSourceImpl implements FeedsDataSource {
   @override
@@ -39,6 +40,22 @@ class FeedsDataSourceImpl implements FeedsDataSource {
       // TODO: print Log로 바꾸는거 생각하기
       print(e);
       return List<CommentDto>.empty();
+    }
+  }
+
+  Future<void> createComment({
+    required String id,
+    required CommentEntity comment,
+  }) async {
+    try {
+      final firestore = FirebaseFirestore.instance;
+      final colRef = firestore.collection('feeds');
+      final docRef = colRef.doc(id);
+      final commentColRef = docRef.collection('comments');
+      final result = await commentColRef.doc();
+      result.set();
+    } catch (e) {
+      print(e);
     }
   }
 }

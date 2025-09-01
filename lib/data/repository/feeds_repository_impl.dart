@@ -32,6 +32,7 @@ class FeedsRepositoryImpl implements FeedsRepository {
             commentLike: doc.commentLike,
             commentUserNM: doc.commentUserNM,
             comment: doc.comment,
+            cLikeUsers: doc.cLikeUsers,
           ),
         )
         .toList();
