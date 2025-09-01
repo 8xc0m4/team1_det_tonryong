@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:team1_det_tonryong/data/dto/feed_dto.dart';
 import 'package:team1_det_tonryong/presentation/page/detail/widget/delete_button.dart';
 import 'package:team1_det_tonryong/presentation/page/detail/widget/floating_comment.dart';
 import 'package:team1_det_tonryong/presentation/page/detail/widget/like_comment.dart';
+import 'package:team1_det_tonryong/presentation/page/home/home_page.dart';
 
 class DetailPage extends StatelessWidget {
-  const DetailPage({super.key});
+  // final FeedDto feed;
+  const DetailPage({
+    super.key,
+  });
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,8 +19,11 @@ class DetailPage extends StatelessWidget {
         actions: [
           DeleteButton(
             onDelete: () {
-              Text('삭제됨');
-              Navigator.pop(context);
+              Text('삭제됨'); // 작성자만 보이게 만들기
+              Navigator.pop(
+                context,
+                MaterialPageRoute(builder: (context) => HomePage()),
+              ); // 삭제하고 홈페이지로 이동 구현하기
             },
           ),
         ],
@@ -30,15 +38,15 @@ class DetailPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '@한석원의 반짝임', // 임시 사용자 이름
+                  'feed.userNM', // 임시 사용자 이름
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                Text('2025-08-28'), // 임시 날짜
+                Text('feed.feedTime'), // 임시 날짜
               ],
             ),
           ),
           Image.asset(
-            'assets/icon/hansukwon.png',
+            'feed.feedPhoto',
             height: 300,
             width: double.infinity,
             fit: BoxFit.cover,
@@ -55,12 +63,14 @@ class DetailPage extends StatelessWidget {
             color: Color(0xfff1f1f1),
             child: Stack(
               children: [
-                const FloatingCommentManager(), // 댓글 표시
+                const FloatingCommentManager(
+                  commentId: '',
+                ), // 댓글 표시
                 Positioned(
                   //하트, 댓글 아이콘 위치
                   right: 10,
                   top: 100,
-                  child: const LikeComment(),
+                  child: LikeComment(),
                 ),
               ],
             ),

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:team1_det_tonryong/data/dto/feed_dto.dart';
 import 'package:team1_det_tonryong/presentation/page/comment/comment_page.dart';
 
 // 좋아요 버튼 활성화 및 댓글 페이지 연결 예정
 class LikeComment extends StatefulWidget {
-  const LikeComment({super.key});
+  // final FeedDto feed;
+  const LikeComment({
+    super.key,
+  });
 
   @override
   State<StatefulWidget> createState() => _LikeCommentState();
@@ -11,11 +15,19 @@ class LikeComment extends StatefulWidget {
 
 class _LikeCommentState extends State<LikeComment> {
   bool liked = false;
+  late int likeCount;
+
+  @override
+  void initState() {
+    super.initState();
+    // likeCount = widget.feed.feedLike;
+  }
 
   void _toggleLike() {
     setState(() {
       liked = !liked;
-    });
+      likeCount += liked ? 1 : -1;
+    }); //좋아요 숫자 증가
   }
 
   @override
@@ -33,6 +45,7 @@ class _LikeCommentState extends State<LikeComment> {
             height: 40,
           ),
         ),
+        Text('{widget.feed.feedLike}'),
         const SizedBox(height: 15),
         GestureDetector(
           onTap: () {
