@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:team1_det_tonryong/presentation/page/write/widgets/PostDialog.dart';
 
 class WritePage extends StatelessWidget {
   const WritePage({super.key});
@@ -18,11 +19,16 @@ class WritePage extends StatelessWidget {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
-            child: Container(
-              width: 50,
-              height: 50,
-              child: Image.asset(
-                'assets/icon/pen.png',
+            child: GestureDetector(
+              onTap: () {
+                PostDialog.show(context);
+              },
+              child: Container(
+                width: 50,
+                height: 50,
+                child: Image.asset(
+                  'assets/icon/pen.png',
+                ),
               ),
             ),
           ),
