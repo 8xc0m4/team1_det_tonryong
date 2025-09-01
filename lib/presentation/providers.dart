@@ -13,7 +13,9 @@ final _feedsDataSourceProvider = Provider<FeedsDataSource>(
 
 final _feedsRepositoryProvider = Provider<FeedsRepository>(
   (ref) {
-    return FeedsRepositoryImpl(ref.read(_feedsDataSourceProvider));
+    return FeedsRepositoryImpl(
+      ref.read(_feedsDataSourceProvider),
+    );
   },
 );
 

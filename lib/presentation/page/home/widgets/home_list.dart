@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:team1_det_tonryong/presentation/page/detail/detail_page.dart';
 import 'package:team1_det_tonryong/presentation/page/home/home_view_model.dart';
 
 class HomeList extends StatelessWidget {
