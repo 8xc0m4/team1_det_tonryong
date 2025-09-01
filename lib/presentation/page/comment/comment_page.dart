@@ -3,9 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:team1_det_tonryong/presentation/page/comment/view_model/comment_view_model.dart';
 import 'package:team1_det_tonryong/presentation/page/comment/views/Comments.dart';
 import 'package:team1_det_tonryong/presentation/page/comment/views/bottom_write_box.dart';
+import 'package:team1_det_tonryong/presentation/page/comment/views/empty_comment.dart';
 
 // TODO : 연결 시 삭제 하고 id를 받아서 사용할 것
-String id = '1';
+String id = 'fu7Wtfzxo2c4urwd2aNT';
+bool isEmpty = true;
 
 class CommentPage extends ConsumerStatefulWidget {
   @override
@@ -16,7 +18,7 @@ class CommentPage extends ConsumerStatefulWidget {
 class _CommentPageState extends ConsumerState<CommentPage> {
   @override
   Widget build(BuildContext context) {
-    final result = ref.watch(commentViewModelProvider(id));
+    final state = ref.watch(commentViewModelProvider(id));
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -85,7 +87,7 @@ class _CommentPageState extends ConsumerState<CommentPage> {
                             width: 10,
                           ),
                           Text(
-                            '418',
+                            '${state.length}',
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
@@ -103,28 +105,33 @@ class _CommentPageState extends ConsumerState<CommentPage> {
                       height: 1,
                       color: Colors.black,
                     ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                        ),
-                        child: ListView.builder(
-                          itemCount: 10,
-                          itemBuilder: (context, index) {
-                            return Column(
-                              children: [
-                                index == 0
-                                    ? SizedBox(
-                                        height: 10,
-                                      )
-                                    : SizedBox.shrink(),
-                                Comments(),
-                              ],
-                            );
-                          },
-                        ),
-                      ),
-                    ),
+                    state.isEmpty
+                        ? EmptyComment()
+                        : Expanded(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(
+                                    horizontal: 20,
+                                  ),
+                              child: ListView.builder(
+                                itemCount: state.length,
+                                itemBuilder: (context, index) {
+                                  return Column(
+                                    children: [
+                                      index == 0
+                                          ? SizedBox(
+                                              height: 10,
+                                            )
+                                          : SizedBox.shrink(),
+                                      Comments(
+                                        state: state[index],
+                                      ),
+                                    ],
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
                   ],
                 ),
               ),
