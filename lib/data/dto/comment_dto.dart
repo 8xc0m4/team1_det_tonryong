@@ -2,11 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 /// 피드에 대한 댓글 DTO 분리
 class CommentDto {
-  String commentId;
-  DateTime commentTime;
-  int commentLike;
-  String commentUserNM;
-  String comment;
+  final String commentId;
+  final DateTime commentTime;
+  final int commentLike;
+  final String commentUserNM;
+  final String comment;
+  final List<String> cLikeUsers;
 
   CommentDto({
     required this.commentId,
@@ -14,6 +15,7 @@ class CommentDto {
     required this.commentLike,
     required this.commentUserNM,
     required this.comment,
+    required this.cLikeUsers,
   });
 
   CommentDto.fromJson(String commentId, Map<String, dynamic> map)
@@ -23,6 +25,7 @@ class CommentDto {
         commentLike: map["commentLike"],
         commentUserNM: map["commentUserNM"],
         comment: map["comment"],
+        cLikeUsers: List<String>.from(map['cLikeUsers'] ?? []),
       );
   Map<String, dynamic> toJson() {
     return {
@@ -30,6 +33,7 @@ class CommentDto {
       "commentLike": commentLike,
       "commentUserNM": commentUserNM,
       "comment": comment,
+      "cLikeUsers": cLikeUsers,
     };
   }
 }

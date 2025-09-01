@@ -1,9 +1,29 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:team1_det_tonryong/presentation/page/home/home_page.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
+
+  Future<UserCredential> login() async {
+    final google = GoogleSignIn();
+    final result = await google.signIn();
+
+    final auth = await result?.authentication;
+    auth?.accessToken;
+    auth?.idToken;
+
+    final cred = GoogleAuthProvider.credential(
+      accessToken: auth?.accessToken,
+      idToken: auth?.idToken,
+    );
+
+    return await FirebaseAuth.instance.signInWithCredential(
+      cred,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +38,12 @@ class LoginPage extends StatelessWidget {
             Image.asset('assets/icon/dtr_logo.png'),
             SizedBox(height: 80),
             GestureDetector(
-              onTap: () {
+              onTap: () async {
                 //
-                awesomeDialog(context);
+                final user = await login();
+                if (user.user?.uid != null) {
+                  awesomeDialog(context);
+                }
               },
               child: googleLogin(),
             ),
