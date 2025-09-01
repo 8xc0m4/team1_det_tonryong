@@ -1,9 +1,19 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:team1_det_tonryong/presentation/page/home/home_page.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:team1_det_tonryong/presentation/page/home/home_view_model.dart';
 
 class PostDialog {
-  static Future<void> show(BuildContext context) {
+  static Future<void> show(
+    BuildContext context,
+    WidgetRef ref, {
+    File? selectedImage,
+    required BuildContext rootContext,
+  }) {
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -25,10 +35,10 @@ class PostDialog {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
+                const Text(
                   "이사진을 게시 하겠습니까?",
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.black,
                     fontSize: 16,
                   ),
@@ -73,14 +83,58 @@ class PostDialog {
                           bottomRight: Radius.circular(16.0),
                         ),
                         color: Colors.transparent,
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => HomePage(),
-                            ),
-                          );
+                        onPressed: () async {
+                          Navigator.of(context).pop(); // Close dialog
+
+                          if (selectedImage != null) {
+                            debugPrint(
+                              '선택한 사진이 있습니다. 경로: ${selectedImage.path}',
+                            );
+                            try {
+                              final storageRef = FirebaseStorage.instance.ref();
+                              final fileName = DateTime.now()
+                                  .millisecondsSinceEpoch
+                                  .toString();
+                              final imageRef = storageRef.child(
+                                'posts/$fileName.jpg',
+                              );
+                              await imageRef.putFile(selectedImage);
+                              final downloadUrl = await imageRef
+                                  .getDownloadURL();
+
+                              await FirebaseFirestore.instance
+                                  .collection('posts')
+                                  .add({
+                                    'feedPhoto': downloadUrl,
+                                    'feedTime': FieldValue.serverTimestamp(),
+                                    'userNM': 'currentUserId',
+                                    'feedLike': 0,
+                                  });
+
+                              ref
+                                  .read(homeViewModelProvider.notifier)
+                                  .addPostedPhotoUrl(downloadUrl);
+
+                              debugPrint(
+                                '게시된 사진이 Firebase에 업로드됨. URL: $downloadUrl',
+                              );
+                              debugPrint('로고 정보: [LOGO_PLACEHOLDER]');
+                            } catch (e) {
+                              debugPrint('이미지 업로드 중 오류 발생: $e');
+                            }
+                          } else {
+                            debugPrint('선택한 사진이 없습니다.');
+                          }
+
+                          // Navigate to HomePage safely
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            Navigator.of(
+                              rootContext,
+                              rootNavigator: true,
+                            ).pushReplacement(
+                              MaterialPageRoute(builder: (_) => HomePage()),
+                            );
+                          });
                         },
                         child: const Text(
                           "게시",

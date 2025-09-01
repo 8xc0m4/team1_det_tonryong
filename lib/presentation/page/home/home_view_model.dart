@@ -21,6 +21,8 @@ class HomeViewModel extends Notifier<HomeState> {
 
     state = HomeState(getFeedsPhoto: result ?? []);
   }
+
+  void addPostedPhotoUrl(String downloadUrl) {}
 }
 
 final homeViewModelProvider = NotifierProvider<HomeViewModel, HomeState>(
