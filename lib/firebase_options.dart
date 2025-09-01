@@ -63,6 +63,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1094819422104',
     projectId: 'det-tonryong',
     storageBucket: 'det-tonryong.firebasestorage.app',
+    iosClientId: '1094819422104-2sbdsqlvchtsm9927rbch7j264l5r3ak.apps.googleusercontent.com',
     iosBundleId: 'com.example.team1DetTonryong',
   );
+
 }
