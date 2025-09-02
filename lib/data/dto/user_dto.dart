@@ -1,21 +1,22 @@
 class UserDto {
   final String nickNM;
-  final String googleUser;
+  final String uid;
 
   UserDto({
     required this.nickNM,
-    required this.googleUser,
+    required this.uid,
   });
 
   UserDto.fromJson(Map<String, dynamic> map)
     : this(
         nickNM: map["nickNM"],
-        googleUser: map["googleUser"],
+        uid: map["uid"],
       );
+
   Map<String, dynamic> toJson() {
     return {
       "nickNM": nickNM,
-      "googleUser": googleUser,
+      "uid": uid,
     };
   }
 }
