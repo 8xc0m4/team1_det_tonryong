@@ -1,15 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:team1_det_tonryong/data/dto/feed_dto.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:team1_det_tonryong/presentation/page/detail/view_model/detail_view_model.dart';
 import 'package:team1_det_tonryong/presentation/page/detail/widget/delete_button.dart';
 import 'package:team1_det_tonryong/presentation/page/detail/widget/floating_comment.dart';
 import 'package:team1_det_tonryong/presentation/page/detail/widget/like_comment.dart';
 import 'package:team1_det_tonryong/presentation/page/home/home_page.dart';
 
-class DetailPage extends StatelessWidget {
-  final FeedDto feed; //null 다시 확인
-  const DetailPage({super.key, required this.feed});
+class DetailPage extends ConsumerWidget {
+  final String feedPhoto;
+  final String feedId;
+  final DateTime feedTime;
+  final String userNM;
+  final List<String> fLikeUsers;
+  DetailPage({
+    super.key,
+    required this.feedPhoto,
+    required this.feedId,
+    required this.feedTime,
+    required this.userNM,
+    required this.fLikeUsers,
+  });
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(detailViewModelProvider(feedId));
     return Scaffold(
       appBar: AppBar(
         title: Image.asset('assets/icon/appbar_logo.png'),
@@ -36,22 +49,22 @@ class DetailPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  feed.userNM, // 임시 사용자 이름
+                  userNM, // 임시 사용자 이름
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                Text(feed.feedTime.toString()), // 임시 날짜
+                Text(feedTime.toString().split(' ')[0]), // 날짜만 나오고 시간 빼기
               ],
             ),
           ),
           Image.asset(
-            'assets/icon/hansukwon.png',
+            feedPhoto,
             height: 300,
             width: double.infinity,
             fit: BoxFit.cover,
           ), // 임시이미지
           SizedBox(height: 5),
           Text(
-            '누가 수능 날 수업 들으러 오래!!',
+            state[0].comment, // 배스트 댓글
             style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
           ),
           Container(
@@ -61,14 +74,14 @@ class DetailPage extends StatelessWidget {
             color: Color(0xfff1f1f1),
             child: Stack(
               children: [
-                const FloatingCommentManager(
-                  commentId: '',
-                ), // 댓글 표시
+                FloatingCommentManager(state: state), // 댓글 표시
                 Positioned(
                   //하트, 댓글 아이콘 위치
                   right: 10,
                   top: 100,
-                  child: LikeComment(feed: feed),
+                  child: LikeComment(
+                    fLikeUsers: fLikeUsers,
+                  ),
                 ),
               ],
             ),

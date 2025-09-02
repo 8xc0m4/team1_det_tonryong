@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:team1_det_tonryong/data/dto/feed_dto.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:team1_det_tonryong/presentation/page/comment/comment_page.dart';
 
 // 좋아요 버튼 활성화 및 댓글 페이지 연결 예정
-class LikeComment extends StatefulWidget {
-  final FeedDto feed;
-  const LikeComment({super.key, required this.feed});
+class LikeComment extends ConsumerStatefulWidget {
+  final List<String> fLikeUsers;
+  const LikeComment({super.key, required this.fLikeUsers});
 
   @override
-  State<StatefulWidget> createState() => _LikeCommentState();
+  ConsumerState<LikeComment> createState() => _LikeCommentState();
 }
 
-class _LikeCommentState extends State<LikeComment> {
+class _LikeCommentState extends ConsumerState<LikeComment> {
   bool liked = false;
   late int likeCount;
 
   @override
   void initState() {
     super.initState();
-    likeCount = widget.feed.feedLike;
+    likeCount = widget.fLikeUsers.length;
   }
 
   void _toggleLike() {
@@ -27,12 +27,13 @@ class _LikeCommentState extends State<LikeComment> {
       likeCount += liked ? 1 : -1;
 
       if (liked) {
-        widget.feed.fLikeUsers.add("fLikeUsers"); // 실제 현재 유저 아이디로 바꾸기
+        widget.fLikeUsers.add("fLikeUsers"); // 실제 현재 유저 아이디로 바꾸기
       } else {
-        widget.feed.fLikeUsers.remove("fLikeUsers");
+        widget.fLikeUsers.remove("fLikeUsers");
       }
     }); //좋아요 숫자 증가
   }
+  // 좋야요 상태 유지, 유저 아이디 사라지게 하기, 삭제 기능
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +50,7 @@ class _LikeCommentState extends State<LikeComment> {
             height: 40,
           ),
         ),
-        Text(widget.feed.fLikeUsers.join(', ')),
+        Text('$likeCount'),
         const SizedBox(height: 15),
         GestureDetector(
           onTap: () {

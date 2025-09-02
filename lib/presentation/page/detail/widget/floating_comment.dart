@@ -1,15 +1,13 @@
 import 'dart:async';
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:team1_det_tonryong/presentation/page/comment/view_model/comment_view_model.dart';
+import 'package:team1_det_tonryong/domain/entity/detail_entity.dart';
 
 // 랜덤위치 댓글 기능
 class FloatingCommentManager extends ConsumerStatefulWidget {
-  final String commentId;
-
-  const FloatingCommentManager({super.key, required this.commentId});
+  final List<DetailEntity> state; // 디테일 페이지에서 넘겨준 것을 UI에 뿌려준다 중요
+  FloatingCommentManager({super.key, required this.state});
 
   @override
   ConsumerState<FloatingCommentManager> createState() =>
@@ -18,13 +16,6 @@ class FloatingCommentManager extends ConsumerStatefulWidget {
 
 class _FloatingCommentManagerState
     extends ConsumerState<FloatingCommentManager> {
-  final List<String> tempComments = [
-    // 댓글 샘플
-    '진도 이만큼 남았어요!',
-    '형은 다 알 수가 있다니깐.',
-    '두피에도 때를 미나요? 라고 질문한 놈 나와.',
-  ];
-
   // 현재 화면에 댓글리스트 표시
   final List<_FloatingComment> activeComments = [];
   final Random random = Random(); // 랜덤 표시
@@ -41,16 +32,14 @@ class _FloatingCommentManagerState
       //2초마다 댓글생성
       if (!mounted) return;
 
-      final comments = ref.read(commentViewModelProvider(widget.commentId));
-
-      if (comments.isEmpty) return;
-
-      // final displayComments = comments.map((c) => c.comment).toList();
-      final displayComments = tempComments;
+      final displayComments = [
+        widget.state[1].comment,
+        widget.state[2].comment,
+        widget.state[3].comment,
+      ];
 
       //화면 밖에 안빠져 나가게 하기
       final screenWidth = MediaQuery.of(context).size.width;
-      // final screenHeight = MediaQuery.of(context).size.height;
 
       final randomX = random.nextDouble() * (screenWidth * 0.5); // 공범
       final randomY = random.nextDouble() * (250.0); // 여기가 범인
@@ -65,10 +54,6 @@ class _FloatingCommentManagerState
             key: UniqueKey(), //중복 방지
           ),
         );
-        // print('comments[random.nextInt(comments.length)]');
-        // print('startX : $randomX');
-
-        // print('startY : $randomY');
       });
     });
   }
@@ -81,9 +66,7 @@ class _FloatingCommentManagerState
 
   @override
   Widget build(BuildContext context) {
-    final comments = ref.watch(commentViewModelProvider(widget.commentId));
-
-    if (comments.isEmpty) {
+    if (widget.state.isEmpty) {
       // 댓글 없으면 애니메이션 없이 고정 텍스트 출력
       return Container(
         width: double.infinity,

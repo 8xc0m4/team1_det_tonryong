@@ -62,4 +62,29 @@ class FeedsDataSourceImpl implements FeedsDataSource {
     final doc = FeedDto.fromJson(id, result.data()!);
     return doc;
   }
+
+  @override
+  /// 피드에 대한 댓글 불러오기
+  Future<List<CommentDto>> getBestComments(id) async {
+    try {
+      final firestore = FirebaseFirestore.instance;
+      final colRef = firestore.collection('feeds');
+      final docRef = colRef.doc(id);
+      final commentColRef = docRef.collection('comments');
+      final result = await commentColRef
+          .orderBy('commentLike', descending: true)
+          .limit(4) // 내림차순으로 정렬하고 4개를 가져와라
+          .get();
+      final doc = result.docs.map(
+        (doc) {
+          return CommentDto.fromJson(doc.id, doc.data());
+        },
+      ).toList();
+      return doc;
+    } catch (e) {
+      // TODO: print Log로 바꾸는거 생각하기
+      print(e);
+      return List<CommentDto>.empty();
+    }
+  }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:team1_det_tonryong/presentation/page/detail/detail_page.dart';
 import 'package:team1_det_tonryong/presentation/page/home/home_view_model.dart';
+import 'package:team1_det_tonryong/presentation/page/write/write_page.dart';
 
 class HomeList extends ConsumerWidget {
   HomeList(this.result);
@@ -34,7 +35,7 @@ class HomeList extends ConsumerWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return DetailPage();
+                    return WritePage();
                   },
                 ),
               );

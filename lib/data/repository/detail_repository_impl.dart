@@ -6,22 +6,15 @@ class DetailRepositoryImpl implements DetailRepository {
   DetailRepositoryImpl(this._feedsDataSource);
   final FeedsDataSource _feedsDataSource;
   @override
-  Future<DetailEntity> getDtailEntity(
+  Future<List<DetailEntity>> getDetailEntity(
     String id,
-    String userNM,
   ) async {
-    final feedsResult = await _feedsDataSource.getDetail(id);
-    final commentResult = await _feedsDataSource.getComments(id);
-
-    return DetailEntity(
-      feedId: feedsResult.feedId,
-      userNM: userNM,
-      feedTime: feedsResult.feedTime,
-      feedPhoto: feedsResult.feedPhoto,
-      fLikeUsers: feedsResult.fLikeUsers,
-      cLikeUsers: commentResult.,
-      comments: [],
-    );
+    final commentResult = await _feedsDataSource.getBestComments(id);
+    return commentResult.map(
+      (doc) {
+        return DetailEntity(cLikeUsers: doc.cLikeUsers, comment: doc.comment);
+      },
+    ).toList();
   }
 }
 
