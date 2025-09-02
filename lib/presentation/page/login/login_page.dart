@@ -55,6 +55,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             SizedBox(height: 80),
             GestureDetector(
               onTap: () async {
+                //닉네임 중복 안되게 만들기
                 final user = await login();
                 if (user.user?.uid != null) {
                   for (var i in userList) {
