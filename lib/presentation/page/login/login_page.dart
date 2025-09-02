@@ -1,11 +1,26 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:team1_det_tonryong/presentation/page/comment/view_model/user_view_model.dart';
 import 'package:team1_det_tonryong/presentation/page/home/home_page.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  ConsumerState<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends ConsumerState<LoginPage> {
+  final controller = TextEditingController();
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   Future<UserCredential> login() async {
     final google = GoogleSignIn();
@@ -27,6 +42,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userList = ref.watch(userViewModelProvider);
     return Scaffold(
       body: SizedBox(
         height: double.infinity,
@@ -39,10 +55,22 @@ class LoginPage extends StatelessWidget {
             SizedBox(height: 80),
             GestureDetector(
               onTap: () async {
-                //
+                //닉네임 중복 안되게 만들기
                 final user = await login();
                 if (user.user?.uid != null) {
-                  awesomeDialog(context);
+                  for (var i in userList) {
+                    if (user.user?.uid == i.uid) {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HomePage(),
+                        ),
+                      );
+                      return;
+                      //일치하는게 없으면 닉네임 다이얼로그
+                    }
+                  }
+                  awesomeDialog(context, user.user!.uid);
                 }
               },
               child: googleLogin(),
@@ -53,7 +81,7 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  AwesomeDialog awesomeDialog(BuildContext context) {
+  AwesomeDialog awesomeDialog(BuildContext context, String uid) {
     return AwesomeDialog(
       context: context,
       width: 400,
@@ -62,7 +90,7 @@ class LoginPage extends StatelessWidget {
       barrierColor: Colors.black26,
       dialogType: DialogType.noHeader,
       animType: AnimType.topSlide,
-      alignment: AlignmentGeometry.center,
+      alignment: Alignment.center,
       dialogBackgroundColor: Color(0xFFF1F1F1),
       dialogBorderRadius: BorderRadius.circular(20),
       buttonsBorderRadius: BorderRadius.circular(20),
@@ -78,13 +106,21 @@ class LoginPage extends StatelessWidget {
                 color: Colors.black,
               ),
             ),
-            SizedBox(height: 50, width: 200, child: TextField()),
+            SizedBox(
+              height: 50,
+              width: 200,
+              child: TextField(controller: controller),
+            ),
           ],
         ),
       ),
       btnOkOnPress: () {
-        //파이어 베이스에 데이터 보낸 후 홈페이지로 이동
-        Navigator.push(
+        final nick = controller.text.trim();
+        ref
+            .read(userViewModelProvider.notifier)
+            .createUser(nickNM: nick, uid: uid);
+
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(
             builder: (context) {
