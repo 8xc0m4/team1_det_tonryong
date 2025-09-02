@@ -9,7 +9,7 @@ class FeedsDataSourceImpl implements FeedsDataSource {
   Future<List<FeedDto>?> getFeeds() async {
     final firestore = FirebaseFirestore.instance;
     Query<Map<String, dynamic>> colRef = firestore
-        .collection('feeds')
+        .collection('posts')
         .orderBy('feedLike', descending: true)
         .orderBy(FieldPath.documentId, descending: true)
         .limit(10);

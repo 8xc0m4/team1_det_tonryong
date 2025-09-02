@@ -19,7 +19,8 @@
 	</array>
 
 
-
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>사진 업로드를 위한 라이브러리 권한을 허용해 주세요</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>

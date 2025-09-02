@@ -110,7 +110,7 @@ class LoginPage extends StatelessWidget {
           Image.asset('assets/icon/google.png'),
           SizedBox(width: 35),
           Text(
-            'Sing In With Google',
+            'Sign In With Google',
             style: TextStyle(
               color: Colors.white,
               fontSize: 24,
