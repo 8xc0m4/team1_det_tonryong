@@ -4,10 +4,8 @@ import 'package:team1_det_tonryong/presentation/page/comment/comment_page.dart';
 
 // 좋아요 버튼 활성화 및 댓글 페이지 연결 예정
 class LikeComment extends StatefulWidget {
-  // final FeedDto feed;
-  const LikeComment({
-    super.key,
-  });
+  final FeedDto feed;
+  const LikeComment({super.key, required this.feed});
 
   @override
   State<StatefulWidget> createState() => _LikeCommentState();
@@ -20,13 +18,19 @@ class _LikeCommentState extends State<LikeComment> {
   @override
   void initState() {
     super.initState();
-    // likeCount = widget.feed.feedLike;
+    likeCount = widget.feed.feedLike;
   }
 
   void _toggleLike() {
     setState(() {
       liked = !liked;
       likeCount += liked ? 1 : -1;
+
+      if (liked) {
+        widget.feed.fLikeUsers.add("fLikeUsers"); // 실제 현재 유저 아이디로 바꾸기
+      } else {
+        widget.feed.fLikeUsers.remove("fLikeUsers");
+      }
     }); //좋아요 숫자 증가
   }
 
@@ -45,7 +49,7 @@ class _LikeCommentState extends State<LikeComment> {
             height: 40,
           ),
         ),
-        Text('{widget.feed.feedLike}'),
+        Text(widget.feed.fLikeUsers.join(', ')),
         const SizedBox(height: 15),
         GestureDetector(
           onTap: () {

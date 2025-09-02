@@ -41,4 +41,15 @@ class FeedsDataSourceImpl implements FeedsDataSource {
       return List<CommentDto>.empty();
     }
   }
+
+  // detail
+  @override
+  Future<FeedDto> getDetail(String id) async {
+    final firestore = FirebaseFirestore.instance;
+    final colRef = firestore.collection('feeds');
+    final coldoc = colRef.doc(id);
+    final result = await coldoc.get();
+    final doc = FeedDto.fromJson(id, result.data()!);
+    return doc;
+  }
 }

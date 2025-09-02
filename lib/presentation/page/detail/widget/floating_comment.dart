@@ -18,12 +18,12 @@ class FloatingCommentManager extends ConsumerStatefulWidget {
 
 class _FloatingCommentManagerState
     extends ConsumerState<FloatingCommentManager> {
-  // final List<String> comments = [
-  //   // 댓글 샘플
-  //   '진도 이만큼 남았어요!',
-  //   '형은 다 알 수가 있다니깐.',
-  //   '두피에도 때를 미나요? 라고 질문한 놈 나와.',
-  // ];
+  final List<String> tempComments = [
+    // 댓글 샘플
+    '진도 이만큼 남았어요!',
+    '형은 다 알 수가 있다니깐.',
+    '두피에도 때를 미나요? 라고 질문한 놈 나와.',
+  ];
 
   // 현재 화면에 댓글리스트 표시
   final List<_FloatingComment> activeComments = [];
@@ -45,7 +45,8 @@ class _FloatingCommentManagerState
 
       if (comments.isEmpty) return;
 
-      final displayComments = comments.map((c) => c.comment).toList();
+      // final displayComments = comments.map((c) => c.comment).toList();
+      final displayComments = tempComments;
 
       //화면 밖에 안빠져 나가게 하기
       final screenWidth = MediaQuery.of(context).size.width;
@@ -87,10 +88,10 @@ class _FloatingCommentManagerState
       return Container(
         width: double.infinity,
         height: 300,
-        color: Colors.grey,
+        color: const Color(0xfff1f1f1),
         alignment: Alignment.center,
         child: const Text(
-          'ㅋㅋ쫄?',
+          '제목의 왕 자리에 도전해보세요!',
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,

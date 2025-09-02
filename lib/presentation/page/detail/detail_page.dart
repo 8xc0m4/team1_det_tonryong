@@ -6,10 +6,8 @@ import 'package:team1_det_tonryong/presentation/page/detail/widget/like_comment.
 import 'package:team1_det_tonryong/presentation/page/home/home_page.dart';
 
 class DetailPage extends StatelessWidget {
-  // final FeedDto feed;
-  const DetailPage({
-    super.key,
-  });
+  final FeedDto feed; //null 다시 확인
+  const DetailPage({super.key, required this.feed});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +18,7 @@ class DetailPage extends StatelessWidget {
           DeleteButton(
             onDelete: () {
               Text('삭제됨'); // 작성자만 보이게 만들기
-              Navigator.pop(
+              Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => HomePage()),
               ); // 삭제하고 홈페이지로 이동 구현하기
@@ -38,15 +36,15 @@ class DetailPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'feed.userNM', // 임시 사용자 이름
+                  feed.userNM, // 임시 사용자 이름
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                Text('feed.feedTime'), // 임시 날짜
+                Text(feed.feedTime.toString()), // 임시 날짜
               ],
             ),
           ),
           Image.asset(
-            'feed.feedPhoto',
+            'assets/icon/hansukwon.png',
             height: 300,
             width: double.infinity,
             fit: BoxFit.cover,
@@ -70,7 +68,7 @@ class DetailPage extends StatelessWidget {
                   //하트, 댓글 아이콘 위치
                   right: 10,
                   top: 100,
-                  child: LikeComment(),
+                  child: LikeComment(feed: feed),
                 ),
               ],
             ),
