@@ -1,0 +1,57 @@
+import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
+import 'package:team1_det_tonryong/presentation/page/login/login_page.dart';
+
+class WelcomePage extends StatefulWidget {
+  @override
+  State<WelcomePage> createState() => _WelcomePageState();
+}
+
+class _WelcomePageState extends State<WelcomePage>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+
+  @override
+  void initState() {
+    _controller = AnimationController(vsync: this);
+    super.initState();
+
+    _controller.addStatusListener(
+      (status) {
+        if (status == AnimationStatus.completed) {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => LoginPage(),
+            ),
+          );
+        }
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: SizedBox(
+          width: 500,
+          height: 500,
+          child: Lottie.asset(
+            'assets/welcome/welcome.json',
+            controller: _controller,
+            onLoaded: (composition) {
+              _controller.duration = composition.duration;
+              _controller.forward();
+            },
+          ),
+        ),
+      ),
+    );
+  }
+}

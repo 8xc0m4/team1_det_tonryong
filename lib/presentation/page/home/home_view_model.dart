@@ -9,6 +9,8 @@ class HomeState {
 }
 
 class HomeViewModel extends Notifier<HomeState> {
+  bool _isLoading = false;
+  bool _hasMore = true;
   @override
   HomeState build() {
     loadPhoto();
@@ -16,10 +18,31 @@ class HomeViewModel extends Notifier<HomeState> {
   }
 
   void loadPhoto() async {
+    _hasMore = true;
     final getFeedsUsecase = ref.read(getFeedsUsecaseProvider);
     final result = await getFeedsUsecase.execute();
 
     state = HomeState(getFeedsPhoto: result ?? []);
+  }
+
+  Future<void> loadMorePhoto() async {
+    if (_isLoading || !_hasMore) return;
+    _isLoading = true;
+    final getFeedUsecase = ref.read(getFeedsUsecaseProvider);
+    final newResult = await getFeedUsecase.execute();
+    if (newResult == null || newResult.isEmpty) {
+      _hasMore = false;
+    } else {
+      final exist = state.getFeedsPhoto!.map((e) => e.feedPhoto);
+      final filter = newResult
+          .where((e) => !exist.contains(e.feedPhoto))
+          .toList();
+
+      if (filter.isNotEmpty) {
+        state = HomeState(getFeedsPhoto: [...state.getFeedsPhoto!, ...filter]);
+      }
+    }
+    _isLoading = false;
   }
 }
 
