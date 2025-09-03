@@ -28,7 +28,10 @@ class FeedsDataSourceImpl implements FeedsDataSource {
       final colRef = firestore.collection('feeds');
       final docRef = colRef.doc(id);
       final commentColRef = docRef.collection('comments');
-      final result = await commentColRef.get();
+      final result = await commentColRef
+          .orderBy('commentLike', descending: true)
+          .orderBy('commentTime', descending: false)
+          .get();
       final doc = result.docs.map(
         (doc) {
           return CommentDto.fromJson(doc.id, doc.data());

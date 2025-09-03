@@ -3,7 +3,8 @@ import 'package:team1_det_tonryong/domain/entity/comment_entity.dart';
 import 'package:team1_det_tonryong/presentation/providers.dart';
 
 class CommentViewModel
-    extends FamilyNotifier<List<CommentEntity>, String> {
+    extends
+        AutoDisposeFamilyNotifier<List<CommentEntity>, String> {
   @override
   build(String id) {
     fetchGetComments(id);
@@ -47,11 +48,7 @@ class CommentViewModel
   }
 }
 
-final commentViewModelProvider =
-    NotifierProvider.family<
-      CommentViewModel,
-      List<CommentEntity>,
-      String
-    >(
+final commentViewModelProvider = NotifierProvider.autoDispose
+    .family<CommentViewModel, List<CommentEntity>, String>(
       () => CommentViewModel(),
     );

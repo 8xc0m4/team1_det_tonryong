@@ -9,8 +9,7 @@ import 'package:team1_det_tonryong/presentation/page/comment/views/empty_comment
 
 class CommentPage extends ConsumerStatefulWidget {
   String feedId = 'fu7Wtfzxo2c4urwd2aNT';
-  bool isEmpty = true;
-  String userNM = '조민우';
+  String userNM = '김현수';
   @override
   ConsumerState<CommentPage> createState() =>
       _CommentPageState();
@@ -65,7 +64,6 @@ class _CommentPageState extends ConsumerState<CommentPage> {
           appBar: AppBar(
             scrolledUnderElevation: 0,
             backgroundColor: Colors.white,
-            elevation: 0,
             centerTitle: true,
             title: Image.asset(
               'assets/icon/appbar_logo.png',

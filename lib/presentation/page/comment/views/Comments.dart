@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:team1_det_tonryong/domain/entity/comment_entity.dart';
 import 'package:team1_det_tonryong/presentation/page/comment/view_model/comment_view_model.dart';
+import 'package:team1_det_tonryong/presentation/util/time_ago.dart';
 
 class Comments extends ConsumerStatefulWidget {
   final CommentEntity state;
@@ -34,6 +35,7 @@ class _CommentsState extends ConsumerState<Comments> {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.state != widget.state) {
       _syncLike();
+      setState(() {});
     }
   }
 
@@ -98,8 +100,7 @@ class _CommentsState extends ConsumerState<Comments> {
                       width: 10,
                     ),
                     Text(
-                      // TODO: 댓글 시간 몇분 전, 몇 시간 전, 몇일전, 몇개월 전으로 표시
-                      '12분 전',
+                      timeAgo(widget.state.commentTime),
                       style: TextStyle(
                         fontSize: 12,
                         color: Colors.black45,
