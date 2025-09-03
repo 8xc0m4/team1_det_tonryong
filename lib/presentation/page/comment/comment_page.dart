@@ -10,6 +10,8 @@ import 'package:team1_det_tonryong/presentation/page/comment/views/empty_comment
 class CommentPage extends ConsumerStatefulWidget {
   String feedId = 'fu7Wtfzxo2c4urwd2aNT';
   String userNM = '김현수';
+  String userProfil =
+      'https://image.tmdb.org/t/p/w200/aZuBfbR0PnCb2up7lqHDsgJlLjs.jpg';
   @override
   ConsumerState<CommentPage> createState() =>
       _CommentPageState();
@@ -23,6 +25,7 @@ class _CommentPageState extends ConsumerState<CommentPage> {
     ref
         .read(commentViewModelProvider(widget.feedId).notifier)
         .fetchCreateComment(
+          userProfil: widget.userProfil,
           id: widget.feedId,
           commentUserNM: widget.userNM,
           comment: comment,
@@ -176,6 +179,7 @@ class _CommentPageState extends ConsumerState<CommentPage> {
                 ),
               ),
               BottomWritBox(
+                userProfil: widget.userProfil,
                 textEditingController: textEditingController,
                 createComment: createComment,
               ),

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 class BottomWritBox extends StatelessWidget {
+  final String userProfil;
   final TextEditingController textEditingController;
   final void Function({required String comment}) createComment;
   BottomWritBox({
     super.key,
+    required this.userProfil,
     required this.textEditingController,
     required this.createComment,
   });
@@ -30,13 +32,9 @@ class BottomWritBox extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: Colors.grey,
-                  shape: BoxShape.circle,
-                ),
+              CircleAvatar(
+                radius: 20,
+                backgroundImage: NetworkImage(userProfil),
               ),
               SizedBox(
                 width: 10,

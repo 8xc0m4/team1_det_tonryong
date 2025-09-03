@@ -22,6 +22,7 @@ class CommentRepositoryImpl implements CommentRepository {
             commentUserNM: doc.commentUserNM,
             comment: doc.comment,
             cLikeUsers: doc.cLikeUsers,
+            userProfil: doc.userProfil,
           ),
         )
         .toList();
@@ -32,6 +33,7 @@ class CommentRepositoryImpl implements CommentRepository {
     required String id,
     required String commentUserNM,
     required String comment,
+    required String userProfil,
   }) async {
     final commentDto = CommentDto(
       commentId: '',
@@ -40,6 +42,7 @@ class CommentRepositoryImpl implements CommentRepository {
       commentUserNM: commentUserNM,
       comment: comment,
       cLikeUsers: [],
+      userProfil: userProfil,
     );
     await _commentDataSource.createComment(
       id: id,

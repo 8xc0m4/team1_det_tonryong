@@ -77,12 +77,10 @@ class _CommentsState extends ConsumerState<Comments> {
         children: [
           Align(
             alignment: Alignment.topCenter,
-            child: Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                color: Colors.grey,
-                shape: BoxShape.circle,
+            child: CircleAvatar(
+              radius: 20,
+              backgroundImage: NetworkImage(
+                widget.state.userProfil,
               ),
             ),
           ),

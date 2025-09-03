@@ -21,10 +21,12 @@ class CommentViewModel
     required String id,
     required String commentUserNM,
     required String comment,
+    required String userProfil,
   }) async {
     await ref
         .read(commentUsecaseProvider)
         .executeCreateComment(
+          userProfil: userProfil,
           id: id,
           comment: comment,
           commentUserNM: commentUserNM,

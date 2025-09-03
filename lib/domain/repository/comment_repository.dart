@@ -6,6 +6,7 @@ abstract interface class CommentRepository {
     required String id,
     required String commentUserNM,
     required String comment,
+    required String userProfil,
   });
   Future<void> updateCommentLike({
     required String commentId,

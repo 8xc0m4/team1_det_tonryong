@@ -3,4 +3,6 @@ import 'package:team1_det_tonryong/data/dto/feed_dto.dart';
 
 abstract interface class FeedsDataSource {
   Future<List<FeedDto>?> getFeeds();
+  Future<FeedDto> getDetail(String id); //detail
+  Future<List<CommentDto>> getBestComments(String id);
 }

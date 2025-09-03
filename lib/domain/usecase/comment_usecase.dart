@@ -15,11 +15,13 @@ class CommentUsecase {
     required String id,
     required String commentUserNM,
     required String comment,
+    required String userProfil,
   }) async {
     return await _commentRepository.createComment(
       id: id,
       commentUserNM: commentUserNM,
       comment: comment,
+      userProfil: userProfil,
     );
   }
 

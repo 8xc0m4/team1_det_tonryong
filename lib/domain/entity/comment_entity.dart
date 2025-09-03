@@ -5,6 +5,7 @@ class CommentEntity {
   final String commentUserNM;
   final String comment;
   final List<String> cLikeUsers;
+  final String userProfil;
 
   CommentEntity({
     required this.commentId,
@@ -13,5 +14,6 @@ class CommentEntity {
     required this.commentUserNM,
     required this.comment,
     required this.cLikeUsers,
+    required this.userProfil,
   });
 }
