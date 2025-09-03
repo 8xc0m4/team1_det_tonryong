@@ -13,8 +13,15 @@ class FeedsRepositoryImpl implements FeedsRepository {
     }
     return result
         .map(
-          (e) => HomeEntity(e.feedPhoto),
+          (e) => HomeEntity(
+            feedPhoto: e.feedPhoto,
+            feedId: e.feedId,
+            feedTime: e.feedTime,
+            fLikeUsers: e.fLikeUsers,
+          ),
         )
         .toList();
   }
 }
+
+//엔

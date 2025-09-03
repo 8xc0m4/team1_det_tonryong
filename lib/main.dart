@@ -1,8 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:team1_det_tonryong/data/dto/feed_dto.dart';
 import 'package:team1_det_tonryong/firebase_options.dart';
+import 'package:team1_det_tonryong/presentation/page/detail/detail_page.dart';
 import 'package:team1_det_tonryong/presentation/page/home/home_page.dart';
+import 'package:team1_det_tonryong/presentation/page/login/login_page.dart';
+import 'package:team1_det_tonryong/presentation/page/welcome/welcome_page.dart';
+import 'package:team1_det_tonryong/presentation/page/write/write_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,8 +22,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: HomePage(),
-    );
+    return MaterialApp(home: WelcomePage());
   }
 }
