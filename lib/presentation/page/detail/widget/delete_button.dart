@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:team1_det_tonryong/presentation/page/home/home_page.dart';
 
 // 게시물 삭제 하기
 class DeleteButton extends StatelessWidget {
@@ -22,8 +23,10 @@ class DeleteButton extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.pop(context);
-                  onDelete();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomePage()),
+                  );
                 },
                 child: const Text('삭제'),
               ),
@@ -39,3 +42,5 @@ class DeleteButton extends StatelessWidget {
     );
   }
 }
+// 페이지 별 데이터 연결
+// 파이어베이스 연결

@@ -1,27 +1,25 @@
 import 'dart:async';
 import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:team1_det_tonryong/domain/entity/detail_entity.dart';
 
 // 랜덤위치 댓글 기능
-class FloatingCommentManager extends StatefulWidget {
-  const FloatingCommentManager({super.key});
+class FloatingCommentManager extends ConsumerStatefulWidget {
+  final List<DetailEntity> state; // 디테일 페이지에서 넘겨준 것을 UI에 뿌려준다 중요
+  FloatingCommentManager({super.key, required this.state});
 
   @override
-  State<FloatingCommentManager> createState() => _FloatingCommentManagerState();
+  ConsumerState<FloatingCommentManager> createState() =>
+      _FloatingCommentManagerState();
 }
 
-class _FloatingCommentManagerState extends State<FloatingCommentManager> {
-  final List<String> comments = [
-    // 댓글 샘플
-    '진도 이만큼 남았어요!',
-    '형은 다 알 수가 있다니깐.',
-    '두피에도 때를 미나요? 라고 질문한 놈 나와.',
-  ];
-
+class _FloatingCommentManagerState
+    extends ConsumerState<FloatingCommentManager> {
   // 현재 화면에 댓글리스트 표시
   final List<_FloatingComment> activeComments = [];
   final Random random = Random(); // 랜덤 표시
+  Timer? _timer;
 
   @override
   void initState() {
@@ -34,33 +32,57 @@ class _FloatingCommentManagerState extends State<FloatingCommentManager> {
       //2초마다 댓글생성
       if (!mounted) return;
 
+      final displayComments = [
+        widget.state[1].comment,
+        widget.state[2].comment,
+        widget.state[3].comment,
+      ];
+
       //화면 밖에 안빠져 나가게 하기
       final screenWidth = MediaQuery.of(context).size.width;
-      // final screenHeight = MediaQuery.of(context).size.height;
 
-      final randomX = random.nextDouble() * (screenWidth);
+      final randomX = random.nextDouble() * (screenWidth * 0.5); // 공범
       final randomY = random.nextDouble() * (250.0); // 여기가 범인
 
       setState(() {
         // print('Qnd');
         activeComments.add(
           _FloatingComment(
-            text: comments[random.nextInt(comments.length)],
+            text: displayComments[random.nextInt(displayComments.length)],
             startX: randomX,
             startY: randomY,
             key: UniqueKey(), //중복 방지
           ),
         );
-        // print('comments[random.nextInt(comments.length)]');
-        // print('startX : $randomX');
-
-        // print('startY : $randomY');
       });
     });
   }
 
   @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    if (widget.state.isEmpty) {
+      // 댓글 없으면 애니메이션 없이 고정 텍스트 출력
+      return Container(
+        width: double.infinity,
+        height: 300,
+        color: const Color(0xfff1f1f1),
+        alignment: Alignment.center,
+        child: const Text(
+          '제목의 왕 자리에 도전해보세요!',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      );
+    }
+
     return Stack(
       // 댓글리스트를 스택으로 만들기
       children: activeComments,
@@ -137,7 +159,6 @@ class _FloatingCommentState extends State<_FloatingComment>
       animation: _controller,
       builder: (_, __) {
         return Positioned(
-          // 왜 자꾸 화면을 빠져나갈까
           left: widget.startX.clamp(0, screenWidth),
           bottom: widget.startY + _positionY.value,
           child: Opacity(
@@ -147,7 +168,7 @@ class _FloatingCommentState extends State<_FloatingComment>
                 minWidth: 10,
                 maxWidth: 400,
                 minHeight: 10,
-                maxHeight: 300,
+                maxHeight: 200,
               ),
               child: Text(
                 displayText, //예시 택스트 가져오기
@@ -164,11 +185,5 @@ class _FloatingCommentState extends State<_FloatingComment>
         );
       },
     );
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
   }
 }
