@@ -23,8 +23,8 @@ class HomeList extends ConsumerWidget {
       child: GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          mainAxisSpacing: 12,
-          crossAxisSpacing: 10,
+          mainAxisSpacing: 3,
+          crossAxisSpacing: 3,
           childAspectRatio: 1.3,
         ),
         itemCount: result.getFeedsPhoto!.length,

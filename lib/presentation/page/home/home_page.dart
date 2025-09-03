@@ -9,7 +9,10 @@ class HomePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final result = ref.watch(homeViewModelProvider);
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        scrolledUnderElevation: 0,
+        backgroundColor: Colors.white,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
@@ -35,7 +38,10 @@ class HomePage extends ConsumerWidget {
           ],
         ),
       ),
-      body: HomeList(result),
+      body: Padding(
+        padding: const EdgeInsets.only(top: 10),
+        child: HomeList(result),
+      ),
     );
   }
 }
