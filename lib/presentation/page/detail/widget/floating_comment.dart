@@ -78,6 +78,7 @@ class _FloatingCommentManagerState
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
+            color: Color(0xFF1F1F1F),
           ),
         ),
       );

@@ -1,38 +1,65 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:team1_det_tonryong/presentation/page/home/home_page.dart';
 
 // 게시물 삭제 하기
 class DeleteButton extends StatelessWidget {
   final VoidCallback onDelete;
+  final String feedId;
+  final String userNM;
 
-  const DeleteButton({super.key, required this.onDelete});
+  const DeleteButton({
+    super.key,
+    required this.onDelete,
+    required this.feedId,
+    required this.userNM,
+  });
 
   @override
   Widget build(BuildContext context) {
+    //사용자 UserNM 가져오기
+    final currentuserNM =
+        FirebaseAuth.instance.currentUser?.displayName; // UserNM 가죠오기
+    //작성자만 삭제 버튼 보이게
+    print('D1');
+    if (currentuserNM != userNM) return SizedBox.shrink();
+    // 증상 : != 를 사용하면 사용자 이름이 같아도 삭제버튼 없음
+    // == 를 사용하면 사용자 이름이 달라도 삭제버튼이 있음
+    print('D2');
     return GestureDetector(
       onTap: () {
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
             title: const Text('게시물 삭제'),
-            content: const Text('정말 삭제하시겠습니까?'),
+            content: const Text('왕이 없습니다. \n정말 삭제하시겠습니까?'),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
                 child: const Text('취소'),
               ),
+
               TextButton(
-                onPressed: () {
-                  Navigator.push(
+                onPressed: () async {
+                  // 파이어 베이스에서 피드 삭제
+                  await FirebaseFirestore.instance
+                      .collection('feeds')
+                      .doc(feedId)
+                      .delete();
+                  print('D3');
+                  Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (context) => HomePage()),
                   );
+                  print('D4');
                 },
                 child: const Text('삭제'),
               ),
             ],
           ),
         );
+        print('D5');
       },
       child: Image.asset(
         'assets/icon/trash.png',

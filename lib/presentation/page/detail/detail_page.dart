@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:team1_det_tonryong/presentation/page/detail/view_model/detail_view_model.dart';
@@ -7,6 +8,7 @@ import 'package:team1_det_tonryong/presentation/page/detail/widget/like_comment.
 import 'package:team1_det_tonryong/presentation/page/home/home_page.dart';
 
 class DetailPage extends ConsumerWidget {
+  final currentuserNM = FirebaseAuth.instance.currentUser?.displayName;
   final String feedPhoto;
   final String feedId;
   final DateTime feedTime;
@@ -29,6 +31,9 @@ class DetailPage extends ConsumerWidget {
         centerTitle: true,
         actions: [
           DeleteButton(
+            feedId: feedId,
+            key: key,
+            userNM: userNM,
             onDelete: () {
               Text('삭제됨'); // 작성자만 보이게 만들기
               Navigator.push(
@@ -61,10 +66,10 @@ class DetailPage extends ConsumerWidget {
             height: 300,
             width: double.infinity,
             fit: BoxFit.cover,
-          ), // 임시이미지
+          ), // 이미지
           SizedBox(height: 5),
           Text(
-            state[0].comment, // 배스트 댓글
+            state.isNotEmpty ? state[0].comment : ' ', // 배스트 댓글
             style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
           ),
           Container(
@@ -81,6 +86,7 @@ class DetailPage extends ConsumerWidget {
                   top: 100,
                   child: LikeComment(
                     fLikeUsers: fLikeUsers,
+                    feedId: feedId,
                   ),
                 ),
               ],

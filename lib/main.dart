@@ -22,6 +22,24 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: WelcomePage());
+    return MaterialApp(
+      // home: WelcomePage(),
+      home: DetailPage(
+        feedPhoto: test.feedPhoto,
+        feedId: test.feedId,
+        feedTime: test.feedTime,
+        userNM: test.userNM,
+        fLikeUsers: test.fLikeUsers,
+      ),
+    );
   }
 }
+
+FeedDto test = FeedDto(
+  feedId: 'fu7Wtfzxo2c4urwd2aNT',
+  userNM: 'dltkdfhr',
+  feedTime: DateTime.now(),
+  feedLike: 4,
+  feedPhoto: 'assets/icon/hansukwon.png',
+  fLikeUsers: ['이상록', '김현수', '노서연', '임우형'],
+);
