@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:team1_det_tonryong/data/datasource/feeds_data_source.dart';
 import 'package:team1_det_tonryong/data/dto/comment_dto.dart';
 import 'package:team1_det_tonryong/data/dto/feed_dto.dart';
-import 'package:team1_det_tonryong/domain/entity/comment_entity.dart';
 
 class FeedsDataSourceImpl implements FeedsDataSource {
   @override
@@ -58,5 +57,27 @@ class FeedsDataSourceImpl implements FeedsDataSource {
     } catch (e) {
       print(e);
     }
+  }
+
+  @override
+  Future<void> updateCommentLike({
+    required String commentId,
+    required String feedId,
+    required String userNM,
+    required bool isLike,
+  }) async {
+    final firestore = FirebaseFirestore.instance;
+    final colRef = firestore.collection('feeds');
+    final docRef = colRef.doc(feedId);
+    final commentColRef = docRef.collection('comments');
+    final result = commentColRef.doc(commentId);
+    await result.update({
+      'commentLike': isLike
+          ? FieldValue.increment(1)
+          : FieldValue.increment(-1),
+      'cLikeUsers': isLike
+          ? FieldValue.arrayUnion([userNM])
+          : FieldValue.arrayRemove([userNM]),
+    });
   }
 }

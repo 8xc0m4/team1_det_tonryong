@@ -6,14 +6,44 @@ class CommentViewModel
     extends FamilyNotifier<List<CommentEntity>, String> {
   @override
   build(String id) {
-    fetchComments(id);
+    fetchGetComments(id);
     return [];
   }
 
-  Future<void> fetchComments(String id) async {
+  Future<void> fetchGetComments(String id) async {
     final getComments = ref.read(getFeedsUsecaseProvider);
-    final result = await getComments.executeComment(id);
+    final result = await getComments.executeGetComment(id);
     state = result;
+  }
+
+  Future<void> fetchCreateComment({
+    required String id,
+    required String commentUserNM,
+    required String comment,
+  }) async {
+    await ref
+        .read(getFeedsUsecaseProvider)
+        .executeCreateComment(
+          id: id,
+          comment: comment,
+          commentUserNM: commentUserNM,
+        );
+  }
+
+  Future<void> fetchUpdateCommentLike({
+    required String commentId,
+    required String feedId,
+    required String userNM,
+    required bool isLike,
+  }) async {
+    await ref
+        .read(getFeedsUsecaseProvider)
+        .executeUpdataCommentLike(
+          commentId: commentId,
+          feedId: feedId,
+          userNM: userNM,
+          isLike: isLike,
+        );
   }
 }
 

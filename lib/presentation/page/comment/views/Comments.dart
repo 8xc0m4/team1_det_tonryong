@@ -1,33 +1,66 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:team1_det_tonryong/domain/entity/comment_entity.dart';
+import 'package:team1_det_tonryong/presentation/page/comment/view_model/comment_view_model.dart';
 
-class Comments extends StatefulWidget {
+class Comments extends ConsumerStatefulWidget {
   final CommentEntity state;
+  final String feedId;
+  final String userNM;
   Comments({
     super.key,
     required this.state,
+    required this.feedId,
+    required this.userNM,
   });
 
   @override
-  State<Comments> createState() => _CommentsState();
+  ConsumerState<Comments> createState() => _CommentsState();
 }
 
-class _CommentsState extends State<Comments> {
-  bool isLike = false;
+class _CommentsState extends ConsumerState<Comments> {
+  late bool isLike;
+  late int commentLikeCount;
+
+  @override
+  void initState() {
+    ref.read(commentViewModelProvider(widget.feedId));
+    super.initState();
+    _syncLike();
+  }
+
+  @override
+  void didUpdateWidget(covariant Comments oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.state != widget.state) {
+      _syncLike();
+    }
+  }
+
+  void _syncLike() {
+    commentLikeCount = widget.state.cLikeUsers.length;
+    isLike = widget.state.cLikeUsers.contains(widget.userNM);
+  }
 
   void onChangeLike() {
     setState(() {
       if (isLike) {
+        commentLikeCount -= 1;
         isLike = false;
-        if (widget.state.commentLike > 0) {
-          widget.state.commentLike - 1;
-        } else {
-          widget.state.commentLike = 0;
-        }
       } else {
+        commentLikeCount += 1;
         isLike = true;
-        widget.state.commentLike + 1;
       }
+      ref
+          .read(
+            commentViewModelProvider(widget.feedId).notifier,
+          )
+          .fetchUpdateCommentLike(
+            commentId: widget.state.commentId,
+            feedId: widget.feedId,
+            userNM: widget.userNM,
+            isLike: isLike,
+          );
     });
   }
 
@@ -105,7 +138,7 @@ class _CommentsState extends State<Comments> {
                   ),
                   Text(
                     // TODO: 좋아야 수 k,m으로 표시하기
-                    '${widget.state.commentLike}',
+                    '$commentLikeCount',
                     style: TextStyle(fontSize: 12),
                   ),
                 ],

@@ -8,4 +8,10 @@ abstract interface class FeedsDataSource {
     required String id,
     required CommentDto comment,
   });
+  Future<void> updateCommentLike({
+    required String commentId,
+    required String feedId,
+    required String userNM,
+    required bool isLike,
+  });
 }
