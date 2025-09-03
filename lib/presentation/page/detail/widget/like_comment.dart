@@ -6,12 +6,16 @@ import 'package:team1_det_tonryong/presentation/page/comment/comment_page.dart';
 
 // 좋아요 버튼 활성화 및 댓글 페이지 연결 예정
 class LikeComment extends ConsumerStatefulWidget {
-  final List<String> fLikeUsers;
   final String feedId;
+  final String userNickNM;
+  final String userProfil;
+  final List<String> fLikeUsers;
   const LikeComment({
     super.key,
     required this.fLikeUsers,
     required this.feedId,
+    required this.userNickNM,
+    required this.userProfil,
   });
 
   @override
@@ -90,7 +94,11 @@ class _LikeCommentState extends ConsumerState<LikeComment> {
               context,
               MaterialPageRoute(
                 builder: (context) {
-                  return CommentPage();
+                  return CommentPage(
+                    feedId: widget.feedId,
+                    userNM: widget.userNickNM,
+                    userProfil: widget.userProfil,
+                  );
                 },
               ),
             );

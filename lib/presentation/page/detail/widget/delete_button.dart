@@ -47,12 +47,8 @@ class DeleteButton extends StatelessWidget {
                       .collection('feeds')
                       .doc(feedId)
                       .delete();
-                  print('D3');
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => HomePage()),
-                  );
-                  print('D4');
+                  Navigator.pop(context);
+                  Navigator.pop(context);
                 },
                 child: const Text('삭제'),
               ),

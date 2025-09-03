@@ -5,26 +5,36 @@ import 'package:team1_det_tonryong/presentation/page/detail/view_model/detail_vi
 import 'package:team1_det_tonryong/presentation/page/detail/widget/delete_button.dart';
 import 'package:team1_det_tonryong/presentation/page/detail/widget/floating_comment.dart';
 import 'package:team1_det_tonryong/presentation/page/detail/widget/like_comment.dart';
-import 'package:team1_det_tonryong/presentation/page/home/home_page.dart';
+import 'package:team1_det_tonryong/presentation/page/home/home_view_model.dart';
 
 class DetailPage extends ConsumerWidget {
   final currentuserNM = FirebaseAuth.instance.currentUser?.displayName;
   final String feedPhoto;
   final String feedId;
   final DateTime feedTime;
-  final String userNM;
+  final String writerNM;
   final List<String> fLikeUsers;
+  final String userNickNM;
+  final String userProfil;
+  final String tag;
   DetailPage({
     super.key,
     required this.feedPhoto,
     required this.feedId,
     required this.feedTime,
-    required this.userNM,
+    required this.writerNM,
     required this.fLikeUsers,
+    required this.userNickNM,
+    required this.userProfil,
+    required this.tag,
   });
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    print(feedPhoto);
     final state = ref.watch(detailViewModelProvider(feedId));
+    final String bestComment = state.isEmpty
+        ? ''
+        : state[0].comment;
     return Scaffold(
       appBar: AppBar(
         title: Image.asset('assets/icon/appbar_logo.png'),
@@ -36,10 +46,7 @@ class DetailPage extends ConsumerWidget {
             userNM: userNM,
             onDelete: () {
               Text('삭제됨'); // 작성자만 보이게 만들기
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => HomePage()),
-              ); // 삭제하고 홈페이지로 이동 구현하기
+              Navigator.pop(context); // 삭제하고 홈페이지로 이동 구현하기
             },
           ),
         ],
@@ -49,18 +56,25 @@ class DetailPage extends ConsumerWidget {
         children: [
           SizedBox(height: 20),
           Padding(
-            padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+            padding: const EdgeInsets.only(
+              top: 20,
+              left: 20,
+              right: 20,
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  userNM, // 임시 사용자 이름
+                  writerNM, // 임시 사용자 이름
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                Text(feedTime.toString().split(' ')[0]), // 날짜만 나오고 시간 빼기
+                Text(
+                  feedTime.toString().split(' ')[0],
+                ), // 날짜만 나오고 시간 빼기
               ],
             ),
           ),
+<<<<<<< HEAD
           Image.asset(
             feedPhoto,
             height: 300,
@@ -71,6 +85,24 @@ class DetailPage extends ConsumerWidget {
           Text(
             state.isNotEmpty ? state[0].comment : ' ', // 배스트 댓글
             style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+=======
+          Hero(
+            tag: tag,
+            child: Image.network(
+              feedPhoto,
+              height: 300,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
+          ), // 임시이미지
+          SizedBox(height: 5),
+          Text(
+            bestComment, // 배스트 댓글
+            style: TextStyle(
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
+            ),
+>>>>>>> develop
           ),
           Container(
             padding: EdgeInsets.all(5),
@@ -87,6 +119,11 @@ class DetailPage extends ConsumerWidget {
                   child: LikeComment(
                     fLikeUsers: fLikeUsers,
                     feedId: feedId,
+<<<<<<< HEAD
+=======
+                    userNickNM: userNickNM,
+                    userProfil: userProfil,
+>>>>>>> develop
                   ),
                 ),
               ],

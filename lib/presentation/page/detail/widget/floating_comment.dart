@@ -29,32 +29,50 @@ class _FloatingCommentManagerState
 
   void _startCommentSpawner() {
     Timer.periodic(const Duration(seconds: 2), (timer) {
+      List<String> displayComments = [];
+      if (widget.state.length == 1) {
+        displayComments = [];
+      } else if (widget.state.length == 2) {
+        displayComments = [widget.state[1].comment];
+      } else if (widget.state.length == 3) {
+        displayComments = [
+          widget.state[1].comment,
+          widget.state[2].comment,
+        ];
+      } else if (widget.state.length > 3) {
+        displayComments = [
+          widget.state[1].comment,
+          widget.state[2].comment,
+          widget.state[3].comment,
+        ];
+      }
+
       //2초마다 댓글생성
       if (!mounted) return;
-
-      final displayComments = [
-        widget.state[1].comment,
-        widget.state[2].comment,
-        widget.state[3].comment,
-      ];
 
       //화면 밖에 안빠져 나가게 하기
       final screenWidth = MediaQuery.of(context).size.width;
 
-      final randomX = random.nextDouble() * (screenWidth * 0.5); // 공범
+      final randomX =
+          random.nextDouble() * (screenWidth * 0.5); // 공범
       final randomY = random.nextDouble() * (250.0); // 여기가 범인
 
-      setState(() {
-        // print('Qnd');
-        activeComments.add(
-          _FloatingComment(
-            text: displayComments[random.nextInt(displayComments.length)],
-            startX: randomX,
-            startY: randomY,
-            key: UniqueKey(), //중복 방지
-          ),
-        );
-      });
+      if (displayComments.isNotEmpty) {
+        setState(() {
+          // print('Qnd');
+          activeComments.add(
+            _FloatingComment(
+              text:
+                  displayComments[random.nextInt(
+                    displayComments.length,
+                  )],
+              startX: randomX,
+              startY: randomY,
+              key: UniqueKey(), //중복 방지
+            ),
+          );
+        });
+      }
     });
   }
 
@@ -104,7 +122,8 @@ class _FloatingComment extends StatefulWidget {
   });
 
   @override
-  State<_FloatingComment> createState() => _FloatingCommentState();
+  State<_FloatingComment> createState() =>
+      _FloatingCommentState();
 }
 
 class _FloatingCommentState extends State<_FloatingComment>
@@ -123,10 +142,16 @@ class _FloatingCommentState extends State<_FloatingComment>
 
     //투명도
     _opacity = Tween<double>(begin: 1, end: 0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeOut),
+      CurvedAnimation(
+        parent: _controller,
+        curve: Curves.easeOut,
+      ),
     );
     _positionY = Tween<double>(begin: 0, end: 100).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeOut),
+      CurvedAnimation(
+        parent: _controller,
+        curve: Curves.easeOut,
+      ),
     );
 
     _controller.addStatusListener((status) {
@@ -135,7 +160,9 @@ class _FloatingCommentState extends State<_FloatingComment>
           WidgetsBinding.instance.addPostFrameCallback((_) {
             if (mounted) {
               final parentState = context
-                  .findAncestorStateOfType<_FloatingCommentManagerState>();
+                  .findAncestorStateOfType<
+                    _FloatingCommentManagerState
+                  >();
               parentState?.setState(() {
                 parentState.activeComments.remove(widget);
               });
