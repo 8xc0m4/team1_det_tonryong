@@ -18,6 +18,7 @@ class FeedsRepositoryImpl implements FeedsRepository {
             feedId: e.feedId,
             feedTime: e.feedTime,
             fLikeUsers: e.fLikeUsers,
+            userNM: e.userNM,
           ),
         )
         .toList();

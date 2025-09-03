@@ -8,10 +8,14 @@ import 'package:team1_det_tonryong/presentation/page/comment/views/empty_comment
 // TODO : 연결 시 삭제 하고 id를 받아서 사용할 것
 
 class CommentPage extends ConsumerStatefulWidget {
-  String feedId = 'fu7Wtfzxo2c4urwd2aNT';
-  String userNM = '김현수';
-  String userProfil =
-      'https://image.tmdb.org/t/p/w200/aZuBfbR0PnCb2up7lqHDsgJlLjs.jpg';
+  String feedId;
+  String userNM;
+  String userProfil;
+  CommentPage({
+    required this.feedId,
+    required this.userNM,
+    required this.userProfil,
+  });
   @override
   ConsumerState<CommentPage> createState() =>
       _CommentPageState();
