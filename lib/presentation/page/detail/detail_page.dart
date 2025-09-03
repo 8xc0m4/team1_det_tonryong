@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:team1_det_tonryong/domain/entity/home_entity.dart';
 import 'package:team1_det_tonryong/presentation/page/detail/view_model/detail_view_model.dart';
 import 'package:team1_det_tonryong/presentation/page/detail/widget/delete_button.dart';
 import 'package:team1_det_tonryong/presentation/page/detail/widget/floating_comment.dart';
@@ -7,29 +9,23 @@ import 'package:team1_det_tonryong/presentation/page/detail/widget/like_comment.
 import 'package:team1_det_tonryong/presentation/page/home/home_view_model.dart';
 
 class DetailPage extends ConsumerWidget {
-  final String feedPhoto;
-  final String feedId;
-  final DateTime feedTime;
-  final String writerNM;
-  final List<String> fLikeUsers;
+  final HomeEntity feed;
   final String userNickNM;
   final String userProfil;
   final String tag;
   DetailPage({
     super.key,
-    required this.feedPhoto,
-    required this.feedId,
-    required this.feedTime,
-    required this.writerNM,
-    required this.fLikeUsers,
+    required this.feed,
     required this.userNickNM,
     required this.userProfil,
     required this.tag,
   });
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    print(feedPhoto);
-    final state = ref.watch(detailViewModelProvider(feedId));
+    print(feed.feedPhoto);
+    final state = ref.watch(
+      detailViewModelProvider(feed.feedId),
+    );
     final String bestComment = state.isEmpty
         ? ''
         : state[0].comment;
@@ -39,8 +35,11 @@ class DetailPage extends ConsumerWidget {
         centerTitle: true,
         actions: [
           DeleteButton(
+            userNickNM: userNickNM,
+            userProfil: userProfil,
             onDelete: () {
               Text('삭제됨'); // 작성자만 보이게 만들기
+
               Navigator.pop(context); // 삭제하고 홈페이지로 이동 구현하기
             },
           ),
@@ -60,11 +59,11 @@ class DetailPage extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  writerNM, // 임시 사용자 이름
+                  feed.userNM, // 임시 사용자 이름
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  feedTime.toString().split(' ')[0],
+                  feed.feedTime.toString().split(' ')[0],
                 ), // 날짜만 나오고 시간 빼기
               ],
             ),
@@ -72,7 +71,7 @@ class DetailPage extends ConsumerWidget {
           Hero(
             tag: tag,
             child: Image.network(
-              feedPhoto,
+              feed.feedPhoto,
               height: 300,
               width: double.infinity,
               fit: BoxFit.cover,
@@ -99,8 +98,8 @@ class DetailPage extends ConsumerWidget {
                   right: 10,
                   top: 100,
                   child: LikeComment(
-                    fLikeUsers: fLikeUsers,
-                    feedId: feedId,
+                    fLikeUsers: feed.fLikeUsers,
+                    feedId: feed.feedId,
                     userNickNM: userNickNM,
                     userProfil: userProfil,
                   ),

@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:team1_det_tonryong/presentation/page/home/home_page.dart';
 
 // 게시물 삭제 하기
 class DeleteButton extends StatelessWidget {
+  final String userNickNM;
+  final String userProfil;
   final VoidCallback onDelete;
 
-  const DeleteButton({super.key, required this.onDelete});
+  const DeleteButton({
+    super.key,
+    required this.onDelete,
+    required this.userNickNM,
+    required this.userProfil,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +31,15 @@ class DeleteButton extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.pop(context);
-                  Navigator.pop(context);
+                  context.push(
+                    '/home',
+                    extra: {
+                      'userNickNM': userNickNM,
+                      'userProfil': userProfil,
+                    },
+                  );
+                  // Navigator.pop(context);
+                  // Navigator.pop(context);
                 },
                 child: const Text('삭제'),
               ),

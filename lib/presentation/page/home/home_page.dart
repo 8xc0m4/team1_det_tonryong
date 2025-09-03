@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:team1_det_tonryong/presentation/page/home/home_view_model.dart';
 import 'package:team1_det_tonryong/presentation/page/home/widgets/home_list.dart';
 import 'package:team1_det_tonryong/presentation/page/write/write_page.dart';
@@ -30,14 +31,17 @@ class HomePage extends ConsumerWidget {
             SizedBox(width: 90),
             GestureDetector(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return WritePage();
-                    },
-                  ),
+                context.push(
+                  '/home/write',
                 );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) {
+                //       return WritePage();
+                //     },
+                //   ),
+                // );
               },
               child: Image.asset('assets/icon/pen2.png'),
             ),

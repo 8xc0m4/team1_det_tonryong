@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:team1_det_tonryong/presentation/page/login/user_view_model.dart';
 import 'package:team1_det_tonryong/presentation/page/home/home_page.dart';
@@ -65,15 +66,22 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   for (var i in userList) {
                     if (user.user?.uid == i.uid) {
                       if (!mounted) return;
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => HomePage(
-                            userNickNM: i.nickNM,
-                            userProfil: user.user!.photoURL!,
-                          ),
-                        ),
+                      context.go(
+                        '/home',
+                        extra: {
+                          'userNickNM': i.nickNM,
+                          'userProfil': user.user!.photoURL!,
+                        },
                       );
+                      // Navigator.pushReplacement(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => HomePage(
+                      //       userNickNM: i.nickNM,
+                      //       userProfil: user.user!.photoURL!,
+                      //     ),
+                      //   ),
+                      // );
                       return;
                       //일치하는게 없으면 닉네임 다이얼로그
                     }
@@ -187,20 +195,27 @@ class _LoginPageState extends ConsumerState<LoginPage> {
               uid: uid,
               photoURL: photoURL,
             );
-
-        Navigator.of(context, rootNavigator: true).pop();
-
-        // 다이얼로그 닫고 홈으로 이동
         if (!mounted) return;
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (_) => HomePage(
-              userNickNM: controller.text,
-              userProfil: photoURL,
-            ),
-          ),
+        context.go(
+          '/home',
+          extra: {
+            'userNickNM': controller.text,
+            'userProfil': photoURL,
+          },
         );
+        // Navigator.of(context, rootNavigator: true).pop();
+
+        // // 다이얼로그 닫고 홈으로 이동
+        // if (!mounted) return;
+        // Navigator.pushReplacement(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (_) => HomePage(
+        //       userNickNM: controller.text,
+        //       userProfil: photoURL,
+        //     ),
+        //   ),
+        // );
       },
     )..show();
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:team1_det_tonryong/presentation/page/comment/comment_page.dart';
 
 // 좋아요 버튼 활성화 및 댓글 페이지 연결 예정
@@ -65,18 +66,26 @@ class _LikeCommentState extends ConsumerState<LikeComment> {
         const SizedBox(height: 15),
         GestureDetector(
           onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) {
-                  return CommentPage(
-                    feedId: widget.feedId,
-                    userNM: widget.userNickNM,
-                    userProfil: widget.userProfil,
-                  );
-                },
-              ),
+            context.push(
+              '/home/detail/comment',
+              extra: {
+                'feedId': widget.feedId,
+                'userNM': widget.userNickNM,
+                'userProfil': widget.userProfil,
+              },
             );
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(
+            //     builder: (context) {
+            //       return CommentPage(
+            //         feedId: widget.feedId,
+            //         userNM: widget.userNickNM,
+            //         userProfil: widget.userProfil,
+            //       );
+            //     },
+            //   ),
+            // );
           },
           child: Image.asset(
             'assets/icon/dg.png',

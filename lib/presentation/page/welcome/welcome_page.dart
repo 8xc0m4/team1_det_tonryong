@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 import 'package:team1_det_tonryong/presentation/page/login/login_page.dart';
 
@@ -19,11 +20,7 @@ class _WelcomePageState extends State<WelcomePage>
     _controller.addStatusListener(
       (status) {
         if (status == AnimationStatus.completed) {
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-              builder: (context) => LoginPage(),
-            ),
-          );
+          context.pushReplacement('/login');
         }
       },
     );
