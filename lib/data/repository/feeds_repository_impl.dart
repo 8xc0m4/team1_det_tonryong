@@ -14,7 +14,12 @@ class FeedsRepositoryImpl implements FeedsRepository {
     }
     return result
         .map(
-          (e) => HomeEntity(e.feedPhoto),
+          (e) => HomeEntity(
+            feedPhoto: e.feedPhoto,
+            feedId: e.feedId,
+            feedTime: e.feedTime,
+            fLikeUsers: e.fLikeUsers,
+          ),
         )
         .toList();
   }
@@ -37,3 +42,5 @@ class FeedsRepositoryImpl implements FeedsRepository {
         .toList();
   }
 }
+
+//엔
