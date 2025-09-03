@@ -6,6 +6,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:team1_det_tonryong/presentation/page/comment/view_model/user_view_model.dart';
 import 'package:team1_det_tonryong/presentation/page/home/home_page.dart';
 
+final nickErrorProvider = StateProvider.autoDispose<String?>((ref) => null);
+
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
 
@@ -55,11 +57,12 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             SizedBox(height: 80),
             GestureDetector(
               onTap: () async {
-                //닉네임 중복 안되게 만들기
                 final user = await login();
+                print(user.user?.photoURL);
                 if (user.user?.uid != null) {
                   for (var i in userList) {
                     if (user.user?.uid == i.uid) {
+                      if (!mounted) return;
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
@@ -70,7 +73,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       //일치하는게 없으면 닉네임 다이얼로그
                     }
                   }
-                  awesomeDialog(context, user.user!.uid);
+                  awesomeDialog(context, user.user!.uid, user.user!.photoURL!);
                 }
               },
               child: googleLogin(),
@@ -81,7 +84,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     );
   }
 
-  AwesomeDialog awesomeDialog(BuildContext context, String uid) {
+  AwesomeDialog awesomeDialog(
+    BuildContext context,
+    String uid,
+    String photoURL,
+  ) {
     return AwesomeDialog(
       context: context,
       width: 400,
@@ -96,6 +103,10 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       buttonsBorderRadius: BorderRadius.circular(20),
       btnOkColor: Color(0xFFBABABA),
       btnOkText: '확인',
+      autoDismiss: false,
+      onDismissCallback: (type) {
+        ref.invalidate(nickErrorProvider);
+      },
       body: Center(
         child: Column(
           children: [
@@ -109,24 +120,61 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             SizedBox(
               height: 50,
               width: 200,
-              child: TextField(controller: controller),
+              child: Consumer(
+                builder: (context, ref, _) {
+                  final errorText = ref.watch(nickErrorProvider);
+                  return TextField(
+                    controller: controller,
+                    onChanged: (_) {
+                      // 재입력 시작하면 에러 제거
+                      ref.read(nickErrorProvider.notifier).state = null;
+                    },
+                    decoration: InputDecoration(
+                      errorText: errorText,
+                    ),
+                  );
+                },
+              ),
             ),
           ],
         ),
       ),
-      btnOkOnPress: () {
+      btnOkOnPress: () async {
+        // 1) 입력값
         final nick = controller.text.trim();
-        ref
-            .read(userViewModelProvider.notifier)
-            .createUser(nickNM: nick, uid: uid);
 
+        // 2) 비어있음 검증
+        if (nick.isEmpty) {
+          ref.read(nickErrorProvider.notifier).state = '닉네임을 입력하세요';
+          return; // 다이얼로그는 열린 채로, TextField 아래에 에러만 표시
+        }
+
+        // 3) 중복 검증 (userViewModelProvider가 List를 바로 준다고 가정)
+        final users = ref.read(userViewModelProvider); // List<User> 라고 가정
+        final isDup = users.any(
+          (u) => u.nickNM.toLowerCase() == nick.toLowerCase(),
+        );
+        // 대소문자 무시하려면: (u) => u.nickNM.toLowerCase() == nick.toLowerCase()
+
+        if (isDup) {
+          ref.read(nickErrorProvider.notifier).state = '중복된 닉네임입니다';
+          return; // 입력 유도
+        }
+
+        // 4) 통과 → 생성 후 이동
+        ref.read(nickErrorProvider.notifier).state = null;
+
+        await ref
+            .read(userViewModelProvider.notifier)
+            .createUser(nickNM: nick, uid: uid, photoURL: photoURL);
+
+        Navigator.of(context, rootNavigator: true).pop();
+
+        // 다이얼로그 닫고 홈으로 이동
+        if (!mounted) return;
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(
-            builder: (context) {
-              return HomePage();
-            },
-          ),
+          MaterialPageRoute(builder: (_) => HomePage()),
         );
       },
     )..show();

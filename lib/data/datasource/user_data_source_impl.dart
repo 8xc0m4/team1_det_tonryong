@@ -13,7 +13,11 @@ class UserDataSourceImpl implements UserDataSource {
   }
 
   @override
-  Future<bool> creatUser({required String uid, required String nickNM}) async {
+  Future<bool> creatUser({
+    required String uid,
+    required String nickNM,
+    required String photoURL,
+  }) async {
     try {
       final fireBase = FirebaseFirestore.instance;
       final collectionRef = fireBase.collection('user');
@@ -22,6 +26,7 @@ class UserDataSourceImpl implements UserDataSource {
       Map<String, dynamic> data = {
         "uid": uid,
         "nickNM": nickNM,
+        "photoURL": photoURL,
       };
       await documentRef.set(data);
       return true;

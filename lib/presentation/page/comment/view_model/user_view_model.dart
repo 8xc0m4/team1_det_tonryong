@@ -15,10 +15,18 @@ class UserViewModel extends Notifier<List<UserEntity>> {
     state = result;
   }
 
-  Future<bool> createUser({required String uid, required String nickNM}) async {
+  Future<bool> createUser({
+    required String uid,
+    required String nickNM,
+    required String photoURL,
+  }) async {
     try {
       final userUsecase = ref.read(userUsecaseProvider);
-      await userUsecase.executeCreatUser(uid: uid, nickNM: nickNM);
+      await userUsecase.executeCreatUser(
+        uid: uid,
+        nickNM: nickNM,
+        photoURL: photoURL,
+      );
       return true;
     } catch (e) {
       print(e);
