@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:team1_det_tonryong/presentation/page/comment/view_model/user_view_model.dart';
+import 'package:team1_det_tonryong/presentation/page/login/user_view_model.dart';
 import 'package:team1_det_tonryong/presentation/page/home/home_page.dart';
 
 final nickErrorProvider = StateProvider.autoDispose<String?>((ref) => null);

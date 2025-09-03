@@ -28,7 +28,10 @@ class HomePage extends ConsumerWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return WritePage();
+                      return WritePage(
+                        uid: '213321',
+                        userNM: '123321',
+                      );
                     },
                   ),
                 );

@@ -1,26 +1,41 @@
-import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
-class WriteImage extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:team1_det_tonryong/presentation/page/write/image_provider.dart';
+
+class WriteImage extends ConsumerWidget {
+  const WriteImage({super.key});
+
+  Future<void> _pickImage(WidgetRef ref) async {
+    final picker = ImagePicker();
+    ref.read(imageFileProvider.notifier).state = await picker.pickImage(
+      source: ImageSource.gallery,
+    );
+  }
+
   @override
-  Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.topCenter,
-      child: GestureDetector(
-        onTap: () async {
-          // 1. 이미지 피커 객체 생성
-          ImagePicker imagePicker = ImagePicker();
-          // 2. 이미지 피커 객체의 pickImage라는 메서드 호출
-          XFile? xFile = await imagePicker.pickImage(
-            source: ImageSource.gallery,
-          );
-          print('경로 : ${xFile?.path}');
-        },
-        child: Container(
-          margin: EdgeInsets.all(50),
-          height: 300,
-          width: 500,
-          child: Image.asset('assets/icon/image_pick.png'),
+  Widget build(BuildContext context, WidgetRef ref) {
+    final image = ref.watch(imageFileProvider);
+
+    final file = (image == null) ? null : File(image.path);
+
+    return Container(
+      padding: EdgeInsets.all(30),
+      child: Align(
+        alignment: Alignment.topCenter,
+        child: GestureDetector(
+          onTap: () async {
+            _pickImage(ref);
+          },
+          child: Container(
+            height: 300,
+            width: double.infinity,
+            child: file == null
+                ? Image.asset('assets/icon/image_pick.png')
+                : Image.file(file),
+          ),
         ),
       ),
     );
