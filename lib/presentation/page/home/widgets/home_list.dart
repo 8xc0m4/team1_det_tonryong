@@ -5,8 +5,14 @@ import 'package:team1_det_tonryong/presentation/page/home/home_view_model.dart';
 import 'package:team1_det_tonryong/presentation/page/write/write_page.dart';
 
 class HomeList extends ConsumerWidget {
-  HomeList(this.result);
+  HomeList({
+    required this.result,
+    required this.userNickNM,
+    required this.userProfil,
+  });
   final HomeState result;
+  final String userNickNM;
+  final String userProfil;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return NotificationListener(
@@ -29,15 +35,22 @@ class HomeList extends ConsumerWidget {
         ),
         itemCount: result.getFeedsPhoto!.length,
         itemBuilder: (context, index) {
+          final feed = result.getFeedsPhoto![index];
           return GestureDetector(
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return WritePage(
-                      uid: '123321',
-                      userNM: '2231312f',
+                    return DetailPage(
+                      feedPhoto: feed.feedPhoto,
+                      feedId: feed.feedId,
+                      feedTime: feed.feedTime,
+                      writerNM: feed.userNM,
+                      fLikeUsers: feed.fLikeUsers,
+                      userNickNM: userNickNM,
+                      userProfil: userProfil,
+                      tag: result.getFeedsPhoto![index].feedPhoto,
                     );
                   },
                 ),
