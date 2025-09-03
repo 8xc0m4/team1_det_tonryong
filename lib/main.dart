@@ -25,12 +25,3 @@ class MyApp extends StatelessWidget {
     return MaterialApp(home: WelcomePage());
   }
 }
-
-FeedDto test = FeedDto(
-  feedId: 'fu7Wtfzxo2c4urwd2aNT',
-  userNM: '이상록',
-  feedTime: DateTime.now(),
-  feedLike: 1,
-  feedPhoto: 'assets/icon/hansukwon.png',
-  fLikeUsers: ['이상록', '김현수', '노서연'],
-);
