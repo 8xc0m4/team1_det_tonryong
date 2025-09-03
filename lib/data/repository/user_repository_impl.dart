@@ -18,7 +18,15 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<bool> creatUser({required String uid, required String nickNM}) async {
-    return await _userDataSource.creatUser(uid: uid, nickNM: nickNM);
+  Future<bool> creatUser({
+    required String uid,
+    required String nickNM,
+    required String photoURL,
+  }) async {
+    return await _userDataSource.creatUser(
+      uid: uid,
+      nickNM: nickNM,
+      photoURL: photoURL,
+    );
   }
 }

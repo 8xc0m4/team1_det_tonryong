@@ -12,7 +12,12 @@ class UserUsecase {
   Future<bool> executeCreatUser({
     required String uid,
     required String nickNM,
+    required String photoURL,
   }) async {
-    return await _userRepository.creatUser(uid: uid, nickNM: nickNM);
+    return await _userRepository.creatUser(
+      uid: uid,
+      nickNM: nickNM,
+      photoURL: photoURL,
+    );
   }
 }
