@@ -4,11 +4,21 @@ import 'package:team1_det_tonryong/presentation/page/comment/comment_page.dart';
 
 // 좋아요 버튼 활성화 및 댓글 페이지 연결 예정
 class LikeComment extends ConsumerStatefulWidget {
+  final String feedId;
+  final String userNickNM;
+  final String userProfil;
   final List<String> fLikeUsers;
-  const LikeComment({super.key, required this.fLikeUsers});
+  const LikeComment({
+    super.key,
+    required this.fLikeUsers,
+    required this.feedId,
+    required this.userNickNM,
+    required this.userProfil,
+  });
 
   @override
-  ConsumerState<LikeComment> createState() => _LikeCommentState();
+  ConsumerState<LikeComment> createState() =>
+      _LikeCommentState();
 }
 
 class _LikeCommentState extends ConsumerState<LikeComment> {
@@ -41,7 +51,8 @@ class _LikeCommentState extends ConsumerState<LikeComment> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         GestureDetector(
-          onTap: _toggleLike, // 다른 곳에서 좋아요 누르면 올라간 숫자 유지 // 좋아요 누르면 숫자 올라가게 만들기
+          onTap:
+              _toggleLike, // 다른 곳에서 좋아요 누르면 올라간 숫자 유지 // 좋아요 누르면 숫자 올라가게 만들기
           child: Image.asset(
             liked
                 ? 'assets/icon/heart_pink.png'
@@ -58,7 +69,11 @@ class _LikeCommentState extends ConsumerState<LikeComment> {
               context,
               MaterialPageRoute(
                 builder: (context) {
-                  return CommentPage();
+                  return CommentPage(
+                    feedId: widget.feedId,
+                    userNM: widget.userNickNM,
+                    userProfil: widget.userProfil,
+                  );
                 },
               ),
             );

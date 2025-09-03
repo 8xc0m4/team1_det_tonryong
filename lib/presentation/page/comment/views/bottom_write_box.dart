@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 
 class BottomWritBox extends StatelessWidget {
-  const BottomWritBox({
+  final String userProfil;
+  final TextEditingController textEditingController;
+  final void Function({required String comment}) createComment;
+  BottomWritBox({
     super.key,
+    required this.userProfil,
+    required this.textEditingController,
+    required this.createComment,
   });
 
   @override
@@ -26,13 +32,9 @@ class BottomWritBox extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: Colors.grey,
-                  shape: BoxShape.circle,
-                ),
+              CircleAvatar(
+                radius: 20,
+                backgroundImage: NetworkImage(userProfil),
               ),
               SizedBox(
                 width: 10,
@@ -41,6 +43,7 @@ class BottomWritBox extends StatelessWidget {
                 child: Container(
                   height: 40,
                   child: TextField(
+                    controller: textEditingController,
                     decoration: InputDecoration(
                       hintText: '제목 추가...',
                       hintStyle: TextStyle(
@@ -65,12 +68,20 @@ class BottomWritBox extends StatelessWidget {
               SizedBox(
                 width: 10,
               ),
-              SizedBox(
-                width: 30,
-                height: 30,
-                child: Image.asset(
-                  'assets/icon/send.png',
-                  fit: BoxFit.cover,
+              GestureDetector(
+                onTap: () {
+                  createComment(
+                    comment: textEditingController.text,
+                  );
+                  textEditingController.clear();
+                },
+                child: SizedBox(
+                  width: 30,
+                  height: 30,
+                  child: Image.asset(
+                    'assets/icon/send.png',
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ],

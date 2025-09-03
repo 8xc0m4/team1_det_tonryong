@@ -5,6 +5,12 @@ import 'package:team1_det_tonryong/presentation/page/home/widgets/home_list.dart
 import 'package:team1_det_tonryong/presentation/page/write/write_page.dart';
 
 class HomePage extends ConsumerWidget {
+  final String userNickNM;
+  final String userProfil;
+  HomePage({
+    required this.userNickNM,
+    required this.userProfil,
+  });
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final result = ref.watch(homeViewModelProvider);
@@ -40,7 +46,11 @@ class HomePage extends ConsumerWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 10),
-        child: HomeList(result),
+        child: HomeList(
+          result: result,
+          userNickNM: userNickNM,
+          userProfil: userProfil,
+        ),
       ),
     );
   }

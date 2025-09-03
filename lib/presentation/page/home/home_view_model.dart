@@ -14,8 +14,12 @@ class HomeViewModel extends Notifier<HomeState> {
   @override
   HomeState build() {
     loadPhoto();
+    // 메서드 넣기
     return HomeState(getFeedsPhoto: []);
   }
+
+  // 여기에 댓글 변화를 확인 메서드 <- 실시간 구독
+  // 메서드 안에서 로컬 알림 띄우는 로직 호출
 
   void loadPhoto() async {
     _hasMore = true;
@@ -39,15 +43,18 @@ class HomeViewModel extends Notifier<HomeState> {
           .toList();
 
       if (filter.isNotEmpty) {
-        state = HomeState(getFeedsPhoto: [...state.getFeedsPhoto!, ...filter]);
+        state = HomeState(
+          getFeedsPhoto: [...state.getFeedsPhoto!, ...filter],
+        );
       }
     }
     _isLoading = false;
   }
 }
 
-final homeViewModelProvider = NotifierProvider<HomeViewModel, HomeState>(
-  () {
-    return HomeViewModel();
-  },
-);
+final homeViewModelProvider =
+    NotifierProvider<HomeViewModel, HomeState>(
+      () {
+        return HomeViewModel();
+      },
+    );
