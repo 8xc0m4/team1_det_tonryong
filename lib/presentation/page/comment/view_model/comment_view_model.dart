@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:team1_det_tonryong/domain/entity/comment_entity.dart';
-import 'package:team1_det_tonryong/presentation/providers.dart';
+import 'package:team1_det_tonryong/presentation/comment_provider.dart';
 
 class CommentViewModel
     extends
@@ -12,7 +12,7 @@ class CommentViewModel
   }
 
   Future<void> fetchGetComments(String id) async {
-    final getComments = ref.read(getFeedsUsecaseProvider);
+    final getComments = ref.read(commentUsecaseProvider);
     final result = await getComments.executeGetComment(id);
     state = result;
   }
@@ -23,7 +23,7 @@ class CommentViewModel
     required String comment,
   }) async {
     await ref
-        .read(getFeedsUsecaseProvider)
+        .read(commentUsecaseProvider)
         .executeCreateComment(
           id: id,
           comment: comment,
@@ -38,7 +38,7 @@ class CommentViewModel
     required bool isLike,
   }) async {
     await ref
-        .read(getFeedsUsecaseProvider)
+        .read(commentUsecaseProvider)
         .executeUpdataCommentLike(
           commentId: commentId,
           feedId: feedId,
