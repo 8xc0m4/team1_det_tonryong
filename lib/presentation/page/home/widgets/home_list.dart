@@ -21,9 +21,7 @@ class HomeList extends ConsumerWidget {
           if (notification.metrics.maxScrollExtent > 0 &&
               notification.metrics.pixels >=
                   notification.metrics.maxScrollExtent - 50) {
-            ref
-                .read(homeViewModelProvider.notifier)
-                .loadMorePhoto();
+            ref.read(homeViewModelProvider.notifier).loadMorePhoto();
           }
         }
         return false;
@@ -52,8 +50,8 @@ class HomeList extends ConsumerWidget {
                       fLikeUsers: feed.fLikeUsers,
                       userNickNM: userNickNM,
                       userProfil: userProfil,
-                      tag:
-                          result.getFeedsPhoto![index].feedPhoto,
+                      feedLike: feed.feedLike,
+                      tag: result.getFeedsPhoto![index].feedPhoto,
                     );
                   },
                 ),

@@ -8,4 +8,16 @@ class DetailUsecase {
   Future<List<DetailEntity>> execute(String id) async {
     return await _detailRepository.getDetailEntity(id);
   }
+
+  Future<void> feedLikeUpdate({
+    required String feedId,
+    required bool liked,
+    required String userNM,
+  }) async {
+    await _detailRepository.feedLikeUpdate(
+      feedId: feedId,
+      liked: liked,
+      userNM: userNM,
+    );
+  }
 }

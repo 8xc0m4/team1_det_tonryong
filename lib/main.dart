@@ -1,7 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:team1_det_tonryong/data/dto/feed_dto.dart';
 import 'package:team1_det_tonryong/firebase_options.dart';
+import 'package:team1_det_tonryong/presentation/page/detail/detail_page.dart';
 import 'package:team1_det_tonryong/presentation/page/welcome/welcome_page.dart';
 
 void main() async {
@@ -19,13 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       // home: WelcomePage(),
-      home: DetailPage(
-        feedPhoto: test.feedPhoto,
-        feedId: test.feedId,
-        feedTime: test.feedTime,
-        userNM: test.userNM,
-        fLikeUsers: test.fLikeUsers,
-      ),
+      home: WelcomePage(),
     );
   }
 }
@@ -38,3 +34,6 @@ FeedDto test = FeedDto(
   feedPhoto: 'assets/icon/hansukwon.png',
   fLikeUsers: ['이상록', '김현수', '노서연', '임우형'],
 );
+
+// 문제 : 베스트 댓글이 적용 안됌
+// 피드 좋아요 적용 안됌

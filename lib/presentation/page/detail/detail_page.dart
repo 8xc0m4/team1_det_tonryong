@@ -5,11 +5,10 @@ import 'package:team1_det_tonryong/presentation/page/detail/view_model/detail_vi
 import 'package:team1_det_tonryong/presentation/page/detail/widget/delete_button.dart';
 import 'package:team1_det_tonryong/presentation/page/detail/widget/floating_comment.dart';
 import 'package:team1_det_tonryong/presentation/page/detail/widget/like_comment.dart';
-import 'package:team1_det_tonryong/presentation/page/home/home_view_model.dart';
 
 class DetailPage extends ConsumerWidget {
-  final currentuserNM = FirebaseAuth.instance.currentUser?.displayName;
   final String feedPhoto;
+  final int feedLike;
   final String feedId;
   final DateTime feedTime;
   final String writerNM;
@@ -20,6 +19,7 @@ class DetailPage extends ConsumerWidget {
   DetailPage({
     super.key,
     required this.feedPhoto,
+    required this.feedLike,
     required this.feedId,
     required this.feedTime,
     required this.writerNM,
@@ -32,9 +32,7 @@ class DetailPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     print(feedPhoto);
     final state = ref.watch(detailViewModelProvider(feedId));
-    final String bestComment = state.isEmpty
-        ? ''
-        : state[0].comment;
+    final String bestComment = state.isEmpty ? '' : state[0].comment;
     return Scaffold(
       appBar: AppBar(
         title: Image.asset('assets/icon/appbar_logo.png'),
@@ -43,7 +41,7 @@ class DetailPage extends ConsumerWidget {
           DeleteButton(
             feedId: feedId,
             key: key,
-            userNM: userNM,
+            userNM: writerNM,
             onDelete: () {
               Text('삭제됨'); // 작성자만 보이게 만들기
               Navigator.pop(context); // 삭제하고 홈페이지로 이동 구현하기
@@ -74,18 +72,6 @@ class DetailPage extends ConsumerWidget {
               ],
             ),
           ),
-<<<<<<< HEAD
-          Image.asset(
-            feedPhoto,
-            height: 300,
-            width: double.infinity,
-            fit: BoxFit.cover,
-          ), // 이미지
-          SizedBox(height: 5),
-          Text(
-            state.isNotEmpty ? state[0].comment : ' ', // 배스트 댓글
-            style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-=======
           Hero(
             tag: tag,
             child: Image.network(
@@ -102,7 +88,6 @@ class DetailPage extends ConsumerWidget {
               fontSize: 28,
               fontWeight: FontWeight.bold,
             ),
->>>>>>> develop
           ),
           Container(
             padding: EdgeInsets.all(5),
@@ -119,11 +104,9 @@ class DetailPage extends ConsumerWidget {
                   child: LikeComment(
                     fLikeUsers: fLikeUsers,
                     feedId: feedId,
-<<<<<<< HEAD
-=======
+                    feedLike: feedLike,
                     userNickNM: userNickNM,
                     userProfil: userProfil,
->>>>>>> develop
                   ),
                 ),
               ],

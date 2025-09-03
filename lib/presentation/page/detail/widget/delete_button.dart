@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:team1_det_tonryong/presentation/page/home/home_page.dart';
 
 // 게시물 삭제 하기
 class DeleteButton extends StatelessWidget {
@@ -22,11 +21,7 @@ class DeleteButton extends StatelessWidget {
     final currentuserNM =
         FirebaseAuth.instance.currentUser?.displayName; // UserNM 가죠오기
     //작성자만 삭제 버튼 보이게
-    print('D1');
     if (currentuserNM != userNM) return SizedBox.shrink();
-    // 증상 : != 를 사용하면 사용자 이름이 같아도 삭제버튼 없음
-    // == 를 사용하면 사용자 이름이 달라도 삭제버튼이 있음
-    print('D2');
     return GestureDetector(
       onTap: () {
         showDialog(
@@ -55,7 +50,6 @@ class DeleteButton extends StatelessWidget {
             ],
           ),
         );
-        print('D5');
       },
       child: Image.asset(
         'assets/icon/trash.png',

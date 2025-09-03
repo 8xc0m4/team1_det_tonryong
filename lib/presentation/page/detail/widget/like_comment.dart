@@ -2,16 +2,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:team1_det_tonryong/domain/entity/home_entity.dart';
 import 'package:team1_det_tonryong/presentation/page/comment/comment_page.dart';
+import 'package:team1_det_tonryong/presentation/page/detail/view_model/detail_view_model.dart';
 
 // 좋아요 버튼 활성화 및 댓글 페이지 연결 예정
 class LikeComment extends ConsumerStatefulWidget {
+  final int feedLike;
   final String feedId;
   final String userNickNM;
   final String userProfil;
   final List<String> fLikeUsers;
   const LikeComment({
     super.key,
+    required this.feedLike,
     required this.fLikeUsers,
     required this.feedId,
     required this.userNickNM,
@@ -23,53 +27,46 @@ class LikeComment extends ConsumerStatefulWidget {
 }
 
 class _LikeCommentState extends ConsumerState<LikeComment> {
-  bool liked = false;
+  late bool liked;
   late int likeCount;
-  String? currentUserNM; //현재 유저 UserNM
+  //현재 유저 UserNM
 
   @override
   void initState() {
+    ref.read(detailViewModelProvider(widget.feedId));
+    _syncLike();
     super.initState();
-    currentUserNM =
-        FirebaseAuth.instance.currentUser?.displayName; // 로그인한 UserNM 가져오기
-    likeCount = widget.fLikeUsers.length;
-    print('e1');
-    //현재 유저가 이미 좋아요 눌렀는지 확인
-    if (currentUserNM != null && widget.fLikeUsers.contains(currentUserNM)) {
-      liked = true; //활성화
-      print('e2');
-    } // 증상 : 내 이름으로 좋아요를 누르면 유지가 됨 근데 다른 이름으로도 유지가 되있음
+  }
+
+  void _syncLike() {
+    liked = widget.fLikeUsers.contains(
+      widget.userNickNM,
+    ); //현재 유저가 이미 좋아요 눌렀는지 확인
+    likeCount = widget.fLikeUsers.length; //값을 정해줌
+  }
+
+  @override
+  void didUpdateWidget(covariant LikeComment oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.feedLike != widget.feedLike) {
+      _syncLike();
+      setState(() {});
+    }
   }
 
   void _toggleLike() async {
-    if (currentUserNM == null) return;
-    print('e3');
     setState(() {
       liked = !liked; // 클릭 시 상태
       likeCount += liked ? 1 : -1; // 증가, 감소
+      ref
+          .read(detailViewModelProvider(widget.feedId).notifier)
+          .feedLikeUpdate(
+            feedId: widget.feedId,
+            liked: liked,
+            userNM: widget.userNickNM,
+          );
     });
-    print('e4');
-    final docRef = FirebaseFirestore.instance
-        .collection('feed')
-        .doc(widget.feedId); // 피드 이름을 확인하고 현재 게시물을 선택
-    print('e5');
-    if (liked) {
-      // 사용자가 좋아요 누르면 업데이트 해줌
-      await docRef.update({
-        'fLikeUsers': FieldValue.arrayUnion([currentUserNM]),
-        'likeCount': FieldValue.increment(1),
-      }); // 실제 현재 유저 아이디로 바꾸기
-      print('e6');
-    } else {
-      await docRef.update({
-        // 또 누르면 감소
-        'fLikeUsers': FieldValue.arrayRemove([currentUserNM]),
-        'likeCount': FieldValue.increment(-1),
-      });
-      print('e7');
-    }
   }
-  // 해야할 것 : 좋야요 상태 유지, 유저 아이디 사라지게 하기, 삭제 기능
 
   @override
   Widget build(BuildContext context) {
@@ -113,3 +110,4 @@ class _LikeCommentState extends ConsumerState<LikeComment> {
     );
   }
 }
+// 좋아요와 유지되지 않고 삭제가 실시간 반영이 안됨 

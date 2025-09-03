@@ -5,4 +5,9 @@ abstract interface class FeedsDataSource {
   Future<List<FeedDto>?> getFeeds();
   Future<FeedDto> getDetail(String id); //detail
   Future<List<CommentDto>> getBestComments(String id);
+  Future<void> feedLikeUpdate({
+    required String feedId,
+    required bool liked,
+    required String userNM,
+  });
 }

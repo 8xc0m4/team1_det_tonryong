@@ -16,6 +16,19 @@ class DetailRepositoryImpl implements DetailRepository {
       },
     ).toList();
   }
+
+  @override
+  Future<void> feedLikeUpdate({
+    required String feedId,
+    required bool liked,
+    required String userNM,
+  }) async {
+    await _feedsDataSource.feedLikeUpdate(
+      feedId: feedId,
+      liked: liked,
+      userNM: userNM,
+    );
+  }
 }
 
 //엔티티 2개를 가져와서 함치는 것
