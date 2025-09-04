@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:team1_det_tonryong/main.dart';
 import 'package:team1_det_tonryong/presentation/page/comment/comment_page.dart';
 
 class NotificationHelper {
@@ -24,7 +25,16 @@ class NotificationHelper {
     await flutterNotificationPlugin.initialize(
       initSetting,
       // 포그라운드 (앱이 열려있을 때) 푸시알림 터치했을 때 실행되는 함수
-      onDidReceiveNotificationResponse: (details) {},
+      onDidReceiveNotificationResponse: (details) {
+        Navigator.push(
+          navigatorKey.currentState!.context,
+          MaterialPageRoute(
+            builder: (context) {
+              return CommentPage();
+            },
+          ),
+        );
+      },
     );
     final androidPlugin = flutterNotificationPlugin
         .resolvePlatformSpecificImplementation<

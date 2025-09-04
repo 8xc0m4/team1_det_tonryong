@@ -19,6 +19,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: WelcomePage());
+    return MaterialApp(
+      home: WelcomePage(),
+      navigatorKey: navigatorKey,
+    );
   }
 }
+
+final navigatorKey = GlobalKey<NavigatorState>();
