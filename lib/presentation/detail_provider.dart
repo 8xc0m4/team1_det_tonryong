@@ -4,6 +4,7 @@ import 'package:team1_det_tonryong/data/datasource/feeds_data_source_impl.dart';
 import 'package:team1_det_tonryong/data/repository/detail_repository_impl.dart';
 import 'package:team1_det_tonryong/domain/repository/detail_repository.dart';
 import 'package:team1_det_tonryong/domain/usecase/detail_usecase.dart';
+import 'package:team1_det_tonryong/domain/usecase/get_feed_usecase.dart';
 
 final _detailDataSourceProvider = Provider<FeedsDataSource>(
   (ref) {

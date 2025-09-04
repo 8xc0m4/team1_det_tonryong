@@ -1,5 +1,6 @@
 import 'package:team1_det_tonryong/domain/entity/detail_entity.dart';
 import 'package:team1_det_tonryong/domain/repository/detail_repository.dart';
+import 'package:team1_det_tonryong/domain/repository/feeds_repository.dart';
 
 class DetailUsecase {
   DetailUsecase(this._detailRepository);
@@ -20,4 +21,9 @@ class DetailUsecase {
       userNM: userNM,
     );
   }
+
+  Future<void> delExecute(String id) async {
+    await _detailRepository.deleteFeed(id);
+  }
 }
+//

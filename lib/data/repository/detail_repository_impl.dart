@@ -33,6 +33,12 @@ class DetailRepositoryImpl implements DetailRepository {
       userNM: userNM,
     );
   }
+
+  @override
+  Future<void> deleteFeed(String id) async {
+    //데이타 소스 매서드 열어주기
+    await _feedsDataSource.deleteFeed(id);
+  }
 }
 
 //엔티티 2개를 가져와서 함치는 것
