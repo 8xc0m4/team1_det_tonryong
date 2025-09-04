@@ -28,6 +28,23 @@ class FeedsRepositoryImpl implements FeedsRepository {
   }
 
   @override
+  Stream<List<HomeEntity>> getMyFeeds(String userNM) {
+   return _feedsDataSource.getMyFeedsStream(userNM).map(
+      (event) {
+        return event.map(
+          (e) => HomeEntity(
+            feedPhoto: e.feedPhoto,
+            feedId: e.feedId,
+            feedTime: e.feedTime,
+            fLikeUsers: e.fLikeUsers,
+            userNM: e.userNM,
+          ),
+        ).toList();
+      },
+    );
+  }
+
+  @override
   Future<HomeEntity?> getFeed(String id) async {
     final result = await _feedsDataSource.getDetail(id);
     return HomeEntity(
@@ -39,6 +56,4 @@ class FeedsRepositoryImpl implements FeedsRepository {
       feedLike: result.feedLike,
     );
   }
-
-  //
 }
