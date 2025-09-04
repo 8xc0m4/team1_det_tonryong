@@ -26,11 +26,12 @@ class NotificationHelper {
       initSetting,
       // 포그라운드 (앱이 열려있을 때) 푸시알림 터치했을 때 실행되는 함수
       onDidReceiveNotificationResponse: (details) {
+        // go_router로 변경
         Navigator.push(
           navigatorKey.currentState!.context,
           MaterialPageRoute(
             builder: (context) {
-              return CommentPage();
+              return CommentPage(feedId: '', userNM: '', userProfil: '');
             },
           ),
         );
@@ -54,9 +55,9 @@ class NotificationHelper {
         // 상세 정보 넣을 수 있음
         android: AndroidNotificationDetails(
           // 안드로이드 8.0 이상에서 알림을 그룹화하는데 사용되는 ID
-          'test channel id',
+          '댓통령',
           // 설정에서 보여지는 알림 채널 이름
-          'General Notifications',
+          '댓통령',
           // 알림에 우선 순위를 결정함
           importance: Importance.high,
           // 알림 울렸을 때 소리 나도록 설정
