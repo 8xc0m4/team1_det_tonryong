@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:team1_det_tonryong/presentation/page/home/home_view_model.dart';
 import 'package:team1_det_tonryong/presentation/page/home/widgets/home_list.dart';
-import 'package:team1_det_tonryong/presentation/page/write/write_page.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   final String userNickNM;

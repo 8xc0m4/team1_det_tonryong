@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:team1_det_tonryong/firebase_options.dart';
 import 'package:team1_det_tonryong/notification_helper.dart';
-import 'package:team1_det_tonryong/presentation/page/welcome/welcome_page.dart';
 import 'package:team1_det_tonryong/router.dart';
 
 void main() async {
@@ -33,13 +32,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      home: WelcomePage(),
-      navigatorKey: navigatorKey,
+      routerConfig: router,
     );
-    return MaterialApp.router(routerConfig: router);
   }
 }
-
-final navigatorKey = GlobalKey<NavigatorState>();

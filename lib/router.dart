@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:team1_det_tonryong/presentation/page/comment/comment_page.dart';
 import 'package:team1_det_tonryong/presentation/page/detail/detail_page.dart';
@@ -7,8 +8,11 @@ import 'package:team1_det_tonryong/presentation/page/login/login_page.dart';
 import 'package:team1_det_tonryong/presentation/page/welcome/welcome_page.dart';
 import 'package:team1_det_tonryong/presentation/page/write/write_page.dart';
 
+final navigatorKey = GlobalKey<NavigatorState>();
+
 final router = GoRouter(
   initialLocation: '/',
+  navigatorKey: navigatorKey,
   errorBuilder: (context, state) {
     return ErrorPage();
   },
@@ -47,7 +51,11 @@ final router = GoRouter(
           builder: (context, state) {
             final data = state.extra as Map<String, dynamic>;
             return DetailPage(
-              feed: data['feed'],
+              feedPhoto: data['feedPhoto'],
+              feedId: data['feedId'],
+              feedTime: data['feedTime'],
+              writerNM: data['writerNM'],
+              fLikeUsers: data['fLikeUsers'],
               userNickNM: data['userNickNM'],
               userProfil: data['userProfil'],
               userId: data['userId'],

@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:team1_det_tonryong/presentation/page/login/user_view_model.dart';
-import 'package:team1_det_tonryong/presentation/page/home/home_page.dart';
 
 final nickErrorProvider = StateProvider.autoDispose<String?>(
   (ref) => null,

@@ -1,8 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:team1_det_tonryong/domain/entity/home_entity.dart';
 import 'package:team1_det_tonryong/notification_helper.dart';
-import 'package:team1_det_tonryong/presentation/page/comment/comment_page.dart';
 import 'package:team1_det_tonryong/presentation/providers.dart';
 
 class HomeState {

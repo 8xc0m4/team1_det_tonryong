@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:team1_det_tonryong/domain/entity/home_entity.dart';
-import 'package:team1_det_tonryong/main.dart';
 import 'package:team1_det_tonryong/presentation/page/detail/detail_page.dart';
+import 'package:team1_det_tonryong/router.dart';
 
 class NotificationHelper {
   static final flutterNotificationPlugin =
@@ -52,6 +52,21 @@ class NotificationHelper {
             },
           ),
         );
+        // context.push(
+        //   '/home/detail',
+        //   navigatorKey.currentState!.context,
+        //   extra: {
+        //     'feedPhoto': feed.feedPhoto,
+        //     'feedId': feed.feedId,
+        //     'feedTime': feed.feedTime,
+        //     'writerNM': feed.userNM,
+        //     'fLikeUsers': feed.fLikeUsers,
+        //     'userNickNM': widget.userNickNM,
+        //     'userProfil': widget.userProfil,
+        //     'userId': feed.feedId,
+        //     'tag': feed.feedPhoto,
+        //   },
+        // );
       },
     );
     final androidPlugin = flutterNotificationPlugin

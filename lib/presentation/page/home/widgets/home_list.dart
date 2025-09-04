@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:team1_det_tonryong/presentation/page/detail/detail_page.dart';
 import 'package:team1_det_tonryong/presentation/page/home/home_view_model.dart';
 
 class HomeList extends ConsumerStatefulWidget {
@@ -56,7 +55,11 @@ class _HomeListState extends ConsumerState<HomeList> {
               bool? deleted = await context.push(
                 '/home/detail',
                 extra: {
-                  'feed': feed,
+                  'feedPhoto': feed.feedPhoto,
+                  'feedId': feed.feedId,
+                  'feedTime': feed.feedTime,
+                  'writerNM': feed.userNM,
+                  'fLikeUsers': feed.fLikeUsers,
                   'userNickNM': widget.userNickNM,
                   'userProfil': widget.userProfil,
                   'userId': feed.feedId,
