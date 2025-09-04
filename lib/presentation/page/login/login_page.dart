@@ -71,7 +71,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           builder: (context) => HomePage(
                             userNickNM: i.nickNM,
                             userProfil: user.user!.photoURL!,
-                            userId: user.user!.uid,
+                            uid: i.uid,
                           ),
                         ),
                       );
@@ -194,7 +194,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             builder: (_) => HomePage(
               userNickNM: controller.text,
               userProfil: photoURL,
-              userId: uid,
+              uid: uid,
             ),
           ),
         );
