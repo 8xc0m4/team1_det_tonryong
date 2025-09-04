@@ -5,7 +5,7 @@ import 'package:team1_det_tonryong/presentation/page/home/home_view_model.dart';
 import 'package:team1_det_tonryong/presentation/page/home/widgets/home_list.dart';
 import 'package:team1_det_tonryong/presentation/page/write/write_page.dart';
 
-class HomePage extends ConsumerWidget {
+class HomePage extends ConsumerStatefulWidget {
   final String userNickNM;
   final String userProfil;
   HomePage({
@@ -14,7 +14,20 @@ class HomePage extends ConsumerWidget {
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends ConsumerState<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+    ref
+        .read(homeViewModelProvider.notifier)
+        .changeLike(widget.userNickNM);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final result = ref.watch(homeViewModelProvider);
     return Scaffold(
       backgroundColor: Colors.white,
@@ -35,7 +48,7 @@ class HomePage extends ConsumerWidget {
                 context.push(
                   '/home/write',
                   extra: {
-                    'userNickNM': userNickNM,
+                    'userNickNM': widget.userNickNM,
                   },
                 );
               },
@@ -48,8 +61,8 @@ class HomePage extends ConsumerWidget {
         padding: const EdgeInsets.only(top: 10),
         child: HomeList(
           result: result,
-          userNickNM: userNickNM,
-          userProfil: userProfil,
+          userNickNM: widget.userNickNM,
+          userProfil: widget.userProfil,
           // result: result,
           // userNickNM: userNickNM,
           // userProfil: userProfil,

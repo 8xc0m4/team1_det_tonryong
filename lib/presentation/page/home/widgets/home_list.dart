@@ -32,9 +32,13 @@ class _HomeListState extends ConsumerState<HomeList> {
               ref
                   .read(homeViewModelProvider.notifier)
                   .loadMorePhoto();
+              ref
+                  .read(homeViewModelProvider.notifier)
+                  .loadMorePhoto();
             });
           }
         }
+
         return false;
       },
       child: GridView.builder(

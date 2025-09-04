@@ -6,14 +6,12 @@ import 'package:team1_det_tonryong/presentation/page/detail/view_model/detail_vi
 
 // 좋아요 버튼 활성화 및 댓글 페이지 연결 예정
 class LikeComment extends ConsumerWidget {
-  final int feedLike;
   final String feedId;
   final String userNickNM;
   final String userProfil;
   final String userId;
   const LikeComment({
     super.key,
-    required this.feedLike,
     required this.feedId,
     required this.userNickNM,
     required this.userProfil,

@@ -21,10 +21,28 @@ class FeedsRepositoryImpl implements FeedsRepository {
             feedTime: e.feedTime,
             fLikeUsers: e.fLikeUsers,
             userNM: e.userNM,
-            feedLike: e.feedLike,
           ),
         )
         .toList();
+  }
+
+  @override
+  Stream<List<HomeEntity>> getMyFeeds(String userNM) {
+    return _feedsDataSource.getMyFeedsStream(userNM).map(
+      (event) {
+        return event
+            .map(
+              (e) => HomeEntity(
+                feedPhoto: e.feedPhoto,
+                feedId: e.feedId,
+                feedTime: e.feedTime,
+                fLikeUsers: e.fLikeUsers,
+                userNM: e.userNM,
+              ),
+            )
+            .toList();
+      },
+    );
   }
 
   @override
@@ -36,9 +54,6 @@ class FeedsRepositoryImpl implements FeedsRepository {
       feedTime: result.feedTime,
       fLikeUsers: result.fLikeUsers,
       userNM: result.userNM,
-      feedLike: result.feedLike,
     );
   }
-
-  //
 }

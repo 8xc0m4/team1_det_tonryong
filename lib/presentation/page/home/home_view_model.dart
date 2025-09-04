@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:team1_det_tonryong/domain/entity/home_entity.dart';
+import 'package:team1_det_tonryong/notification_helper.dart';
+import 'package:team1_det_tonryong/presentation/page/comment/comment_page.dart';
 import 'package:team1_det_tonryong/presentation/providers.dart';
 
 class HomeState {
@@ -14,12 +17,8 @@ class HomeViewModel extends Notifier<HomeState> {
   @override
   HomeState build() {
     loadPhoto();
-    // 메서드 넣기
     return HomeState(getFeedsPhoto: []);
   }
-
-  // 여기에 댓글 변화를 확인 메서드 <- 실시간 구독
-  // 메서드 안에서 로컬 알림 띄우는 로직 호출
 
   void loadPhoto() async {
     _hasMore = true;
@@ -29,8 +28,35 @@ class HomeViewModel extends Notifier<HomeState> {
     state = HomeState(getFeedsPhoto: result ?? []);
   }
 
-  void refreshFeeds() async {
-    loadPhoto(); // 삭제 후 새로고침
+  List<HomeEntity> previousFeedList = [];
+  // 여기에 피드 변화를 확인 메서드
+  Future<void> changeLike(String userNickNM) async {
+    // 메서드 안에서 로컬 알림 띄우는 로직 호출
+    // NotificationHelper.show('', '');
+    final getMyFeedUsecase = ref.read(getMyFeedUsecaseProvider);
+    final stream = getMyFeedUsecase.execute(userNickNM);
+    stream.listen(
+      (newFeedList) {
+        for (var i = 0; i < newFeedList.length; i++) {
+          final newFeed = newFeedList[i];
+          for (var j = 0; j < previousFeedList.length; j++) {
+            final previousFeed = previousFeedList[j];
+            if (newFeed.feedId == previousFeed.feedId) {
+              if (newFeed.fLikeUsers.length >
+                  previousFeed.fLikeUsers.length) {
+                NotificationHelper.show(
+                  title: '알림',
+                  content: '누군가가 당신의 글을 좋아합니다',
+
+                  feed: newFeed,
+                );
+              }
+            }
+          }
+        }
+        previousFeedList = newFeedList;
+      },
+    );
   }
 
   Future<void> loadMorePhoto() async {
@@ -62,7 +88,11 @@ class HomeViewModel extends Notifier<HomeState> {
   // detail페이지에서 파이어베이스 삭제하기 때문에 List에서만 비워줌
   void deleteFeed(String feedId) {
     final newList = <HomeEntity>[];
-    for (var i = 0; i < (state.getFeedsPhoto?.length ?? 0); i++) {
+    for (
+      var i = 0;
+      i < (state.getFeedsPhoto?.length ?? 0);
+      i++
+    ) {
       if (state.getFeedsPhoto![i].feedId != feedId) {
         newList.add(state.getFeedsPhoto![i]);
       }
@@ -71,8 +101,9 @@ class HomeViewModel extends Notifier<HomeState> {
   }
 }
 
-final homeViewModelProvider = NotifierProvider<HomeViewModel, HomeState>(
-  () {
-    return HomeViewModel();
-  },
-);
+final homeViewModelProvider =
+    NotifierProvider<HomeViewModel, HomeState>(
+      () {
+        return HomeViewModel();
+      },
+    );
