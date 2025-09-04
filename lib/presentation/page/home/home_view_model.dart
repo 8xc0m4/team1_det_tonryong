@@ -43,12 +43,16 @@ class HomeViewModel extends Notifier<HomeState> {
   }
 
   Future<void> loadMorePhoto() async {
+    print("_로드모어 호출됨");
     if (_isLoading || !_hasMore) return;
     _isLoading = true;
+    print("dkdkdkdk");
     final getFeedUsecase = ref.read(getFeedsUsecaseProvider);
     final newResult = await getFeedUsecase.execute();
+    print("결과 : $newResult");
     if (newResult == null || newResult.isEmpty) {
-      _hasMore = false;
+      // _hasMore = false;
+      print(_hasMore);
     } else {
       final exist = state.getFeedsPhoto!.map((e) => e.feedPhoto);
       final filter = newResult
@@ -65,9 +69,8 @@ class HomeViewModel extends Notifier<HomeState> {
   }
 }
 
-final homeViewModelProvider =
-    NotifierProvider<HomeViewModel, HomeState>(
-      () {
-        return HomeViewModel();
-      },
-    );
+final homeViewModelProvider = NotifierProvider<HomeViewModel, HomeState>(
+  () {
+    return HomeViewModel();
+  },
+);

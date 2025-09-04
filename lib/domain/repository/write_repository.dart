@@ -1,8 +1,8 @@
 import 'package:image_picker/image_picker.dart';
 
-abstract interface class WriteDataSource {
+abstract interface class WriteRepository {
   Future<String> createImage(XFile xFile);
-  Future<bool> createFeed({
+  Future<bool> creatFeed({
     required String uid,
     required String feedPhoto,
     required String userNM,
