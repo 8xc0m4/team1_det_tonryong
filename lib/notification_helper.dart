@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:team1_det_tonryong/domain/entity/home_entity.dart';
 import 'package:team1_det_tonryong/main.dart';
 import 'package:team1_det_tonryong/presentation/page/comment/comment_page.dart';
+import 'package:team1_det_tonryong/presentation/page/detail/detail_page.dart';
 
 class NotificationHelper {
   static final flutterNotificationPlugin = FlutterLocalNotificationsPlugin();
@@ -26,12 +30,23 @@ class NotificationHelper {
       initSetting,
       // 포그라운드 (앱이 열려있을 때) 푸시알림 터치했을 때 실행되는 함수
       onDidReceiveNotificationResponse: (details) {
-        // go_router로 변경
+        print('넘어온 페이로드 :${details.payload}');
+        final feedMap = jsonDecode(details.payload!);
+        //TODO go_router로 변경
         Navigator.push(
           navigatorKey.currentState!.context,
           MaterialPageRoute(
             builder: (context) {
-              return CommentPage(feedId: '', userNM: '', userProfil: '');
+              return DetailPage(
+                feedPhoto: feedMap['feedPhoto'],
+                feedId: feedMap['feedId'],
+                feedTime: DateTime.parse(feedMap['feedTime']),
+                writerNM: feedMap['userNM'],
+                fLikeUsers: List.from(feedMap['fLikeUsers']),
+                userNickNM: feedMap['userNM'],
+                userProfil: '',
+                tag: '',
+              );
             },
           ),
         );
@@ -44,7 +59,11 @@ class NotificationHelper {
     await androidPlugin?.requestNotificationsPermission();
   }
 
-  static Future<void> show(String title, String content) async {
+  static Future<void> show({
+    required String title,
+    required String content,
+    required HomeEntity feed,
+  }) async {
     // 실제로 푸시 알림 보내는 기능 구현
     flutterNotificationPlugin.show(
       // 알림 ID => 중복된 알림 관리하기 위한 고유 ID
@@ -77,7 +96,13 @@ class NotificationHelper {
       /// onDidReceiveNotificationResponse
       ///  함수에 details 부분에 담겨서 넘어오게 됨
       // 알림에 부가적인 데이터 담는 용도
-      payload: 'hi',
+      payload: jsonEncode({
+        'feedId': feed.feedId,
+        'feedPhoto': feed.feedPhoto,
+        'fLikeUsers': feed.fLikeUsers,
+        'feedTime': feed.feedTime.toIso8601String(),
+        'userNM': feed.userNM,
+      }),
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:team1_det_tonryong/data/datasource/feeds_data_source_impl.dart';
 import 'package:team1_det_tonryong/data/repository/feeds_repository_impl.dart';
 import 'package:team1_det_tonryong/domain/repository/feeds_repository.dart';
 import 'package:team1_det_tonryong/domain/usecase/get_feeds_usecase.dart';
+import 'package:team1_det_tonryong/domain/usecase/get_my_feeds_stream_usecase.dart';
 
 final _feedsDataSourceProvider = Provider<FeedsDataSource>(
   (ref) {
@@ -22,5 +23,11 @@ final _feedsRepositoryProvider = Provider<FeedsRepository>(
 final getFeedsUsecaseProvider = Provider(
   (ref) {
     return GetFeedsUsecase(ref.read(_feedsRepositoryProvider));
+  },
+);
+
+final getMyFeedUsecaseProvider = Provider(
+  (ref) {
+    return GetMyFeedsStreamUsecase(ref.read(_feedsRepositoryProvider));
   },
 );

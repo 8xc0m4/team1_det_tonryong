@@ -67,4 +67,16 @@ class FeedsDataSourceImpl implements FeedsDataSource {
       return List<CommentDto>.empty();
     }
   }
+
+  @override
+  Stream<List<FeedDto>> getMyFeedsStream(String userNM) {
+    final firestore = FirebaseFirestore.instance;
+    final colRef = firestore.collection('feeds');
+    final snapShot = colRef.where('userNM', isEqualTo: userNM).snapshots();
+    return snapShot.map(
+      (event) {
+        return event.docs.map((e) => FeedDto.fromJson(e.id, e.data())).toList();
+      },
+    );
+  }
 }

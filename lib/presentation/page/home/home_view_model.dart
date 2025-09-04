@@ -17,7 +17,6 @@ class HomeViewModel extends Notifier<HomeState> {
   @override
   HomeState build() {
     loadPhoto();
-    changeLike(title: '댓통령', content: '회원님의 댓글에 누군가가 좋아요를 눌렀습니다');
     return HomeState(getFeedsPhoto: []);
   }
 
@@ -32,14 +31,34 @@ class HomeViewModel extends Notifier<HomeState> {
     state = HomeState(getFeedsPhoto: result ?? []);
   }
 
-  // 여기에 댓글 변화를 확인 메서드
-  Future<void> changeLike({
-    required String title,
-    required String content,
-  }) async {
+  List<HomeEntity> previousFeedList = [];
+  // 여기에 피드 변화를 확인 메서드
+  Future<void> changeLike(String userNickNM) async {
     // 메서드 안에서 로컬 알림 띄우는 로직 호출
-    NotificationHelper.show('', '');
-    if (title.isEmpty || content.isEmpty) return;
+    // NotificationHelper.show('', '');
+    final getMyFeedUsecase = ref.read(getMyFeedUsecaseProvider);
+    final stream = getMyFeedUsecase.execute(userNickNM);
+    stream.listen(
+      (newFeedList) {
+        for (var i = 0; i < newFeedList.length; i++) {
+          final newFeed = newFeedList[i];
+          for (var j = 0; j < previousFeedList.length; j++) {
+            final previousFeed = previousFeedList[j];
+            if (newFeed.feedId == previousFeed.feedId) {
+              if (newFeed.fLikeUsers.length > previousFeed.fLikeUsers.length) {
+                NotificationHelper.show(
+                  title: '알림',
+                  content: '누군가가 당신의 글을 좋아합니다',
+
+                  feed: newFeed,
+                );
+              }
+            }
+          }
+        }
+        previousFeedList = newFeedList;
+      },
+    );
   }
 
   Future<void> loadMorePhoto() async {
