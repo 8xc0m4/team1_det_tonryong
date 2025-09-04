@@ -7,7 +7,7 @@ import 'package:team1_det_tonryong/domain/entity/detail_entity.dart';
 // 랜덤위치 댓글 기능
 class FloatingCommentManager extends ConsumerStatefulWidget {
   final List<DetailEntity> state; // 디테일 페이지에서 넘겨준 것을 UI에 뿌려준다 중요
-  FloatingCommentManager({super.key, required this.state});
+  const FloatingCommentManager({super.key, required this.state});
 
   @override
   ConsumerState<FloatingCommentManager> createState() =>
@@ -19,6 +19,7 @@ class _FloatingCommentManagerState
   // 현재 화면에 댓글리스트 표시
   final List<_FloatingComment> activeComments = [];
   final Random random = Random(); // 랜덤 표시
+  Timer? _timer;
 
   @override
   void initState() {
@@ -27,7 +28,7 @@ class _FloatingCommentManagerState
   }
 
   void _startCommentSpawner() {
-    var _timer = Timer.periodic(const Duration(seconds: 2), (
+    _timer = Timer.periodic(const Duration(seconds: 2), (
       timer,
     ) {
       List<String> displayComments = [];
@@ -52,8 +53,7 @@ class _FloatingCommentManagerState
       //화면 밖에 안빠져 나가게 하기
       final screenWidth = MediaQuery.of(context).size.width;
 
-      final randomX =
-          random.nextDouble() * (screenWidth * 0.5); // 공범
+      final randomX = random.nextDouble() * (screenWidth * 0.5); // 공범
       final randomY = random.nextDouble() * (250.0); // 여기가 범인
 
       if (displayComments.isNotEmpty) {
@@ -77,6 +77,7 @@ class _FloatingCommentManagerState
 
   @override
   void dispose() {
+    _timer!.cancel();
     super.dispose();
   }
 
@@ -120,8 +121,7 @@ class _FloatingComment extends StatefulWidget {
   });
 
   @override
-  State<_FloatingComment> createState() =>
-      _FloatingCommentState();
+  State<_FloatingComment> createState() => _FloatingCommentState();
 }
 
 class _FloatingCommentState extends State<_FloatingComment>
@@ -158,9 +158,7 @@ class _FloatingCommentState extends State<_FloatingComment>
           WidgetsBinding.instance.addPostFrameCallback((_) {
             if (mounted) {
               final parentState = context
-                  .findAncestorStateOfType<
-                    _FloatingCommentManagerState
-                  >();
+                  .findAncestorStateOfType<_FloatingCommentManagerState>();
               parentState?.setState(() {
                 parentState.activeComments.remove(widget);
               });
