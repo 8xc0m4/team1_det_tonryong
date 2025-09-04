@@ -26,12 +26,8 @@ class LikeComment extends ConsumerWidget {
       detailViewModelProvider(feedId).notifier,
     );
     bool like = false;
-    for (
-      var i = 0;
-      i < (state.feed?.fLikeUsers.length ?? 0);
-      i++
-    ) {
-      if (userId == state.feed!.fLikeUsers[i]) {
+    for (var i = 0; i < (state.feed?.fLikeUsers.length ?? 0); i++) {
+      if (userNickNM == state.feed!.fLikeUsers[i]) {
         like = true;
         break;
       }
@@ -44,13 +40,11 @@ class LikeComment extends ConsumerWidget {
           onTap: () {
             viewmodel.feedLikeUpdate(
               liked: !like,
-              userNM: userId,
+              userNM: userNickNM,
             );
           }, // 다른 곳에서 좋아요 누르면 올라간 숫자 유지 // 좋아요 누르면 숫자 올라가게 만들기
           child: Image.asset(
-            like
-                ? 'assets/icon/heart_pink.png'
-                : 'assets/icon/heart_brown.png',
+            like ? 'assets/icon/heart_pink.png' : 'assets/icon/heart_brown.png',
             width: 40,
             height: 40,
           ),
