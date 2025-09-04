@@ -31,7 +31,11 @@ final getFeedsUsecaseProvider = Provider(
 
 final getMyFeedUsecaseProvider = Provider(
   (ref) {
-    return GetMyFeedsStreamUsecase(ref.read(_feedsRepositoryProvider));
+    return GetMyFeedsStreamUsecase(
+      ref.read(_feedsRepositoryProvider),
+    );
+  },
+);
 final getFeedUsecaseProvider = Provider(
   (ref) {
     return GetFeedUsecase(ref.read(_feedsRepositoryProvider));

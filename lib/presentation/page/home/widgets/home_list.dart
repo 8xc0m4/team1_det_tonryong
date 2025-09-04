@@ -30,11 +30,13 @@ class _HomeListState extends ConsumerState<HomeList> {
                   notification.metrics.maxScrollExtent - 50) {
             setState(() {
               ref.watch(homeViewModelProvider);
-              ref.read(homeViewModelProvider.notifier).loadMorePhoto();
+              ref
+                  .read(homeViewModelProvider.notifier)
+                  .loadMorePhoto();
             });
           }
         }
-        
+
         return false;
       },
       child: GridView.builder(
@@ -62,8 +64,10 @@ class _HomeListState extends ConsumerState<HomeList> {
                       fLikeUsers: feed.fLikeUsers,
                       userNickNM: widget.userNickNM,
                       userProfil: widget.userProfil,
-                      tag: widget.result.getFeedsPhoto![index].feedPhoto,
-                      feedLike: feed.feedLike,
+                      tag: widget
+                          .result
+                          .getFeedsPhoto![index]
+                          .feedPhoto,
                       userId: feed.feedId,
                     );
                   },

@@ -5,14 +5,12 @@ import 'package:team1_det_tonryong/presentation/page/detail/view_model/detail_vi
 
 // 좋아요 버튼 활성화 및 댓글 페이지 연결 예정
 class LikeComment extends ConsumerWidget {
-  final int feedLike;
   final String feedId;
   final String userNickNM;
   final String userProfil;
   final String userId;
   const LikeComment({
     super.key,
-    required this.feedLike,
     required this.feedId,
     required this.userNickNM,
     required this.userProfil,
@@ -24,9 +22,15 @@ class LikeComment extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(detailViewModelProvider(feedId));
-    final viewmodel = ref.read(detailViewModelProvider(feedId).notifier);
+    final viewmodel = ref.read(
+      detailViewModelProvider(feedId).notifier,
+    );
     bool like = false;
-    for (var i = 0; i < (state.feed?.fLikeUsers.length ?? 0); i++) {
+    for (
+      var i = 0;
+      i < (state.feed?.fLikeUsers.length ?? 0);
+      i++
+    ) {
       if (userId == state.feed!.fLikeUsers[i]) {
         like = true;
         break;
@@ -38,10 +42,15 @@ class LikeComment extends ConsumerWidget {
       children: [
         GestureDetector(
           onTap: () {
-            viewmodel.feedLikeUpdate(liked: !like, userNM: userId);
+            viewmodel.feedLikeUpdate(
+              liked: !like,
+              userNM: userId,
+            );
           }, // 다른 곳에서 좋아요 누르면 올라간 숫자 유지 // 좋아요 누르면 숫자 올라가게 만들기
           child: Image.asset(
-            like ? 'assets/icon/heart_pink.png' : 'assets/icon/heart_brown.png',
+            like
+                ? 'assets/icon/heart_pink.png'
+                : 'assets/icon/heart_brown.png',
             width: 40,
             height: 40,
           ),
