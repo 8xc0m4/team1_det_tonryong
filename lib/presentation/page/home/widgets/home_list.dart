@@ -59,39 +59,6 @@ class _HomeListState extends ConsumerState<HomeList> {
                   'tag': feed.feedPhoto,
                 },
               );
-
-              // Navigator.push(
-              //   //
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) {
-              //       return DetailPage(
-              //         feedPhoto: feed.feedPhoto,
-              //         feedId: feed.feedId,
-              //         feedTime: feed.feedTime,
-              //         writerNM: feed.userNM,
-              //         fLikeUsers: feed.fLikeUsers,
-              //         userNickNM: widget.userNickNM,
-              //         userProfil: widget.userProfil,
-              //         tag: widget
-              //             .result
-              //             .getFeedsPhoto![index]
-              //             .feedPhoto,
-              //         feedLike: feed.feedLike,
-              //         userId: feed.feedId,
-              //       );
-              //     },
-              //   ),
-              // );
-              // context.push(
-              //   '/home/detail',
-              //   extra: {
-              //     'feed': feed,
-              //     'userNickNM': userNickNM,
-              //     'userProfil': userProfil,
-              //     'tag': feed.feedPhoto,
-              //   },
-              // );
               if (deleted == true) {
                 //
                 ref

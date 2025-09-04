@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:team1_det_tonryong/presentation/page/write/image_provider.dart';
 import 'package:team1_det_tonryong/presentation/page/write/widgets/write_image.dart';
 import 'package:team1_det_tonryong/presentation/page/write/write_view_model.dart';
@@ -37,7 +38,7 @@ class WritePage extends StatelessWidget {
                         );
                     ref.read(imageFileProvider.notifier).state =
                         null;
-                    Navigator.pop(context);
+                    context.pop();
                   } else {
                     CupertinoAlertDialog(
                       title: Text('오류가 발생했습니다'),

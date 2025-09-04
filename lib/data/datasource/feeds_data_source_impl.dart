@@ -78,7 +78,9 @@ class FeedsDataSourceImpl implements FeedsDataSource {
     final colref = firestore.collection('feeds');
     final docref = colref.doc(feedId);
     final feedLikeRef = docref.update({
-      'feedLike': liked ? FieldValue.increment(1) : FieldValue.increment(-1),
+      'feedLike': liked
+          ? FieldValue.increment(1)
+          : FieldValue.increment(-1),
       'fLikeUsers': liked
           ? FieldValue.arrayUnion([userNM])
           : FieldValue.arrayRemove([userNM]),

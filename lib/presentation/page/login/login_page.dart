@@ -195,19 +195,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             'userProfil': photoURL,
           },
         );
-        // Navigator.of(context, rootNavigator: true).pop();
-
-        // // 다이얼로그 닫고 홈으로 이동
-        // if (!mounted) return;
-        // Navigator.pushReplacement(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (_) => HomePage(
-        //       userNickNM: controller.text,
-        //       userProfil: photoURL,
-        //     ),
-        //   ),
-        // );
       },
     )..show();
   }

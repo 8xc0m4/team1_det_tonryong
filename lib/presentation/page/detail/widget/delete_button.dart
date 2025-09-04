@@ -1,7 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:team1_det_tonryong/presentation/page/detail/view_model/detail_view_model.dart';
+import 'package:go_router/go_router.dart';
 
 // 게시물 삭제 하기
 class DeleteButton extends ConsumerWidget {
@@ -33,23 +32,15 @@ class DeleteButton extends ConsumerWidget {
             content: const Text('왕이 없습니다. \n정말 삭제하시겠습니까?'),
             actions: [
               TextButton(
-                onPressed: () => Navigator.pop(context),
+                onPressed: () => context.pop(),
                 child: const Text('취소'),
               ),
 
               TextButton(
                 onPressed: () {
-                  Navigator.pop(context);
-                  Navigator.pop(context, true);
+                  context.pop();
+                  context.pop(true);
                 },
-
-                // context.push(
-                //     '/home',
-                //     extra: {
-                //       'userNickNM': userNickNM,
-                //       'userProfil': userProfil,
-                //     },
-                //   );
                 child: const Text('삭제'),
               ),
             ],
