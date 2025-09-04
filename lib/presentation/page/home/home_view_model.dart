@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:team1_det_tonryong/domain/entity/home_entity.dart';
+import 'package:team1_det_tonryong/notification_helper.dart';
+import 'package:team1_det_tonryong/presentation/page/comment/comment_page.dart';
 import 'package:team1_det_tonryong/presentation/providers.dart';
 
 class HomeState {
@@ -14,6 +17,7 @@ class HomeViewModel extends Notifier<HomeState> {
   @override
   HomeState build() {
     loadPhoto();
+    changeLike(title: '댓통령', content: '회원님의 댓글에 누군가가 좋아요를 눌렀습니다');
     return HomeState(getFeedsPhoto: []);
   }
 
@@ -23,6 +27,16 @@ class HomeViewModel extends Notifier<HomeState> {
     final result = await getFeedsUsecase.execute();
 
     state = HomeState(getFeedsPhoto: result ?? []);
+  }
+
+  // 여기에 댓글 변화를 확인 메서드
+  Future<void> changeLike({
+    required String title,
+    required String content,
+  }) async {
+    // 메서드 안에서 로컬 알림 띄우는 로직 호출
+    NotificationHelper.show('', '');
+    if (title.isEmpty || content.isEmpty) return;
   }
 
   Future<void> loadMorePhoto() async {

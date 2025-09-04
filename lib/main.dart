@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:team1_det_tonryong/data/dto/feed_dto.dart';
 import 'package:team1_det_tonryong/firebase_options.dart';
+import 'package:team1_det_tonryong/notification_helper.dart';
 import 'package:team1_det_tonryong/presentation/page/detail/detail_page.dart';
 import 'package:team1_det_tonryong/presentation/page/home/home_page.dart';
 import 'package:team1_det_tonryong/presentation/page/login/login_page.dart';
@@ -14,6 +15,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await NotificationHelper.init();
   runApp(const ProviderScope(child: MyApp()));
 }
 

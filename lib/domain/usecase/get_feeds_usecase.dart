@@ -6,7 +6,7 @@ class GetFeedsUsecase {
   GetFeedsUsecase(this._feedsRepository);
   final FeedsRepository _feedsRepository;
 
-  Future<List<HomeEntity>?> execute({int page = 1}) async {
+  Future<List<HomeEntity>?> execute() async {
     return await _feedsRepository.getFeedsPhoto();
   }
 
