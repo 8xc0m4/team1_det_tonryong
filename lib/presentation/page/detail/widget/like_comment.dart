@@ -1,62 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:team1_det_tonryong/presentation/page/comment/comment_page.dart';
+import 'package:team1_det_tonryong/presentation/page/detail/view_model/detail_view_model.dart';
 
 // 좋아요 버튼 활성화 및 댓글 페이지 연결 예정
-class LikeComment extends ConsumerStatefulWidget {
+class LikeComment extends ConsumerWidget {
+  final int feedLike;
   final String feedId;
   final String userNickNM;
   final String userProfil;
-  final List<String> fLikeUsers;
+  final String userId;
   const LikeComment({
     super.key,
-    required this.fLikeUsers,
+    required this.feedLike,
     required this.feedId,
     required this.userNickNM,
     required this.userProfil,
+    required this.userId,
   });
 
+  //현재 유저 UserNM
+  // 파이어베이스 블로그 앱 복습, todo 앱 만들기
   @override
-  ConsumerState<LikeComment> createState() =>
-      _LikeCommentState();
-}
-
-class _LikeCommentState extends ConsumerState<LikeComment> {
-  bool liked = false;
-  late int likeCount;
-
-  @override
-  void initState() {
-    super.initState();
-    likeCount = widget.fLikeUsers.length;
-  }
-
-  void _toggleLike() {
-    setState(() {
-      liked = !liked;
-      likeCount += liked ? 1 : -1;
-
-      if (liked) {
-        widget.fLikeUsers.add("fLikeUsers"); // 실제 현재 유저 아이디로 바꾸기
-      } else {
-        widget.fLikeUsers.remove("fLikeUsers");
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(detailViewModelProvider(feedId));
+    final viewmodel = ref.read(detailViewModelProvider(feedId).notifier);
+    bool like = false;
+    for (var i = 0; i < (state.feed?.fLikeUsers.length ?? 0); i++) {
+      if (userId == state.feed!.fLikeUsers[i]) {
+        like = true;
+        break;
       }
-    }); //좋아요 숫자 증가
-  }
-  // 좋야요 상태 유지, 유저 아이디 사라지게 하기, 삭제 기능
-
-  @override
-  Widget build(BuildContext context) {
+    }
+    int likeCount = state.feed?.fLikeUsers.length ?? 0;
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         GestureDetector(
-          onTap:
-              _toggleLike, // 다른 곳에서 좋아요 누르면 올라간 숫자 유지 // 좋아요 누르면 숫자 올라가게 만들기
+          onTap: () {
+            viewmodel.feedLikeUpdate(liked: !like, userNM: userId);
+          }, // 다른 곳에서 좋아요 누르면 올라간 숫자 유지 // 좋아요 누르면 숫자 올라가게 만들기
           child: Image.asset(
-            liked
-                ? 'assets/icon/heart_pink.png'
-                : 'assets/icon/heart_brown.png',
+            like ? 'assets/icon/heart_pink.png' : 'assets/icon/heart_brown.png',
             width: 40,
             height: 40,
           ),
@@ -70,9 +55,9 @@ class _LikeCommentState extends ConsumerState<LikeComment> {
               MaterialPageRoute(
                 builder: (context) {
                   return CommentPage(
-                    feedId: widget.feedId,
-                    userNM: widget.userNickNM,
-                    userProfil: widget.userProfil,
+                    feedId: feedId,
+                    userNM: userNickNM,
+                    userProfil: userProfil,
                   );
                 },
               ),
@@ -88,3 +73,4 @@ class _LikeCommentState extends ConsumerState<LikeComment> {
     );
   }
 }
+// 좋아요와 유지되지 않고 삭제가 실시간 반영이 안됨 

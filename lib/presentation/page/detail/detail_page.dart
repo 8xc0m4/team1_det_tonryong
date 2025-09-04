@@ -4,41 +4,51 @@ import 'package:team1_det_tonryong/presentation/page/detail/view_model/detail_vi
 import 'package:team1_det_tonryong/presentation/page/detail/widget/delete_button.dart';
 import 'package:team1_det_tonryong/presentation/page/detail/widget/floating_comment.dart';
 import 'package:team1_det_tonryong/presentation/page/detail/widget/like_comment.dart';
-import 'package:team1_det_tonryong/presentation/page/home/home_view_model.dart';
 
 class DetailPage extends ConsumerWidget {
   final String feedPhoto;
+  final int feedLike;
   final String feedId;
   final DateTime feedTime;
   final String writerNM;
   final List<String> fLikeUsers;
   final String userNickNM;
   final String userProfil;
+  final String userId;
   final String tag;
   DetailPage({
     super.key,
     required this.feedPhoto,
+    required this.feedLike,
     required this.feedId,
     required this.feedTime,
     required this.writerNM,
     required this.fLikeUsers,
     required this.userNickNM,
     required this.userProfil,
+    required this.userId,
     required this.tag,
   });
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     print(feedPhoto);
     final state = ref.watch(detailViewModelProvider(feedId));
-    final String bestComment = state.isEmpty
+    final String bestComment = state.bestComments.isEmpty
         ? ''
-        : state[0].comment;
+        : state.bestComments[0].comment;
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: Image.asset('assets/icon/appbar_logo.png'),
         centerTitle: true,
         actions: [
           DeleteButton(
+            feedId: feedId,
+            key: key,
+            userNM: userNickNM,
+            writerNM: writerNM,
             onDelete: () {
               Text('삭제됨'); // 작성자만 보이게 만들기
               Navigator.pop(context); // 삭제하고 홈페이지로 이동 구현하기
@@ -90,19 +100,20 @@ class DetailPage extends ConsumerWidget {
             padding: EdgeInsets.all(5),
             width: 400,
             height: 300,
-            color: Color(0xfff1f1f1),
+            color: Colors.white,
             child: Stack(
               children: [
-                FloatingCommentManager(state: state), // 댓글 표시
+                FloatingCommentManager(state: state.bestComments), // 댓글 표시
                 Positioned(
                   //하트, 댓글 아이콘 위치
                   right: 10,
                   top: 100,
                   child: LikeComment(
-                    fLikeUsers: fLikeUsers,
                     feedId: feedId,
+                    feedLike: feedLike,
                     userNickNM: userNickNM,
                     userProfil: userProfil,
+                    userId: userId,
                   ),
                 ),
               ],
