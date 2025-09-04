@@ -36,7 +36,10 @@ final router = GoRouter(
         GoRoute(
           path: '/write',
           builder: (context, state) {
-            return WritePage();
+            final data = state.extra as Map<String, dynamic>;
+            return WritePage(
+              userNM: data['userNickNM'],
+            );
           },
         ),
         GoRoute(
@@ -47,6 +50,7 @@ final router = GoRouter(
               feed: data['feed'],
               userNickNM: data['userNickNM'],
               userProfil: data['userProfil'],
+              userId: data['userId'],
               tag: data['tag'],
             );
           },

@@ -8,11 +8,9 @@ import 'package:team1_det_tonryong/presentation/page/write/write_page.dart';
 class HomePage extends ConsumerWidget {
   final String userNickNM;
   final String userProfil;
-  final String uid;
   HomePage({
     required this.userNickNM,
     required this.userProfil,
-    required this.uid,
   });
 
   @override
@@ -36,6 +34,9 @@ class HomePage extends ConsumerWidget {
               onTap: () {
                 context.push(
                   '/home/write',
+                  extra: {
+                    'userNickNM': userNickNM,
+                  },
                 );
               },
               child: Image.asset('assets/icon/pen2.png'),
@@ -49,7 +50,6 @@ class HomePage extends ConsumerWidget {
           result: result,
           userNickNM: userNickNM,
           userProfil: userProfil,
-          uid: uid,
           // result: result,
           // userNickNM: userNickNM,
           // userProfil: userProfil,

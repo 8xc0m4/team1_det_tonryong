@@ -8,9 +8,8 @@ import 'package:team1_det_tonryong/presentation/page/write/widgets/write_image.d
 import 'package:team1_det_tonryong/presentation/page/write/write_view_model.dart';
 
 class WritePage extends StatelessWidget {
-  String uid;
   String userNM;
-  WritePage({required this.uid, required this.userNM});
+  WritePage({required this.userNM});
 
   @override
   Widget build(BuildContext context) {
@@ -33,11 +32,11 @@ class WritePage extends StatelessWidget {
                     await ref
                         .read(writeViewModelProvider.notifier)
                         .createFeed(
-                          uid: uid,
                           feedPhoto: imagePath,
                           userNM: userNM,
                         );
-                    ref.read(imageFileProvider.notifier).state = null;
+                    ref.read(imageFileProvider.notifier).state =
+                        null;
                     Navigator.pop(context);
                   } else {
                     CupertinoAlertDialog(

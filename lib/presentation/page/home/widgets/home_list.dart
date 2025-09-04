@@ -9,12 +9,10 @@ class HomeList extends ConsumerStatefulWidget {
     required this.result,
     required this.userNickNM,
     required this.userProfil,
-    required this.uid,
   });
   final HomeState result;
   final String userNickNM;
   final String userProfil;
-  final String uid;
 
   @override
   ConsumerState<HomeList> createState() => _HomeListState();
@@ -51,29 +49,40 @@ class _HomeListState extends ConsumerState<HomeList> {
           final feed = widget.result.getFeedsPhoto![index];
           return GestureDetector(
             onTap: () async {
-              bool? deleted = await Navigator.push(
-                //
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return DetailPage(
-                      feedPhoto: feed.feedPhoto,
-                      feedId: feed.feedId,
-                      feedTime: feed.feedTime,
-                      writerNM: feed.userNM,
-                      fLikeUsers: feed.fLikeUsers,
-                      userNickNM: widget.userNickNM,
-                      userProfil: widget.userProfil,
-                      tag: widget
-                          .result
-                          .getFeedsPhoto![index]
-                          .feedPhoto,
-                      feedLike: feed.feedLike,
-                      userId: feed.feedId,
-                    );
-                  },
-                ),
+              bool? deleted = await context.push(
+                '/home/detail',
+                extra: {
+                  'feed': feed,
+                  'userNickNM': widget.userNickNM,
+                  'userProfil': widget.userProfil,
+                  'userId': feed.feedId,
+                  'tag': feed.feedPhoto,
+                },
               );
+
+              // Navigator.push(
+              //   //
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) {
+              //       return DetailPage(
+              //         feedPhoto: feed.feedPhoto,
+              //         feedId: feed.feedId,
+              //         feedTime: feed.feedTime,
+              //         writerNM: feed.userNM,
+              //         fLikeUsers: feed.fLikeUsers,
+              //         userNickNM: widget.userNickNM,
+              //         userProfil: widget.userProfil,
+              //         tag: widget
+              //             .result
+              //             .getFeedsPhoto![index]
+              //             .feedPhoto,
+              //         feedLike: feed.feedLike,
+              //         userId: feed.feedId,
+              //       );
+              //     },
+              //   ),
+              // );
               // context.push(
               //   '/home/detail',
               //   extra: {

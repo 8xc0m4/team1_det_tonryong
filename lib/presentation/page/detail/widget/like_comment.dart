@@ -65,9 +65,9 @@ class LikeComment extends ConsumerWidget {
             context.push(
               '/home/detail/comment',
               extra: {
-                'feedId': widget.feedId,
-                'userNM': widget.userNickNM,
-                'userProfil': widget.userProfil,
+                'feedId': feedId,
+                'userNM': userNickNM,
+                'userProfil': userProfil,
               },
             );
           },

@@ -28,7 +28,7 @@ class DetailPage extends ConsumerWidget {
     final state = ref.watch(
       detailViewModelProvider(feed.feedId),
     );
-    final String bestComment = state.isEmpty
+    final String bestComment = state.bestComments.isEmpty
         ? ''
         : state.bestComments[0].comment;
     return Scaffold(
@@ -106,7 +106,7 @@ class DetailPage extends ConsumerWidget {
                   right: 10,
                   top: 100,
                   child: LikeComment(
-                    fLikeUsers: feed.fLikeUsers,
+                    feedLike: feed.feedLike,
                     feedId: feed.feedId,
                     userNickNM: userNickNM,
                     userProfil: userProfil,

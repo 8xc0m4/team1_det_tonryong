@@ -10,12 +10,10 @@ class WriteUsercase {
   }
 
   Future<bool> createFeed({
-    required String uid,
     required String feedPhoto,
     required String userNM,
   }) async {
     return await repository.creatFeed(
-      uid: uid,
       feedPhoto: feedPhoto,
       userNM: userNM,
     );
