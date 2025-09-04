@@ -8,21 +8,22 @@ class DeleteButton extends ConsumerWidget {
   final VoidCallback onDelete;
   final String feedId;
   final String userNM;
+  final String writerNM;
 
   const DeleteButton({
     super.key,
     required this.onDelete,
     required this.feedId,
     required this.userNM,
+    required this.writerNM,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     //사용자 UserNM 가져오기
-    final currentuserNM =
-        FirebaseAuth.instance.currentUser?.displayName; // UserNM 가죠오기
+
     //작성자만 삭제 버튼 보이게
-    if (currentuserNM != userNM) return SizedBox.shrink();
+    if (writerNM != userNM) return SizedBox.shrink();
     return GestureDetector(
       onTap: () {
         showDialog(
@@ -37,12 +38,9 @@ class DeleteButton extends ConsumerWidget {
               ),
 
               TextButton(
-                onPressed: () async {
-                  await ref //
-                      .read(detailViewModelProvider(feedId).notifier)
-                      .deleteFeed(feedId);
+                onPressed: () {
                   Navigator.pop(context);
-                  Navigator.pop(context);
+                  Navigator.pop(context, true);
                 },
                 child: const Text('삭제'),
               ),
@@ -58,5 +56,4 @@ class DeleteButton extends ConsumerWidget {
     );
   }
 }
-// 페이지 별 데이터 연결
-// 파이어베이스 연결
+// 닉네임이 같아도 삭제버튼이 안나옴

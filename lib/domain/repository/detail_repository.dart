@@ -7,5 +7,4 @@ abstract interface class DetailRepository {
     required bool liked,
     required String userNM,
   });
-  Future<void> deleteFeed(String id); //
 }

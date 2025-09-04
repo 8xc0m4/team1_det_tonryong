@@ -21,9 +21,6 @@ class DetailUsecase {
       userNM: userNM,
     );
   }
-
-  Future<void> delExecute(String id) async {
-    await _detailRepository.deleteFeed(id);
-  }
 }
+
 //

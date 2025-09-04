@@ -42,9 +42,6 @@ class DetailViewModel extends AutoDisposeFamilyNotifier<DetailState, String> {
   }
 
   //
-  Future<void> deleteFeed(String feedId) async {
-    await ref.read(detailUsecaseProvider).delExecute(feedId);
-  }
 } //
 
 class DetailState {

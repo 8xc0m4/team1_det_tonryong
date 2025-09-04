@@ -47,8 +47,9 @@ class _HomeListState extends ConsumerState<HomeList> {
         itemBuilder: (context, index) {
           final feed = widget.result.getFeedsPhoto![index];
           return GestureDetector(
-            onTap: () {
-              Navigator.push(
+            onTap: () async {
+              bool? deleted = await Navigator.push(
+                //
                 context,
                 MaterialPageRoute(
                   builder: (context) {
@@ -67,6 +68,12 @@ class _HomeListState extends ConsumerState<HomeList> {
                   },
                 ),
               );
+              if (deleted == true) {
+                //
+                ref
+                    .read(homeViewModelProvider.notifier)
+                    .deleteFeed(feed.feedId);
+              }
             },
             child: Hero(
               tag: widget.result.getFeedsPhoto![index].feedPhoto,

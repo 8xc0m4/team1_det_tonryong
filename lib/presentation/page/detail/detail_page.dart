@@ -47,7 +47,8 @@ class DetailPage extends ConsumerWidget {
           DeleteButton(
             feedId: feedId,
             key: key,
-            userNM: writerNM,
+            userNM: userNickNM,
+            writerNM: writerNM,
             onDelete: () {
               Text('삭제됨'); // 작성자만 보이게 만들기
               Navigator.pop(context); // 삭제하고 홈페이지로 이동 구현하기
