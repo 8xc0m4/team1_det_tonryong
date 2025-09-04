@@ -49,6 +49,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   Widget build(BuildContext context) {
     final userList = ref.watch(userViewModelProvider);
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SizedBox(
         height: double.infinity,
         width: double.infinity,
@@ -57,7 +58,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Image.asset('assets/icon/dtr_logo.png'),
-            SizedBox(height: 80),
+            SizedBox(height: 60),
             GestureDetector(
               onTap: () async {
                 final user = await login();
@@ -73,15 +74,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           'userProfil': user.user!.photoURL!,
                         },
                       );
-                      // Navigator.pushReplacement(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) => HomePage(
-                      //       userNickNM: i.nickNM,
-                      //       userProfil: user.user!.photoURL!,
-                      //     ),
-                      //   ),
-                      // );
                       return;
                       //일치하는게 없으면 닉네임 다이얼로그
                     }
@@ -223,22 +215,26 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   Container googleLogin() {
     return Container(
       height: 58,
-      width: 372,
+      width: 300,
       decoration: BoxDecoration(
-        color: Color(0xFFBABABA),
+        color: Color(0xFFFFFFFF),
         borderRadius: BorderRadius.circular(15),
+        border: Border.all(color: Colors.black, width: 1.5),
       ),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(width: 25),
-          Image.asset('assets/icon/google.png'),
-          SizedBox(width: 35),
+          Image.asset(
+            'assets/icon/google.png',
+            scale: 1.7,
+          ),
+          SizedBox(width: 10),
           Text(
-            'Sign In With Google',
+            'Sign in with Google',
             style: TextStyle(
-              color: Colors.white,
+              color: Color(0xFF1F1F1F),
               fontSize: 24,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w500,
             ),
           ),
         ],

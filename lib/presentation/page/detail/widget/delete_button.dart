@@ -1,46 +1,55 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:team1_det_tonryong/presentation/page/home/home_page.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:team1_det_tonryong/presentation/page/detail/view_model/detail_view_model.dart';
 
 // 게시물 삭제 하기
-class DeleteButton extends StatelessWidget {
-  final String userNickNM;
-  final String userProfil;
+class DeleteButton extends ConsumerWidget {
   final VoidCallback onDelete;
+  final String feedId;
+  final String userNM;
+  final String writerNM;
 
   const DeleteButton({
     super.key,
     required this.onDelete,
-    required this.userNickNM,
-    required this.userProfil,
+    required this.feedId,
+    required this.userNM,
+    required this.writerNM,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    //사용자 UserNM 가져오기
+
+    //작성자만 삭제 버튼 보이게
+    if (writerNM != userNM) return SizedBox.shrink();
     return GestureDetector(
       onTap: () {
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
             title: const Text('게시물 삭제'),
-            content: const Text('정말 삭제하시겠습니까?'),
+            content: const Text('왕이 없습니다. \n정말 삭제하시겠습니까?'),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
                 child: const Text('취소'),
               ),
+
               TextButton(
                 onPressed: () {
-                  context.push(
-                    '/home',
-                    extra: {
-                      'userNickNM': userNickNM,
-                      'userProfil': userProfil,
-                    },
-                  );
-                  // Navigator.pop(context);
-                  // Navigator.pop(context);
+                  Navigator.pop(context);
+                  Navigator.pop(context, true);
                 },
+
+                // context.push(
+                //     '/home',
+                //     extra: {
+                //       'userNickNM': userNickNM,
+                //       'userProfil': userProfil,
+                //     },
+                //   );
                 child: const Text('삭제'),
               ),
             ],
@@ -55,5 +64,4 @@ class DeleteButton extends StatelessWidget {
     );
   }
 }
-// 페이지 별 데이터 연결
-// 파이어베이스 연결
+// 닉네임이 같아도 삭제버튼이 안나옴

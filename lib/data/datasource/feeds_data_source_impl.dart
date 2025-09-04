@@ -10,8 +10,8 @@ class FeedsDataSourceImpl implements FeedsDataSource {
     final firestore = FirebaseFirestore.instance;
     Query<Map<String, dynamic>> colRef = firestore
         .collection('feeds')
-        .orderBy('feedLike', descending: true)
-        .orderBy(FieldPath.documentId, descending: true)
+        .orderBy('feedTime', descending: false)
+        //  .orderBy(FieldPath.documentId, descending: true)
         .limit(10);
     if (_lastDoc != null) {
       colRef = colRef.startAfterDocument(
@@ -19,9 +19,11 @@ class FeedsDataSourceImpl implements FeedsDataSource {
       );
     }
     final result = await colRef.get();
+
     final doc = result.docs;
     if (doc.isNotEmpty) {
       _lastDoc = doc.last;
+      print(_lastDoc?.id);
     }
     return doc
         .map(
@@ -64,5 +66,22 @@ class FeedsDataSourceImpl implements FeedsDataSource {
       print(e);
       return List<CommentDto>.empty();
     }
+  }
+
+  @override
+  Future<void> feedLikeUpdate({
+    required String feedId,
+    required bool liked,
+    required String userNM,
+  }) async {
+    final firestore = FirebaseFirestore.instance;
+    final colref = firestore.collection('feeds');
+    final docref = colref.doc(feedId);
+    final feedLikeRef = docref.update({
+      'feedLike': liked ? FieldValue.increment(1) : FieldValue.increment(-1),
+      'fLikeUsers': liked
+          ? FieldValue.arrayUnion([userNM])
+          : FieldValue.arrayRemove([userNM]),
+    });
   }
 }
