@@ -8,6 +8,7 @@ class CommentDto {
   final String commentUserNM;
   final String comment;
   final List<String> cLikeUsers;
+  final String userProfil;
 
   CommentDto({
     required this.commentId,
@@ -16,6 +17,7 @@ class CommentDto {
     required this.commentUserNM,
     required this.comment,
     required this.cLikeUsers,
+    required this.userProfil,
   });
 
   CommentDto.fromJson(String commentId, Map<String, dynamic> map)
@@ -26,6 +28,7 @@ class CommentDto {
         commentUserNM: map["commentUserNM"],
         comment: map["comment"],
         cLikeUsers: List<String>.from(map['cLikeUsers'] ?? []),
+        userProfil: map["userProfil"],
       );
   Map<String, dynamic> toJson() {
     return {
@@ -34,6 +37,7 @@ class CommentDto {
       "commentUserNM": commentUserNM,
       "comment": comment,
       "cLikeUsers": cLikeUsers,
+      "userProfil": userProfil,
     };
   }
 }

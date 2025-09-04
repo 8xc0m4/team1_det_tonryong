@@ -11,20 +11,24 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:team1_det_tonryong/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  DateTime test = DateTime(2025, 8, 02, 12, 14);
+  print(timeAgo(test));
+}
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+String timeAgo(DateTime date) {
+  final diff = DateTime.now().difference(date);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
-  });
+  if (diff.inSeconds < 60) {
+    return '방금 전';
+  } else if (diff.inMinutes < 60) {
+    return '${diff.inMinutes}분 전';
+  } else if (diff.inHours < 24) {
+    return '${diff.inHours}시간 전';
+  } else if (diff.inDays < 30) {
+    return '${diff.inDays}일 전';
+  } else if (diff.inDays < 365) {
+    return '${diff.inDays ~/ 30}개월 전';
+  } else {
+    return '${diff.inDays ~/ 365}년 전';
+  }
 }

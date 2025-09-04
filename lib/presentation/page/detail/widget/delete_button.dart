@@ -23,10 +23,8 @@ class DeleteButton extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => HomePage()),
-                  );
+                  Navigator.pop(context);
+                  Navigator.pop(context);
                 },
                 child: const Text('삭제'),
               ),
