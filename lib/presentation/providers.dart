@@ -35,8 +35,3 @@ final getFeedUsecaseProvider = Provider(
     return GetFeedUsecase(ref.read(_feedsRepositoryProvider));
   },
 );
-
-final deleteFeedUsecaseProvider = Provider<DeleteFeedUsecase>((ref) {
-  final refo = ref.watch(_feedsRepositoryProvider);
-  return DeleteFeedUsecase(refo); //
-});

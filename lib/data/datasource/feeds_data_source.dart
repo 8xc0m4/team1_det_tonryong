@@ -11,5 +11,5 @@ abstract interface class FeedsDataSource {
     required bool liked,
     required String userNM,
   });
-  // Future<bool> delete(String id);
+  Future<void> deleteFeed(String id);
 }

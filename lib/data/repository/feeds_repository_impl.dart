@@ -41,14 +41,4 @@ class FeedsRepositoryImpl implements FeedsRepository {
   }
 
   //
-  @override
-  Future<bool> deleteFeed(String id) async {
-    try {
-      await firestore.collection('feed').doc(id).delete();
-      return true;
-    } catch (e) {
-      print(e);
-      return false;
-    }
-  }
 }

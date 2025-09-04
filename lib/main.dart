@@ -26,14 +26,14 @@ class MyApp extends StatelessWidget {
   }
 }
 
-FeedDto test = FeedDto(
-  feedId: 'fu7Wtfzxo2c4urwd2aNT',
-  userNM: 'dltkdfhr',
-  feedTime: DateTime.now(),
-  feedLike: 4,
-  feedPhoto: 'assets/icon/hansukwon.png',
-  fLikeUsers: ['이상록', '김현수', '노서연', '임우형'],
-);
+// FeedDto test = FeedDto(
+//   feedId: 'fu7Wtfzxo2c4urwd2aNT',
+//   userNM: 'dltkdfhr',
+//   feedTime: DateTime.now(),
+//   feedLike: 4,
+//   feedPhoto: 'assets/icon/hansukwon.png',
+//   fLikeUsers: ['이상록', '김현수', '노서연', '임우형'],
+// );
 
 // 문제 : 베스트 댓글이 적용 안됌
 // 피드 좋아요 적용 안됌

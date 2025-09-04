@@ -29,6 +29,10 @@ class HomeViewModel extends Notifier<HomeState> {
     state = HomeState(getFeedsPhoto: result ?? []);
   }
 
+  Future<void> refreshFeeds() async {
+    loadPhoto(); // 삭제 후 새로고침
+  }
+
   Future<void> loadMorePhoto() async {
     print("_로드모어 호출됨");
     if (_isLoading || !_hasMore) return;

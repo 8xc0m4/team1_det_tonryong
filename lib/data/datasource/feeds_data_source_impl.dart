@@ -85,17 +85,17 @@ class FeedsDataSourceImpl implements FeedsDataSource {
     });
   }
 
-  // @override
-  // Future<bool> delete(String id) async {
-  //   try {
-  //     final firestore = FirebaseFirestore.instance;
-  //     final colRef = firestore.collection('feeds');
-  //     final docRef = colRef.doc(id);
-  //     await docRef.delete();
-  //     return true;
-  //   } catch (e) {
-  //     print(e);
-  //     return false;
-  //   }
-  // }
+  @override
+  Future<void> deleteFeed(String id) async {
+    try {
+      final firestore = FirebaseFirestore.instance;
+      final colRef = firestore.collection('feeds');
+      final docRef = colRef.doc(id);
+      await docRef.delete();
+      return;
+    } catch (e) {
+      print(e);
+      return;
+    }
+  }
 }

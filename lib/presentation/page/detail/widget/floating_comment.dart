@@ -88,7 +88,7 @@ class _FloatingCommentManagerState
       return Container(
         width: double.infinity,
         height: 300,
-        color: const Color(0xfff1f1f1),
+        color: Colors.white,
         alignment: Alignment.center,
         child: const Text(
           '제목의 왕 자리에 도전해보세요!',

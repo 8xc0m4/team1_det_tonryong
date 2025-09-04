@@ -61,6 +61,8 @@ class _HomeListState extends ConsumerState<HomeList> {
                       userNickNM: widget.userNickNM,
                       userProfil: widget.userProfil,
                       tag: widget.result.getFeedsPhoto![index].feedPhoto,
+                      feedLike: feed.feedLike,
+                      userId: feed.feedId,
                     );
                   },
                 ),

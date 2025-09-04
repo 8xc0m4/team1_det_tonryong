@@ -29,6 +29,7 @@ class DetailPage extends ConsumerWidget {
     required this.userId,
     required this.tag,
   });
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     print(feedPhoto);
@@ -37,7 +38,9 @@ class DetailPage extends ConsumerWidget {
         ? ''
         : state.bestComments[0].comment;
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: Image.asset('assets/icon/appbar_logo.png'),
         centerTitle: true,
         actions: [
@@ -96,7 +99,7 @@ class DetailPage extends ConsumerWidget {
             padding: EdgeInsets.all(5),
             width: 400,
             height: 300,
-            color: Color(0xfff1f1f1),
+            color: Colors.white,
             child: Stack(
               children: [
                 FloatingCommentManager(state: state.bestComments), // 댓글 표시
