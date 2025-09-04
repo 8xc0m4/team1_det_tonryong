@@ -7,7 +7,6 @@ import 'package:team1_det_tonryong/presentation/page/detail/widget/like_comment.
 
 class DetailPage extends ConsumerWidget {
   final String feedPhoto;
-  final int feedLike;
   final String feedId;
   final DateTime feedTime;
   final String writerNM;
@@ -19,7 +18,6 @@ class DetailPage extends ConsumerWidget {
   DetailPage({
     super.key,
     required this.feedPhoto,
-    required this.feedLike,
     required this.feedId,
     required this.feedTime,
     required this.writerNM,
@@ -32,8 +30,9 @@ class DetailPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    print(feedPhoto);
-    final state = ref.watch(detailViewModelProvider(feedId));
+    final state = ref.watch(
+      detailViewModelProvider(feedId),
+    );
     final String bestComment = state.bestComments.isEmpty
         ? ''
         : state.bestComments[0].comment;
@@ -51,6 +50,7 @@ class DetailPage extends ConsumerWidget {
             writerNM: writerNM,
             onDelete: () {
               Text('삭제됨'); // 작성자만 보이게 만들기
+
               Navigator.pop(context); // 삭제하고 홈페이지로 이동 구현하기
             },
           ),
@@ -103,14 +103,18 @@ class DetailPage extends ConsumerWidget {
             color: Colors.white,
             child: Stack(
               children: [
-                FloatingCommentManager(state: state.bestComments), // 댓글 표시
+                FloatingCommentManager(
+                  state: state.bestComments,
+                ), // 댓글 표시
+                FloatingCommentManager(
+                  state: state.bestComments,
+                ), // 댓글 표시
                 Positioned(
                   //하트, 댓글 아이콘 위치
                   right: 10,
                   top: 100,
                   child: LikeComment(
                     feedId: feedId,
-                    feedLike: feedLike,
                     userNickNM: userNickNM,
                     userProfil: userProfil,
                     userId: userId,

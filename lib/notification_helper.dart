@@ -1,17 +1,18 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:team1_det_tonryong/domain/entity/home_entity.dart';
-import 'package:team1_det_tonryong/main.dart';
-import 'package:team1_det_tonryong/presentation/page/comment/comment_page.dart';
 import 'package:team1_det_tonryong/presentation/page/detail/detail_page.dart';
+import 'package:team1_det_tonryong/router.dart';
 
 class NotificationHelper {
-  static final flutterNotificationPlugin = FlutterLocalNotificationsPlugin();
+  static final flutterNotificationPlugin =
+      FlutterLocalNotificationsPlugin();
   static Future<void> init() async {
     //  안드로이드 초기화 설정
-    final androidSetting = AndroidInitializationSettings('@mipmap/ic_launcher');
+    final androidSetting = AndroidInitializationSettings(
+      '@mipmap/ic_launcher',
+    );
     // ios 초기화 설정
     final darwinSetting = DarwinInitializationSettings(
       // 알림 권한
@@ -44,12 +45,28 @@ class NotificationHelper {
                 writerNM: feedMap['userNM'],
                 fLikeUsers: List.from(feedMap['fLikeUsers']),
                 userNickNM: feedMap['userNM'],
+                userId: '',
                 userProfil: '',
                 tag: '',
               );
             },
           ),
         );
+        // context.push(
+        //   '/home/detail',
+        //   navigatorKey.currentState!.context,
+        //   extra: {
+        //     'feedPhoto': feed.feedPhoto,
+        //     'feedId': feed.feedId,
+        //     'feedTime': feed.feedTime,
+        //     'writerNM': feed.userNM,
+        //     'fLikeUsers': feed.fLikeUsers,
+        //     'userNickNM': widget.userNickNM,
+        //     'userProfil': widget.userProfil,
+        //     'userId': feed.feedId,
+        //     'tag': feed.feedPhoto,
+        //   },
+        // );
       },
     );
     final androidPlugin = flutterNotificationPlugin

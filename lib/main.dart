@@ -1,12 +1,11 @@
 import 'dart:async';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:team1_det_tonryong/firebase_options.dart';
 import 'package:team1_det_tonryong/notification_helper.dart';
-import 'package:team1_det_tonryong/presentation/page/welcome/welcome_page.dart';
+import 'package:team1_det_tonryong/router.dart';
 
 void main() async {
   runZonedGuarded(
@@ -33,11 +32,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: WelcomePage(),
-      navigatorKey: navigatorKey,
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      routerConfig: router,
     );
   }
 }
-
-final navigatorKey = GlobalKey<NavigatorState>();

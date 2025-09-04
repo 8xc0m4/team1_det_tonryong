@@ -110,7 +110,7 @@ class _CommentPageState extends ConsumerState<CommentPage> {
                         ),
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 15,
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(
@@ -120,11 +120,15 @@ class _CommentPageState extends ConsumerState<CommentPage> {
                           crossAxisAlignment:
                               CrossAxisAlignment.center,
                           children: [
-                            Text(
-                              '댓글',
-                              style: TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
+                            Transform.translate(
+                              offset: Offset(0, -1),
+                              child: Text(
+                                '댓글',
+                                style: TextStyle(
+                                  height: 1,
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                             SizedBox(
@@ -142,7 +146,7 @@ class _CommentPageState extends ConsumerState<CommentPage> {
                         ),
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 15,
                       ),
                       Container(
                         width: double.infinity,

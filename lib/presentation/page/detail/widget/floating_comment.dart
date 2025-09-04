@@ -19,7 +19,6 @@ class _FloatingCommentManagerState
   // 현재 화면에 댓글리스트 표시
   final List<_FloatingComment> activeComments = [];
   final Random random = Random(); // 랜덤 표시
-  Timer? _timer;
 
   @override
   void initState() {
@@ -28,7 +27,9 @@ class _FloatingCommentManagerState
   }
 
   void _startCommentSpawner() {
-    _timer = Timer.periodic(const Duration(seconds: 2), (timer) {
+    var _timer = Timer.periodic(const Duration(seconds: 2), (
+      timer,
+    ) {
       List<String> displayComments = [];
       if (widget.state.length == 1) {
         displayComments = [];
@@ -53,7 +54,8 @@ class _FloatingCommentManagerState
       //화면 밖에 안빠져 나가게 하기
       final screenWidth = MediaQuery.of(context).size.width;
 
-      final randomX = random.nextDouble() * (screenWidth * 0.5); // 공범
+      final randomX =
+          random.nextDouble() * (screenWidth * 0.5); // 공범
       final randomY = random.nextDouble() * (250.0); // 여기가 범인
 
       if (displayComments.isNotEmpty) {
@@ -77,7 +79,6 @@ class _FloatingCommentManagerState
 
   @override
   void dispose() {
-    _timer?.cancel();
     super.dispose();
   }
 
@@ -121,7 +122,8 @@ class _FloatingComment extends StatefulWidget {
   });
 
   @override
-  State<_FloatingComment> createState() => _FloatingCommentState();
+  State<_FloatingComment> createState() =>
+      _FloatingCommentState();
 }
 
 class _FloatingCommentState extends State<_FloatingComment>
@@ -158,7 +160,9 @@ class _FloatingCommentState extends State<_FloatingComment>
           WidgetsBinding.instance.addPostFrameCallback((_) {
             if (mounted) {
               final parentState = context
-                  .findAncestorStateOfType<_FloatingCommentManagerState>();
+                  .findAncestorStateOfType<
+                    _FloatingCommentManagerState
+                  >();
               parentState?.setState(() {
                 parentState.activeComments.remove(widget);
               });
@@ -167,6 +171,12 @@ class _FloatingCommentState extends State<_FloatingComment>
         }
       }
     });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override

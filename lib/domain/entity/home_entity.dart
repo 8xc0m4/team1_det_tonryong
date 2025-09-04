@@ -4,7 +4,6 @@ class HomeEntity {
   DateTime feedTime;
   List<String> fLikeUsers;
   String userNM;
-  int feedLike;
 
   HomeEntity({
     required this.feedPhoto,
@@ -12,6 +11,5 @@ class HomeEntity {
     required this.feedTime,
     required this.fLikeUsers,
     required this.userNM,
-    required this.feedLike,
   });
 }

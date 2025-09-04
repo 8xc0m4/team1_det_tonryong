@@ -14,14 +14,12 @@ class WriteViewModel extends Notifier<Null> {
   }
 
   Future<bool> createFeed({
-    required String uid,
     required String feedPhoto,
     required String userNM,
   }) async {
     try {
       final writeUseCase = ref.read(writeUsecaseProvider);
       await writeUseCase.createFeed(
-        uid: uid,
         feedPhoto: feedPhoto,
         userNM: userNM,
       );
@@ -33,8 +31,9 @@ class WriteViewModel extends Notifier<Null> {
   }
 }
 
-final writeViewModelProvider = NotifierProvider<WriteViewModel, Null>(
-  () {
-    return WriteViewModel();
-  },
-);
+final writeViewModelProvider =
+    NotifierProvider<WriteViewModel, Null>(
+      () {
+        return WriteViewModel();
+      },
+    );
