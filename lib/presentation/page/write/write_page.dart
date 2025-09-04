@@ -37,6 +37,7 @@ class WritePage extends StatelessWidget {
                           feedPhoto: imagePath,
                           userNM: userNM,
                         );
+                    ref.read(imageFileProvider.notifier).state = null;
                     Navigator.pop(context);
                   } else {
                     CupertinoAlertDialog(

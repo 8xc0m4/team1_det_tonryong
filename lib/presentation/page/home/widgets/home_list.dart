@@ -8,10 +8,12 @@ class HomeList extends ConsumerStatefulWidget {
     required this.result,
     required this.userNickNM,
     required this.userProfil,
+    required this.uid,
   });
   final HomeState result;
   final String userNickNM;
   final String userProfil;
+  final String uid;
 
   @override
   ConsumerState<HomeList> createState() => _HomeListState();
@@ -27,7 +29,7 @@ class _HomeListState extends ConsumerState<HomeList> {
               notification.metrics.pixels >=
                   notification.metrics.maxScrollExtent - 50) {
             setState(() {
-              ref.read(homeViewModelProvider);
+              ref.watch(homeViewModelProvider);
               ref.read(homeViewModelProvider.notifier).loadMorePhoto();
             });
           }
