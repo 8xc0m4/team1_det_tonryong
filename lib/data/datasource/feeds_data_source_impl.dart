@@ -67,4 +67,21 @@ class FeedsDataSourceImpl implements FeedsDataSource {
       return List<CommentDto>.empty();
     }
   }
+
+  @override
+  Future<void> feedLikeUpdate({
+    required String feedId,
+    required bool liked,
+    required String userNM,
+  }) async {
+    final firestore = FirebaseFirestore.instance;
+    final colref = firestore.collection('feeds');
+    final docref = colref.doc(feedId);
+    final feedLikeRef = docref.update({
+      'feedLike': liked ? FieldValue.increment(1) : FieldValue.increment(-1),
+      'fLikeUsers': liked
+          ? FieldValue.arrayUnion([userNM])
+          : FieldValue.arrayRemove([userNM]),
+    });
+  }
 }
