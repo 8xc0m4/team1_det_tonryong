@@ -7,10 +7,13 @@ import 'package:team1_det_tonryong/presentation/page/write/write_page.dart';
 class HomePage extends ConsumerWidget {
   final String userNickNM;
   final String userProfil;
+  final String uid;
   HomePage({
     required this.userNickNM,
     required this.userProfil,
+    required this.uid,
   });
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final result = ref.watch(homeViewModelProvider);
@@ -34,7 +37,10 @@ class HomePage extends ConsumerWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return WritePage();
+                      return WritePage(
+                        uid: uid,
+                        userNM: userNickNM,
+                      );
                     },
                   ),
                 );
@@ -50,6 +56,10 @@ class HomePage extends ConsumerWidget {
           result: result,
           userNickNM: userNickNM,
           userProfil: userProfil,
+          uid: uid,
+          // result: result,
+          // userNickNM: userNickNM,
+          // userProfil: userProfil,
         ),
       ),
     );
