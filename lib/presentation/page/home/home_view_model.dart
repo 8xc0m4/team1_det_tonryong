@@ -28,6 +28,7 @@ class HomeViewModel extends Notifier<HomeState> {
     state = HomeState(getFeedsPhoto: result ?? []);
   }
 
+
   List<HomeEntity> previousFeedList = [];
   // 여기에 피드 변화를 확인 메서드
   Future<void> changeLike(String userNickNM) async {
@@ -56,6 +57,8 @@ class HomeViewModel extends Notifier<HomeState> {
         previousFeedList = newFeedList;
       },
     );
+  void refreshFeeds() async {
+    loadPhoto(); // 삭제 후 새로고침
   }
 
   Future<void> loadMorePhoto() async {
@@ -82,6 +85,17 @@ class HomeViewModel extends Notifier<HomeState> {
       }
     }
     _isLoading = false;
+  }
+
+  // detail페이지에서 파이어베이스 삭제하기 때문에 List에서만 비워줌
+  void deleteFeed(String feedId) {
+    final newList = <HomeEntity>[];
+    for (var i = 0; i < (state.getFeedsPhoto?.length ?? 0); i++) {
+      if (state.getFeedsPhoto![i].feedId != feedId) {
+        newList.add(state.getFeedsPhoto![i]);
+      }
+    }
+    state = HomeState(getFeedsPhoto: newList);
   }
 }
 
