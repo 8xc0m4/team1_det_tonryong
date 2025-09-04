@@ -1,10 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:team1_det_tonryong/data/datasource/feeds_data_source.dart';
 import 'package:team1_det_tonryong/domain/entity/home_entity.dart';
 import 'package:team1_det_tonryong/domain/repository/feeds_repository.dart';
 
 class FeedsRepositoryImpl implements FeedsRepository {
-  FeedsRepositoryImpl(this._feedsDataSource);
+  FeedsRepositoryImpl(this._feedsDataSource, this.firestore);
   final FeedsDataSource _feedsDataSource;
+  final FirebaseFirestore firestore;
   @override
   Future<List<HomeEntity>?> getFeedsPhoto() async {
     final result = await _feedsDataSource.getFeeds();
@@ -23,5 +25,30 @@ class FeedsRepositoryImpl implements FeedsRepository {
           ),
         )
         .toList();
+  }
+
+  @override
+  Future<HomeEntity?> getFeed(String id) async {
+    final result = await _feedsDataSource.getDetail(id);
+    return HomeEntity(
+      feedPhoto: result.feedPhoto,
+      feedId: result.feedId,
+      feedTime: result.feedTime,
+      fLikeUsers: result.fLikeUsers,
+      userNM: result.userNM,
+      feedLike: result.feedLike,
+    );
+  }
+
+  //
+  @override
+  Future<bool> deleteFeed(String id) async {
+    try {
+      await firestore.collection('feed').doc(id).delete();
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
   }
 }

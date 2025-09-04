@@ -82,4 +82,18 @@ class FeedsDataSourceImpl implements FeedsDataSource {
           : FieldValue.arrayRemove([userNM]),
     });
   }
+
+  // @override
+  // Future<bool> delete(String id) async {
+  //   try {
+  //     final firestore = FirebaseFirestore.instance;
+  //     final colRef = firestore.collection('feeds');
+  //     final docRef = colRef.doc(id);
+  //     await docRef.delete();
+  //     return true;
+  //   } catch (e) {
+  //     print(e);
+  //     return false;
+  //   }
+  // }
 }

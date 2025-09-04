@@ -7,9 +7,12 @@ import 'package:team1_det_tonryong/presentation/page/write/write_page.dart';
 class HomePage extends ConsumerWidget {
   final String userNickNM;
   final String userProfil;
+  final String userId;
+
   HomePage({
     required this.userNickNM,
     required this.userProfil,
+    required this.userId,
   });
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -50,6 +53,7 @@ class HomePage extends ConsumerWidget {
           result: result,
           userNickNM: userNickNM,
           userProfil: userProfil,
+          userId: userId,
         ),
       ),
     );

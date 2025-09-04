@@ -71,6 +71,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           builder: (context) => HomePage(
                             userNickNM: i.nickNM,
                             userProfil: user.user!.photoURL!,
+                            userId: user.user!.uid,
                           ),
                         ),
                       );
@@ -136,10 +137,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     controller: controller,
                     onChanged: (_) {
                       // 재입력 시작하면 에러 제거
-                      ref
-                              .read(nickErrorProvider.notifier)
-                              .state =
-                          null;
+                      ref.read(nickErrorProvider.notifier).state = null;
                     },
                     decoration: InputDecoration(
                       errorText: errorText,
@@ -157,8 +155,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
         // 2) 비어있음 검증
         if (nick.isEmpty) {
-          ref.read(nickErrorProvider.notifier).state =
-              '닉네임을 입력하세요';
+          ref.read(nickErrorProvider.notifier).state = '닉네임을 입력하세요';
           return; // 다이얼로그는 열린 채로, TextField 아래에 에러만 표시
         }
 
@@ -172,8 +169,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         // 대소문자 무시하려면: (u) => u.nickNM.toLowerCase() == nick.toLowerCase()
 
         if (isDup) {
-          ref.read(nickErrorProvider.notifier).state =
-              '중복된 닉네임입니다';
+          ref.read(nickErrorProvider.notifier).state = '중복된 닉네임입니다';
           return; // 입력 유도
         }
 
@@ -198,6 +194,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             builder: (_) => HomePage(
               userNickNM: controller.text,
               userProfil: photoURL,
+              userId: uid,
             ),
           ),
         );

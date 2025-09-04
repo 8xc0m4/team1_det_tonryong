@@ -9,10 +9,12 @@ class HomeList extends ConsumerWidget {
     required this.result,
     required this.userNickNM,
     required this.userProfil,
+    required this.userId,
   });
   final HomeState result;
   final String userNickNM;
   final String userProfil;
+  final String userId;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return NotificationListener(
@@ -52,6 +54,7 @@ class HomeList extends ConsumerWidget {
                       userProfil: userProfil,
                       feedLike: feed.feedLike,
                       tag: result.getFeedsPhoto![index].feedPhoto,
+                      userId: userId,
                     );
                   },
                 ),

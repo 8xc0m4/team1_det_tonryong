@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:team1_det_tonryong/presentation/page/detail/view_model/detail_view_model.dart';
@@ -15,6 +14,7 @@ class DetailPage extends ConsumerWidget {
   final List<String> fLikeUsers;
   final String userNickNM;
   final String userProfil;
+  final String userId;
   final String tag;
   DetailPage({
     super.key,
@@ -26,13 +26,16 @@ class DetailPage extends ConsumerWidget {
     required this.fLikeUsers,
     required this.userNickNM,
     required this.userProfil,
+    required this.userId,
     required this.tag,
   });
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     print(feedPhoto);
     final state = ref.watch(detailViewModelProvider(feedId));
-    final String bestComment = state.isEmpty ? '' : state[0].comment;
+    final String bestComment = state.bestComments.isEmpty
+        ? ''
+        : state.bestComments[0].comment;
     return Scaffold(
       appBar: AppBar(
         title: Image.asset('assets/icon/appbar_logo.png'),
@@ -96,17 +99,17 @@ class DetailPage extends ConsumerWidget {
             color: Color(0xfff1f1f1),
             child: Stack(
               children: [
-                FloatingCommentManager(state: state), // 댓글 표시
+                FloatingCommentManager(state: state.bestComments), // 댓글 표시
                 Positioned(
                   //하트, 댓글 아이콘 위치
                   right: 10,
                   top: 100,
                   child: LikeComment(
-                    fLikeUsers: fLikeUsers,
                     feedId: feedId,
                     feedLike: feedLike,
                     userNickNM: userNickNM,
                     userProfil: userProfil,
+                    userId: userId,
                   ),
                 ),
               ],

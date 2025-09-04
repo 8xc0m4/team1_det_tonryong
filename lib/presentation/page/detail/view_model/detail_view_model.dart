@@ -2,43 +2,62 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:team1_det_tonryong/domain/entity/detail_entity.dart';
 import 'package:team1_det_tonryong/domain/entity/home_entity.dart';
 import 'package:team1_det_tonryong/presentation/detail_provider.dart';
+import 'package:team1_det_tonryong/presentation/providers.dart';
 
-class DetailState {
-  List<HomeEntity> getFeeds;
+final detailViewModelProvider = NotifierProvider.autoDispose
+    .family<DetailViewModel, DetailState, String>(
+      () => DetailViewModel(),
+    );
 
-  DetailState({required this.getFeeds});
-}
-
-class DetailViewModel
-    extends AutoDisposeFamilyNotifier<List<DetailEntity>, String> {
+class DetailViewModel extends AutoDisposeFamilyNotifier<DetailState, String> {
   @override
-  List<DetailEntity> build(String feedId) {
+  DetailState build(
+    String feedId,
+  ) {
     fetchDetail(feedId);
-    return [];
+    return DetailState(bestComments: [], feed: null);
   }
 
   Future<void> fetchDetail(String id) async {
     final getDetail = ref.read(detailUsecaseProvider);
     final result = await getDetail.execute(id);
-    state = result;
+    final feed = await ref.read(getFeedUsecaseProvider).execute(id);
+    bool like = false;
+
+    state = DetailState(bestComments: result, feed: feed);
   }
 
   Future<void> feedLikeUpdate({
-    required String feedId,
     required bool liked,
     required String userNM,
   }) async {
     await ref
         .read(detailUsecaseProvider)
         .feedLikeUpdate(
-          feedId: feedId,
+          feedId: arg,
           liked: liked,
           userNM: userNM,
         );
+    fetchDetail(arg);
   }
-}
 
-final detailViewModelProvider = NotifierProvider.autoDispose
-    .family<DetailViewModel, List<DetailEntity>, String>(
-      () => DetailViewModel(),
-    );
+  //
+  Future<void> deleteFeed(String id) async {
+    final del = await ref.read(deleteFeedUsecaseProvider).execute(id);
+    if (del) {
+      state = DetailState(bestComments: [], feed: null);
+    } else
+      (e) {
+        print(e);
+      };
+  }
+} //
+
+class DetailState {
+  List<DetailEntity> bestComments;
+  HomeEntity? feed;
+  DetailState({
+    required this.bestComments,
+    required this.feed,
+  });
+}

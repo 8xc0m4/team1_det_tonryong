@@ -1,9 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:team1_det_tonryong/presentation/page/detail/view_model/detail_view_model.dart';
 
 // 게시물 삭제 하기
-class DeleteButton extends StatelessWidget {
+class DeleteButton extends ConsumerWidget {
   final VoidCallback onDelete;
   final String feedId;
   final String userNM;
@@ -16,7 +17,7 @@ class DeleteButton extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     //사용자 UserNM 가져오기
     final currentuserNM =
         FirebaseAuth.instance.currentUser?.displayName; // UserNM 가죠오기
@@ -37,11 +38,9 @@ class DeleteButton extends StatelessWidget {
 
               TextButton(
                 onPressed: () async {
-                  // 파이어 베이스에서 피드 삭제
-                  await FirebaseFirestore.instance
-                      .collection('feeds')
-                      .doc(feedId)
-                      .delete();
+                  await ref //
+                      .read(detailViewModelProvider(feedId).notifier)
+                      .deleteFeed(feedId);
                   Navigator.pop(context);
                   Navigator.pop(context);
                 },

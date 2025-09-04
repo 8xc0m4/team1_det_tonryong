@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:team1_det_tonryong/data/dto/comment_dto.dart';
 import 'package:team1_det_tonryong/data/dto/feed_dto.dart';
 
@@ -10,4 +11,5 @@ abstract interface class FeedsDataSource {
     required bool liked,
     required String userNM,
   });
+  // Future<bool> delete(String id);
 }
