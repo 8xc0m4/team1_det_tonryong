@@ -46,14 +46,13 @@ class _FloatingCommentManagerState
           widget.state[3].comment,
         ];
       }
-
-      //2초마다 댓글생성
       if (!mounted) return;
 
       //화면 밖에 안빠져 나가게 하기
       final screenWidth = MediaQuery.of(context).size.width;
 
-      final randomX = random.nextDouble() * (screenWidth * 0.5); // 공범
+      final randomX =
+          random.nextDouble() * (screenWidth * 0.5); // 공범
       final randomY = random.nextDouble() * (250.0); // 여기가 범인
 
       if (displayComments.isNotEmpty) {
@@ -121,7 +120,8 @@ class _FloatingComment extends StatefulWidget {
   });
 
   @override
-  State<_FloatingComment> createState() => _FloatingCommentState();
+  State<_FloatingComment> createState() =>
+      _FloatingCommentState();
 }
 
 class _FloatingCommentState extends State<_FloatingComment>
@@ -158,7 +158,9 @@ class _FloatingCommentState extends State<_FloatingComment>
           WidgetsBinding.instance.addPostFrameCallback((_) {
             if (mounted) {
               final parentState = context
-                  .findAncestorStateOfType<_FloatingCommentManagerState>();
+                  .findAncestorStateOfType<
+                    _FloatingCommentManagerState
+                  >();
               parentState?.setState(() {
                 parentState.activeComments.remove(widget);
               });
@@ -167,6 +169,12 @@ class _FloatingCommentState extends State<_FloatingComment>
         }
       }
     });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
