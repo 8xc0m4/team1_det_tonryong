@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:team1_det_tonryong/presentation/page/detail/detail_page.dart';
 import 'package:team1_det_tonryong/presentation/page/home/home_view_model.dart';
-import 'package:team1_det_tonryong/presentation/page/write/write_page.dart';
 
-class HomeList extends ConsumerWidget {
-  HomeList({
+class HomeList extends ConsumerStatefulWidget {
+  const HomeList({
     required this.result,
     required this.userNickNM,
     required this.userProfil,
@@ -13,15 +12,24 @@ class HomeList extends ConsumerWidget {
   final HomeState result;
   final String userNickNM;
   final String userProfil;
+
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<HomeList> createState() => _HomeListState();
+}
+
+class _HomeListState extends ConsumerState<HomeList> {
+  @override
+  Widget build(BuildContext context) {
     return NotificationListener(
       onNotification: (notification) {
         if (notification is ScrollEndNotification) {
           if (notification.metrics.maxScrollExtent > 0 &&
               notification.metrics.pixels >=
                   notification.metrics.maxScrollExtent - 50) {
-            ref.read(homeViewModelProvider.notifier).loadMorePhoto();
+            setState(() {
+              ref.read(homeViewModelProvider);
+              ref.read(homeViewModelProvider.notifier).loadMorePhoto();
+            });
           }
         }
         return false;
@@ -33,9 +41,9 @@ class HomeList extends ConsumerWidget {
           crossAxisSpacing: 3,
           childAspectRatio: 1.3,
         ),
-        itemCount: result.getFeedsPhoto!.length,
+        itemCount: widget.result.getFeedsPhoto!.length,
         itemBuilder: (context, index) {
-          final feed = result.getFeedsPhoto![index];
+          final feed = widget.result.getFeedsPhoto![index];
           return GestureDetector(
             onTap: () {
               Navigator.push(
@@ -48,20 +56,20 @@ class HomeList extends ConsumerWidget {
                       feedTime: feed.feedTime,
                       writerNM: feed.userNM,
                       fLikeUsers: feed.fLikeUsers,
-                      userNickNM: userNickNM,
-                      userProfil: userProfil,
-                      tag: result.getFeedsPhoto![index].feedPhoto,
+                      userNickNM: widget.userNickNM,
+                      userProfil: widget.userProfil,
+                      tag: widget.result.getFeedsPhoto![index].feedPhoto,
                     );
                   },
                 ),
               );
             },
             child: Hero(
-              tag: result.getFeedsPhoto![index].feedPhoto,
+              tag: widget.result.getFeedsPhoto![index].feedPhoto,
               child: Container(
                 color: Colors.grey,
                 child: Image.network(
-                  result.getFeedsPhoto![index].feedPhoto,
+                  widget.result.getFeedsPhoto![index].feedPhoto,
                   fit: BoxFit.cover,
                 ),
               ),

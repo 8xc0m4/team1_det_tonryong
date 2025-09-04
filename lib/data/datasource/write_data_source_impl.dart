@@ -38,6 +38,7 @@ class WriteDataSourceImpl implements WriteDataSource {
         'feedPhoto': feedPhoto,
         'feedTime': now,
         'userNM': userNM,
+        'feedLike': 0,
         'fLikeUsers': [],
       });
       return true;

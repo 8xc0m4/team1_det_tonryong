@@ -5,7 +5,6 @@ import 'package:team1_det_tonryong/presentation/create_feed_provider.dart';
 class WriteViewModel extends Notifier<Null> {
   @override
   build() {
-    createFeed(uid: '', feedPhoto: '', userNM: '');
     return;
   }
 

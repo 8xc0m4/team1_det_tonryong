@@ -53,6 +53,9 @@ class HomePage extends ConsumerWidget {
           result: result,
           userNickNM: userNickNM,
           userProfil: userProfil,
+          // result: result,
+          // userNickNM: userNickNM,
+          // userProfil: userProfil,
         ),
       ),
     );
