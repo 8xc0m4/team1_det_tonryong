@@ -15,7 +15,7 @@ class BottomWritBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 100,
+      constraints: BoxConstraints(minHeight: 78, maxHeight: 130),
       decoration: BoxDecoration(
         color: Color(0xffFBC3D7),
         boxShadow: [
@@ -27,9 +27,7 @@ class BottomWritBox extends StatelessWidget {
       ),
       child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 20,
-          ),
+          padding: const EdgeInsets.only(left: 20, right: 15),
           child: Row(
             children: [
               CircleAvatar(
@@ -41,10 +39,17 @@ class BottomWritBox extends StatelessWidget {
               ),
               Flexible(
                 child: Container(
-                  height: 40,
+                  padding: EdgeInsets.symmetric(vertical: 15),
+                  constraints: BoxConstraints(minHeight: 40),
                   child: TextField(
+                    // textAlignVertical: TextAlignVertical(
+                    //   y: 0.01,
+                    // ),
                     controller: textEditingController,
                     decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: 12,
+                      ).copyWith(top: 8),
                       hintText: '제목 추가...',
                       hintStyle: TextStyle(
                         fontSize: 16,
@@ -62,11 +67,13 @@ class BottomWritBox extends StatelessWidget {
                         ),
                       ),
                     ),
+                    maxLines: null,
+                    textInputAction: TextInputAction.newline,
                   ),
                 ),
               ),
               SizedBox(
-                width: 10,
+                width: 15,
               ),
               GestureDetector(
                 onTap: () {

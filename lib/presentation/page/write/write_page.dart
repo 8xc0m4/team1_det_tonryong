@@ -1,16 +1,14 @@
-import 'dart:ffi';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:team1_det_tonryong/presentation/page/write/image_provider.dart';
 import 'package:team1_det_tonryong/presentation/page/write/widgets/write_image.dart';
 import 'package:team1_det_tonryong/presentation/page/write/write_view_model.dart';
 
 class WritePage extends StatelessWidget {
-  String uid;
   String userNM;
-  WritePage({required this.uid, required this.userNM});
+  WritePage({required this.userNM});
 
   @override
   Widget build(BuildContext context) {
@@ -33,12 +31,12 @@ class WritePage extends StatelessWidget {
                     await ref
                         .read(writeViewModelProvider.notifier)
                         .createFeed(
-                          uid: uid,
                           feedPhoto: imagePath,
                           userNM: userNM,
                         );
-                    ref.read(imageFileProvider.notifier).state = null;
-                    Navigator.pop(context);
+                    ref.read(imageFileProvider.notifier).state =
+                        null;
+                    context.pop();
                   } else {
                     CupertinoAlertDialog(
                       title: Text('오류가 발생했습니다'),

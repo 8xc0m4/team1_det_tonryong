@@ -13,12 +13,10 @@ class WriteRepositoryImpl implements WriteRepository {
 
   @override
   Future<bool> creatFeed({
-    required String uid,
     required String feedPhoto,
     required String userNM,
   }) async {
     return await _dataSource.createFeed(
-      uid: uid,
       feedPhoto: feedPhoto,
       userNM: userNM,
     );

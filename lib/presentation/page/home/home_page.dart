@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:team1_det_tonryong/notification_helper.dart';
+import 'package:go_router/go_router.dart';
 import 'package:team1_det_tonryong/presentation/page/home/home_view_model.dart';
 import 'package:team1_det_tonryong/presentation/page/home/widgets/home_list.dart';
-import 'package:team1_det_tonryong/presentation/page/write/write_page.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   final String userNickNM;
   final String userProfil;
-  final String uid;
   HomePage({
     required this.userNickNM,
     required this.userProfil,
-    required this.uid,
   });
 
   @override
@@ -23,7 +20,9 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   void initState() {
     super.initState();
-    ref.read(homeViewModelProvider.notifier).changeLike(widget.userNickNM);
+    ref
+        .read(homeViewModelProvider.notifier)
+        .changeLike(widget.userNickNM);
   }
 
   @override
@@ -45,16 +44,11 @@ class _HomePageState extends ConsumerState<HomePage> {
             SizedBox(width: 90),
             GestureDetector(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return WritePage(
-                        uid: widget.uid,
-                        userNM: widget.userNickNM,
-                      );
-                    },
-                  ),
+                context.push(
+                  '/home/write',
+                  extra: {
+                    'userNickNM': widget.userNickNM,
+                  },
                 );
               },
               child: Image.asset('assets/icon/pen2.png'),
@@ -68,7 +62,6 @@ class _HomePageState extends ConsumerState<HomePage> {
           result: result,
           userNickNM: widget.userNickNM,
           userProfil: widget.userProfil,
-          uid: widget.uid,
           // result: result,
           // userNickNM: userNickNM,
           // userProfil: userProfil,

@@ -19,7 +19,6 @@ class _FloatingCommentManagerState
   // 현재 화면에 댓글리스트 표시
   final List<_FloatingComment> activeComments = [];
   final Random random = Random(); // 랜덤 표시
-  Timer? _timer;
 
   @override
   void initState() {
@@ -28,7 +27,9 @@ class _FloatingCommentManagerState
   }
 
   void _startCommentSpawner() {
-    _timer = Timer.periodic(const Duration(seconds: 2), (timer) {
+    var _timer = Timer.periodic(const Duration(seconds: 2), (
+      timer,
+    ) {
       List<String> displayComments = [];
       if (widget.state.length == 1) {
         displayComments = [];
@@ -76,7 +77,6 @@ class _FloatingCommentManagerState
 
   @override
   void dispose() {
-    _timer?.cancel();
     super.dispose();
   }
 

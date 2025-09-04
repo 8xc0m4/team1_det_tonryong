@@ -24,7 +24,6 @@ class WriteDataSourceImpl implements WriteDataSource {
 
   @override
   Future<bool> createFeed({
-    required String uid,
     required String feedPhoto,
     required String userNM,
   }) async {
@@ -34,7 +33,6 @@ class WriteDataSourceImpl implements WriteDataSource {
       final docRef = colRef.doc();
       final now = DateTime.now();
       await docRef.set({
-        'uid': uid,
         'feedPhoto': feedPhoto,
         'feedTime': now,
         'userNM': userNM,

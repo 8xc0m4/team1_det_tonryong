@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:team1_det_tonryong/presentation/page/comment/comment_page.dart';
+import 'package:go_router/go_router.dart';
 import 'package:team1_det_tonryong/presentation/page/detail/view_model/detail_view_model.dart';
 
 // 좋아요 버튼 활성화 및 댓글 페이지 연결 예정
@@ -59,17 +59,13 @@ class LikeComment extends ConsumerWidget {
         const SizedBox(height: 15),
         GestureDetector(
           onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) {
-                  return CommentPage(
-                    feedId: feedId,
-                    userNM: userNickNM,
-                    userProfil: userProfil,
-                  );
-                },
-              ),
+            context.push(
+              '/home/detail/comment',
+              extra: {
+                'feedId': feedId,
+                'userNM': userNickNM,
+                'userProfil': userProfil,
+              },
             );
           },
           child: Image.asset(
