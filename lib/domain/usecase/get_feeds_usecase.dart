@@ -8,4 +8,8 @@ class GetFeedsUsecase {
   Future<List<HomeEntity>?> execute() async {
     return await _feedsRepository.getFeedsPhoto();
   }
+
+  Future<void> delExecute(String id) async {
+    await _feedsRepository.deleteFeed(id);
+  }
 }

@@ -4,4 +4,6 @@ abstract interface class FeedsRepository {
   Future<List<HomeEntity>?> getFeedsPhoto();
   Stream<List<HomeEntity>> getMyFeeds(String userNM);
   Future<HomeEntity?> getFeed(String id);
+
+  Future<void> deleteFeed(String id);
 }
