@@ -7,6 +7,42 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:1094819422104:android:2b9b448a887f667d1655ed",
+        "android_client_info": {
+          "package_name": "com.dettonryong.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1094819422104-reikr2tauchncg5p69lbki4pv8lm3vep.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlPDPFSSrxj0UM8QjJeOwqi-QjM7VoKpo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1094819422104-reikr2tauchncg5p69lbki4pv8lm3vep.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1094819422104-2sbdsqlvchtsm9927rbch7j264l5r3ak.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.team1DetTonryong"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:1094819422104:android:e41eb082c81cda071655ed",
         "android_client_info": {
           "package_name": "com.example.team1_det_tonryong"

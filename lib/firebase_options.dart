@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBlPDPFSSrxj0UM8QjJeOwqi-QjM7VoKpo',
-    appId: '1:1094819422104:android:e41eb082c81cda071655ed',
+    appId: '1:1094819422104:android:2b9b448a887f667d1655ed',
     messagingSenderId: '1094819422104',
     projectId: 'det-tonryong',
     storageBucket: 'det-tonryong.firebasestorage.app',
@@ -59,13 +59,13 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyA9LBrOVkWogbJdv7EjTCDMqzHaIfGI3Hs',
-    appId: '1:1094819422104:ios:fa801f94aaae575e1655ed',
+    appId: '1:1094819422104:ios:1ca421ef4823518b1655ed',
     messagingSenderId: '1094819422104',
     projectId: 'det-tonryong',
     storageBucket: 'det-tonryong.firebasestorage.app',
     androidClientId: '1094819422104-376563ihj2ef5nadudn878nmorklk39t.apps.googleusercontent.com',
-    iosClientId: '1094819422104-2sbdsqlvchtsm9927rbch7j264l5r3ak.apps.googleusercontent.com',
-    iosBundleId: 'com.example.team1DetTonryong',
+    iosClientId: '1094819422104-6qigu8rm72kfpli0b6dhfkd125kskcec.apps.googleusercontent.com',
+    iosBundleId: 'com.dettonryong.app',
   );
 
 }
