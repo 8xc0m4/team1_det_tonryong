@@ -106,9 +106,6 @@ class DetailPage extends ConsumerWidget {
                 FloatingCommentManager(
                   state: state.bestComments,
                 ), // 댓글 표시
-                FloatingCommentManager(
-                  state: state.bestComments,
-                ), // 댓글 표시
                 Positioned(
                   //하트, 댓글 아이콘 위치
                   right: 10,

@@ -40,8 +40,6 @@ class DetailViewModel extends AutoDisposeFamilyNotifier<DetailState, String> {
         );
     fetchDetail(arg);
   }
-
-  //
 } //
 
 class DetailState {

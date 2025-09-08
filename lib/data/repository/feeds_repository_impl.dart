@@ -56,4 +56,10 @@ class FeedsRepositoryImpl implements FeedsRepository {
       userNM: result.userNM,
     );
   }
+
+  @override
+  Future<void> deleteFeed(String id) async {
+    //데이타 소스 매서드 열어주기
+    await _feedsDataSource.deleteFeed(id);
+  }
 }

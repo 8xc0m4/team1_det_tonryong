@@ -48,6 +48,8 @@ class _FloatingCommentManagerState
           widget.state[3].comment,
         ];
       }
+
+      //2초마다 댓글생성
       if (!mounted) return;
 
       //화면 밖에 안빠져 나가게 하기
