@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>1094819422104-2sbdsqlvchtsm9927rbch7j264l5r3ak.apps.googleusercontent.com</string>
+	<string>1094819422104-6qigu8rm72kfpli0b6dhfkd125kskcec.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.1094819422104-2sbdsqlvchtsm9927rbch7j264l5r3ak</string>
+	<string>com.googleusercontent.apps.1094819422104-6qigu8rm72kfpli0b6dhfkd125kskcec</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>1094819422104-376563ihj2ef5nadudn878nmorklk39t.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.team1DetTonryong</string>
+	<string>com.dettonryong.app</string>
 	<key>PROJECT_ID</key>
 	<string>det-tonryong</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1094819422104:ios:fa801f94aaae575e1655ed</string>
+	<string>1:1094819422104:ios:1ca421ef4823518b1655ed</string>
 </dict>
 </plist>
